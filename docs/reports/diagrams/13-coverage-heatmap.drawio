@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2025-01-31T10:00:00.000Z" agent="Claude AI" version="21.0.0" type="device">
+  <diagram id="coverage-heatmap" name="模块覆盖率热力图">
+    <mxGraphModel dx="1100" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="750" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- 标题 -->
+        <mxCell id="title" value="模块覆盖率热力图" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=22;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="400" y="20" width="300" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- Core Bank Service 区块 -->
+        <mxCell id="core_bank_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1976D2;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="50" y="80" width="650" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="core_bank_title" value="Core Bank Service" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;fontColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="70" y="90" width="200" height="25" as="geometry"/>
+        </mxCell>
+
+        <!-- Core Bank 模块 -->
+        <mxCell id="cb_controller" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2E7D32;strokeColor=#1B5E20;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="70" y="125" width="110" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="cb_controller_label" value="controller&#xa;92%" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="70" y="140" width="110" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cb_service" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#43A047;strokeColor=#2E7D32;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="195" y="125" width="110" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="cb_service_label" value="service&#xa;88%" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="195" y="140" width="110" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cb_repository" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2E7D32;strokeColor=#1B5E20;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="320" y="125" width="110" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="cb_repository_label" value="repository&#xa;95%" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="320" y="140" width="110" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cb_security" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2E7D32;strokeColor=#1B5E20;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="445" y="125" width="110" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="cb_security_label" value="security&#xa;95%" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="445" y="140" width="110" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cb_dto" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#66BB6A;strokeColor=#43A047;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="570" y="125" width="110" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="cb_dto_label" value="dto&#xa;85%" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="570" y="140" width="110" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- Payment Service 区块 -->
+        <mxCell id="payment_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#4CAF50;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="50" y="240" width="500" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="payment_title" value="Payment Service" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;fontColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="70" y="250" width="200" height="25" as="geometry"/>
+        </mxCell>
+
+        <!-- Payment 模块 -->
+        <mxCell id="pay_routes" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2E7D32;strokeColor=#1B5E20;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="70" y="285" width="140" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="pay_routes_label" value="routes&#xa;90%" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="70" y="300" width="140" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="pay_services" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#66BB6A;strokeColor=#43A047;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="225" y="285" width="140" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="pay_services_label" value="services&#xa;85%" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="225" y="300" width="140" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="pay_utils" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2E7D32;strokeColor=#1B5E20;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="380" y="285" width="140" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="pay_utils_label" value="utils&#xa;92%" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="380" y="300" width="140" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- Risk Service 区块 -->
+        <mxCell id="risk_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#E57373;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="50" y="400" width="400" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="risk_title" value="Risk Service" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;fontColor=#C62828;" vertex="1" parent="1">
+          <mxGeometry x="70" y="410" width="200" height="25" as="geometry"/>
+        </mxCell>
+
+        <!-- Risk 模块 -->
+        <mxCell id="risk_rules" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2E7D32;strokeColor=#1B5E20;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="70" y="445" width="170" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="risk_rules_label" value="rules&#xa;95%" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="70" y="460" width="170" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="risk_api" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#43A047;strokeColor=#2E7D32;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="260" y="445" width="170" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="risk_api_label" value="api&#xa;88%" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="260" y="460" width="170" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- 图例 -->
+        <mxCell id="legend_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#E0E0E0;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="720" y="80" width="180" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend_title" value="图例 - 覆盖率" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="720" y="90" width="180" height="25" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="legend_90" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2E7D32;strokeColor=#1B5E20;" vertex="1" parent="1">
+          <mxGeometry x="740" y="125" width="40" height="25" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend_90_label" value="≥90% 深绿" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="790" y="125" width="100" height="25" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="legend_80" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#43A047;strokeColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="740" y="160" width="40" height="25" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend_80_label" value="80-89% 绿" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="790" y="160" width="100" height="25" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="legend_70" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FDD835;strokeColor=#F9A825;" vertex="1" parent="1">
+          <mxGeometry x="740" y="195" width="40" height="25" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend_70_label" value="70-79% 黄" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="790" y="195" width="100" height="25" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="legend_low" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E53935;strokeColor=#C62828;" vertex="1" parent="1">
+          <mxGeometry x="740" y="230" width="40" height="25" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend_low_label" value="&lt;70% 红" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="790" y="230" width="100" height="25" as="geometry"/>
+        </mxCell>
+
+        <!-- 汇总统计 -->
+        <mxCell id="summary_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#E0E0E0;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="720" y="300" width="180" height="240" as="geometry"/>
+        </mxCell>
+        <mxCell id="summary_title" value="覆盖率统计" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="720" y="310" width="180" height="25" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="sum1" value="Core Bank 平均" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="735" y="345" width="100" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="sum1v" value="91%" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="835" y="345" width="50" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="sum2" value="Payment 平均" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="735" y="375" width="100" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="sum2v" value="89%" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#43A047;" vertex="1" parent="1">
+          <mxGeometry x="835" y="375" width="50" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="sum3" value="Risk 平均" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="735" y="405" width="100" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="sum3v" value="91.5%" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="835" y="405" width="50" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="divider" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=#BDBDBD;" vertex="1" parent="1">
+          <mxGeometry x="735" y="440" width="150" height="10" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="sum_total" value="整体平均" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="735" y="460" width="80" height="25" as="geometry"/>
+        </mxCell>
+        <mxCell id="sum_totalv" value="90.5%" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;fontColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="815" y="460" width="70" height="25" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="target_note" value="目标: ≥85%" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#757575;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="720" y="495" width="180" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="status_badge" value="✓ 已达标" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#4CAF50;fontSize=12;fontStyle=1;fontColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="760" y="515" width="100" height="25" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
