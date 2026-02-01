@@ -1,0 +1,42 @@
+# 核心银行服务 API 用例（TestRail 可导入）
+# 符合 test-case-schema.json
+
+- id: TC-CB-001
+  title: POST 开户 - 必填有效，应返回 201 与 accountId
+  suite: core-bank
+  priority: 1
+  steps:
+    - action: POST /api/v1/accounts，body 含 customerId、accountType、currency、initialBalance
+    - action: 检查响应 code=201，body 含 accountId
+  expected: 201 Created，JSON 含 accountId、accountNumber
+  preconditions: 客户已存在
+  tags: [api, accounts, smoke]
+
+- id: TC-CB-002
+  title: GET 账户列表 - 分页，应返回 200
+  suite: core-bank
+  priority: 2
+  steps:
+    - action: GET /api/v1/accounts?page=1&pageSize=10
+    - action: 检查 code=200， body 为列表结构
+  expected: 200，分页列表
+  tags: [api, accounts]
+
+- id: TC-CB-003
+  title: GET 账户详情 - 存在则 200，不存在则 404
+  suite: core-bank
+  priority: 1
+  steps:
+    - action: GET /api/v1/accounts/{account-id}，id 存在
+    - action: GET /api/v1/accounts/{account-id}，id 不存在
+  expected: 200 含 accountNumber/balance；404
+  tags: [api, accounts]
+
+- id: TC-CB-004
+  title: GET 余额查询 - 应返回 balance、currency
+  suite: core-bank
+  priority: 1
+  steps:
+    - action: GET /api/v1/accounts/{account-id}/balance
+  expected: 200，含 accountId、balance、currency
+  tags: [api, accounts, balance]

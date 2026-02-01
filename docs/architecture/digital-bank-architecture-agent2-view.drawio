@@ -1,0 +1,214 @@
+<mxfile host="app.diagrams.net" modified="2026-01-26T00:00:00.000Z" agent="5.0" version="21.0.0" etag="digital-bank-architecture-agent2" type="device">
+  <diagram id="agent2-architecture-view" name="Agent 2 架构视图">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="3000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- 标题 -->
+        <mxCell id="title" value="支付清算服务 - Agent 2 架构视图" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="500" y="20" width="1000" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- 业务层标题 -->
+        <mxCell id="business-layer-title" value="业务层 (Business Layer)" style="text;html=1;strokeColor=#F4B942;fillColor=#FFF8DC;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;strokeWidth=2" vertex="1" parent="1">
+          <mxGeometry x="50" y="80" width="300" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- 业务服务 -->
+        <mxCell id="business-payment" value="支付网关业务" style="shape=mxgraph.archimate3.business;appType=serv;archiType=rounded;fillColor=#FFD54F;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="50" y="140" width="200" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="business-settlement" value="清算对账业务" style="shape=mxgraph.archimate3.business;appType=serv;archiType=rounded;fillColor=#FFD54F;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="280" y="140" width="200" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="business-callback" value="交易回调业务" style="shape=mxgraph.archimate3.business;appType=serv;archiType=rounded;fillColor=#FFD54F;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="510" y="140" width="200" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- 应用层标题 -->
+        <mxCell id="application-layer-title" value="应用层 (Application Layer) - 支付清算服务" style="text;html=1;strokeColor=#66BB6A;fillColor=#E8F5E9;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;strokeWidth=2" vertex="1" parent="1">
+          <mxGeometry x="50" y="240" width="500" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- Routes层 -->
+        <mxCell id="app-route-payment" value="Payment Routes&#xa;/api/v1/payments" style="shape=mxgraph.archimate3.application;appType=comp;archiType=rounded;fillColor=#66BB6A;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="50" y="300" width="180" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="app-route-settlement" value="Settlement Routes&#xa;/api/v1/settlements" style="shape=mxgraph.archimate3.application;appType=comp;archiType=rounded;fillColor=#66BB6A;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="260" y="300" width="180" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="app-route-callback" value="Callback Routes&#xa;/api/v1/callbacks" style="shape=mxgraph.archimate3.application;appType=comp;archiType=rounded;fillColor=#66BB6A;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="470" y="300" width="180" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- Controller层 -->
+        <mxCell id="app-controller-payment" value="PaymentController&#xa;支付控制器" style="shape=mxgraph.archimate3.application;appType=comp;archiType=rounded;fillColor=#66BB6A;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="50" y="390" width="180" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="app-controller-settlement" value="SettlementController&#xa;清算控制器" style="shape=mxgraph.archimate3.application;appType=comp;archiType=rounded;fillColor=#66BB6A;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="260" y="390" width="180" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="app-controller-callback" value="CallbackController&#xa;回调控制器" style="shape=mxgraph.archimate3.application;appType=comp;archiType=rounded;fillColor=#66BB6A;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="470" y="390" width="180" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- Service层 -->
+        <mxCell id="app-service-payment" value="PaymentService&#xa;支付业务逻辑" style="shape=mxgraph.archimate3.application;appType=comp;archiType=rounded;fillColor=#66BB6A;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="50" y="480" width="180" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="app-service-settlement" value="SettlementService&#xa;清算业务逻辑" style="shape=mxgraph.archimate3.application;appType=comp;archiType=rounded;fillColor=#66BB6A;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="260" y="480" width="180" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="app-service-callback" value="CallbackService&#xa;回调业务逻辑" style="shape=mxgraph.archimate3.application;appType=comp;archiType=rounded;fillColor=#66BB6A;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="470" y="480" width="180" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- Model层 -->
+        <mxCell id="app-model-payment" value="Payment Model&#xa;Mongoose Schema" style="shape=mxgraph.archimate3.application;appType=comp;archiType=rounded;fillColor=#66BB6A;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="50" y="570" width="180" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="app-model-settlement" value="Settlement Model&#xa;Mongoose Schema" style="shape=mxgraph.archimate3.application;appType=comp;archiType=rounded;fillColor=#66BB6A;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="260" y="570" width="180" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- Mock服务 -->
+        <mxCell id="app-mock-gateway" value="Mock Payment Gateway&#xa;模拟支付网关" style="shape=mxgraph.archimate3.application;appType=comp;archiType=rounded;fillColor=#66BB6A;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="470" y="570" width="180" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- 外部服务集成 -->
+        <mxCell id="app-external-title" value="外部服务集成" style="text;html=1;strokeColor=#66BB6A;fillColor=#E8F5E9;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;strokeWidth=2" vertex="1" parent="1">
+          <mxGeometry x="700" y="300" width="200" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="app-core-bank-client" value="CoreBankServiceClient&#xa;Agent 1 核心银行服务" style="shape=mxgraph.archimate3.application;appType=serv;archiType=rounded;fillColor=#E8F5E9;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="700" y="340" width="200" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="app-risk-client" value="RiskServiceClient&#xa;Agent 3 风控服务" style="shape=mxgraph.archimate3.application;appType=serv;archiType=rounded;fillColor=#E8F5E9;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="700" y="420" width="200" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- 异步任务处理 -->
+        <mxCell id="app-async-title" value="异步任务处理" style="text;html=1;strokeColor=#66BB6A;fillColor=#E8F5E9;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;strokeWidth=2" vertex="1" parent="1">
+          <mxGeometry x="700" y="500" width="200" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="app-bull-queue" value="Bull Queue&#xa;异步任务队列" style="shape=mxgraph.archimate3.application;appType=serv;archiType=rounded;fillColor=#E8F5E9;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="700" y="540" width="200" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- 基础设施服务 -->
+        <mxCell id="app-infra-title" value="基础设施服务" style="text;html=1;strokeColor=#66BB6A;fillColor=#E8F5E9;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;strokeWidth=2" vertex="1" parent="1">
+          <mxGeometry x="700" y="620" width="200" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="app-api-gateway" value="API Gateway&#xa;(Kong) - Agent 5" style="shape=mxgraph.archimate3.application;appType=serv;archiType=rounded;fillColor=#E8F5E9;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="700" y="660" width="200" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="app-service-registry" value="Service Registry&#xa;(Consul) - Agent 5" style="shape=mxgraph.archimate3.application;appType=serv;archiType=rounded;fillColor=#E8F5E9;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="700" y="740" width="200" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- 数据层标题 -->
+        <mxCell id="data-layer-title" value="数据层 (Data Layer)" style="text;html=1;strokeColor=#1976D2;fillColor=#BBDEFB;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;strokeWidth=2" vertex="1" parent="1">
+          <mxGeometry x="50" y="670" width="300" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- 数据对象 -->
+        <mxCell id="data-payment" value="Payment Document&#xa;支付文档" style="shape=mxgraph.archimate3.data;appType=passive;archiType=rounded;fillColor=#1976D2;strokeColor=#666666;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="50" y="730" width="180" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="data-settlement" value="Settlement Document&#xa;清算文档" style="shape=mxgraph.archimate3.data;appType=passive;archiType=rounded;fillColor=#1976D2;strokeColor=#666666;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="260" y="730" width="180" height="50" as="geometry" />
+        </mxCell>
+        
+        <!-- MongoDB数据库 -->
+        <mxCell id="data-mongodb" value="MongoDB 7.0&#xa;支付交易数据库&#xa;payments, settlements" style="shape=mxgraph.archimate3.data;appType=passive;archiType=rounded;fillColor=#1976D2;strokeColor=#666666;fontColor=#FFFFFF;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="50" y="810" width="600" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- 技术层标题 -->
+        <mxCell id="technology-layer-title" value="技术层 (Technology Layer)" style="text;html=1;strokeColor=#7CB342;fillColor=#DCEDC8;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;strokeWidth=2" vertex="1" parent="1">
+          <mxGeometry x="50" y="930" width="300" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- Express框架 -->
+        <mxCell id="tech-express" value="Express.js&#xa;Web框架" style="shape=mxgraph.archimate3.technology;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="50" y="990" width="180" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- Mongoose -->
+        <mxCell id="tech-mongoose" value="Mongoose&#xa;ODM框架" style="shape=mxgraph.archimate3.technology;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="260" y="990" width="180" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- Node.js -->
+        <mxCell id="tech-nodejs" value="Node.js 20&#xa;运行时环境" style="shape=mxgraph.archimate3.technology;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="470" y="990" width="180" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- 测试框架 -->
+        <mxCell id="tech-test-title" value="测试框架" style="text;html=1;strokeColor=#7CB342;fillColor=#DCEDC8;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;strokeWidth=2" vertex="1" parent="1">
+          <mxGeometry x="700" y="930" width="200" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="tech-jest" value="Jest&#xa;测试框架" style="shape=mxgraph.archimate3.technology;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="700" y="970" width="180" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="tech-supertest" value="Supertest&#xa;API测试" style="shape=mxgraph.archimate3.technology;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="700" y="1040" width="180" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="tech-wiremock" value="WireMock&#xa;Mock服务" style="shape=mxgraph.archimate3.technology;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="900" y="970" width="180" height="50" as="geometry" />
+        </mxCell>
+        
+        <!-- API文档 -->
+        <mxCell id="tech-openapi" value="OpenAPI 3.0&#xa;API文档" style="shape=mxgraph.archimate3.technology;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="900" y="1040" width="180" height="50" as="geometry" />
+        </mxCell>
+        
+        <!-- 图例 -->
+        <mxCell id="legend-title" value="图例 (Legend)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="50" y="1130" width="200" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend-bus" value="业务层" style="shape=mxgraph.archimate3.business;appType=serv;archiType=rounded;fillColor=#FFD54F;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="50" y="1170" width="120" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend-app" value="应用层" style="shape=mxgraph.archimate3.application;appType=comp;archiType=rounded;fillColor=#66BB6A;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="200" y="1170" width="120" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend-data" value="数据层" style="shape=mxgraph.archimate3.data;appType=passive;archiType=rounded;fillColor=#1976D2;strokeColor=#666666;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="350" y="1170" width="120" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend-tech" value="技术层" style="shape=mxgraph.archimate3.technology;appType=node;archiType=rounded;fillColor=#7CB342;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="500" y="1170" width="120" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- 说明文字 -->
+        <mxCell id="note" value="说明：&#xa;1. 本架构图从Agent 2（支付清算处理器）的视角展示支付清算服务的内部架构和外部协作关系&#xa;2. 采用ArchiMate 3.2标准，包含业务层、应用层、数据层、技术层四层架构&#xa;3. 应用层采用分层架构：Routes（路由层）→ Controller（控制器层）→ Service（业务逻辑层）→ Model（数据模型层）&#xa;4. 外部服务集成：通过HTTP客户端调用Agent 1（核心银行服务）和Agent 3（风控服务）&#xa;5. 异步处理：使用Bull队列处理支付回调和异步任务&#xa;6. 数据层：使用MongoDB存储支付和清算数据，通过Mongoose进行ODM映射&#xa;7. 技术栈：Node.js 20 + Express.js + Mongoose + MongoDB 7.0&#xa;8. 测试框架：Jest + Supertest + WireMock，测试覆盖率≥60%" style="text;html=1;strokeColor=#CCCCCC;fillColor=#F5F5F5;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="50" y="1240" width="1100" height="160" as="geometry" />
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

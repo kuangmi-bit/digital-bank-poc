@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://digitalbank-poc/schemas/settlement.json",
+  "title": "settlements",
+  "description": "清算批次文档结构（MongoDB）。字段命名 camelCase，集合名复数 snake_case。",
+  "type": "object",
+  "required": ["settlementId", "batchId", "totalAmount", "status", "createdAt"],
+  "properties": {
+    "_id": {
+      "description": "MongoDB 文档 _id",
+      "bsonType": "objectId"
+    },
+    "settlementId": {
+      "description": "清算单号，业务唯一",
+      "type": "string"
+    },
+    "batchId": {
+      "description": "批次号，日/周批次",
+      "type": "string"
+    },
+    "totalAmount": {
+      "description": "批次总金额",
+      "type": "number"
+    },
+    "paymentCount": {
+      "description": "纳入笔数",
+      "type": "integer"
+    },
+    "paymentIds": {
+      "description": "关联的 paymentId 列表",
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "status": {
+      "description": "pending, processing, completed, failed",
+      "type": "string",
+      "enum": ["pending", "processing", "completed", "failed"]
+    },
+    "createdAt": {
+      "description": "创建时间，ISO 8601",
+      "type": "string",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "description": "更新时间，ISO 8601",
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "indexes": [
+    { "keys": { "settlementId": 1 }, "options": { "unique": true } },
+    { "keys": { "batchId": 1 } },
+    { "keys": { "status": 1, "createdAt": -1 } }
+  ]
+}

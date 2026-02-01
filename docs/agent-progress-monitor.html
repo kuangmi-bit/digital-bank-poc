@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent 进度监控 | 数字银行 POC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #eef2f7;
+      --surface: #ffffff;
+      --card: #ffffff;
+      --card-hover: #f8fafc;
+      --text: #1f2328;
+      --text-soft: #424a53;
+      --muted: #656d76;
+      --accent: #1a7f37;
+      --accent-dim: rgba(26, 127, 55, 0.12);
+      --highlight: #d9730d;
+      --highlight-dim: rgba(217, 115, 13, 0.1);
+      --border: #d0d7de;
+      --border-focus: #2ea043;
+      --radius: 10px;
+      --radius-sm: 6px;
+      --font-display: 'Outfit', sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --header-bg: #ffffff;
+      --nav-bg: #f6f8fa;
+      --nav-hover: #eaeef2;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 400;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    .cockpit { display: flex; flex-direction: column; min-height: 100vh; }
+    .cockpit-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--header-bg);
+      border-bottom: 2px solid var(--border);
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .cockpit-header-left { display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+    .cockpit-title { font-family: var(--font-display); font-weight: 700; font-size: 1.35rem; color: var(--text); margin: 0; letter-spacing: -0.02em; }
+    .cockpit-title span { color: var(--accent); }
+    .cockpit-tagline { font-size: 0.85rem; color: var(--muted); margin: 0; }
+    .cockpit-strip {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.35rem 0.75rem;
+      background: linear-gradient(135deg, var(--accent-dim), var(--highlight-dim));
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--accent);
+    }
+    .cockpit-body { display: flex; flex: 1; min-height: 0; }
+    .cockpit-nav {
+      width: 200px;
+      flex-shrink: 0;
+      background: var(--nav-bg);
+      border-right: 1px solid var(--border);
+      padding: 1rem 0;
+      position: sticky;
+      top: 4.5rem;
+      align-self: flex-start;
+      max-height: calc(100vh - 5rem);
+      overflow-y: auto;
+    }
+    .cockpit-nav-title { font-family: var(--font-display); font-size: 0.75rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; padding: 0 1rem 0.5rem; margin: 0; }
+    .cockpit-nav a {
+      display: block;
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      text-decoration: none;
+      transition: background 0.15s var(--ease-out), color 0.15s var(--ease-out);
+      border-left: 3px solid transparent;
+    }
+    .cockpit-nav a:hover { background: var(--nav-hover); color: var(--accent); border-left-color: var(--accent); }
+    .cockpit-nav a:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+    .cockpit-main { flex: 1; overflow-y: auto; padding: 1.5rem 2rem 3rem; }
+    .page { max-width: 880px; margin: 0 auto; }
+    h1, h2, h3 { font-family: var(--font-display); font-weight: 600; }
+    h1 { font-size: 1.5rem; margin: 0 0 0.5rem; color: var(--text); }
+    h2 { font-size: 1rem; margin: 2rem 0 1rem; color: var(--muted); font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; }
+    h3 { font-size: 0.95rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text); }
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.15rem 1.35rem;
+      margin-bottom: 1rem;
+      transition: background 0.2s var(--ease-out), border-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    section:hover { background: var(--card-hover); border-color: #b1bac4; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+    #usage {
+      border-color: var(--border-focus);
+      background: linear-gradient(135deg, var(--card) 0%, var(--accent-dim) 100%);
+      box-shadow: 0 0 0 1px var(--border-focus), 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .accent-bar { height: 4px; background: linear-gradient(90deg, var(--accent), var(--highlight)); border-radius: var(--radius) var(--radius) 0 0; margin: -1.15rem -1.35rem 1rem -1.35rem; }
+    #usage h1 { color: var(--accent); }
+    #usage p { margin: 0.5rem 0; color: var(--text-soft); }
+    #usage code { font-family: var(--font-mono); font-size: 0.85em; padding: 0.15em 0.4em; background: var(--nav-bg); border-radius: var(--radius-sm); color: var(--highlight); border: 1px solid var(--border); }
+    ul { margin: 0.3rem 0; padding-left: 1.4rem; }
+    li { margin: 0.4rem 0; }
+    li ul { margin-top: 0.3rem; margin-bottom: 0.2rem; }
+    input[type="checkbox"] {
+      margin-right: 0.6rem;
+      vertical-align: middle;
+      width: 1.1em;
+      height: 1.1em;
+      accent-color: var(--accent);
+      cursor: pointer;
+      transition: transform 0.15s var(--ease-spring);
+    }
+    input[type="checkbox"]:hover { transform: scale(1.08); }
+    input[type="checkbox"]:checked { transform: scale(1); }
+    label { cursor: pointer; transition: color 0.2s var(--ease-out); }
+    li:hover label { color: var(--text-soft); }
+    li:hover input:checked + label { color: var(--muted); }
+    input:checked + label { color: var(--muted); text-decoration: line-through; }
+    details {
+      margin-bottom: 0.6rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease-out);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    details[open] { border-color: var(--accent); box-shadow: 0 2px 8px rgba(26, 127, 55, 0.08); }
+    details > summary {
+      list-style: none;
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      background: var(--card);
+      color: var(--text);
+      transition: background 0.2s var(--ease-out), color 0.2s var(--ease-out);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid transparent;
+    }
+    details[open] > summary { border-bottom-color: var(--border); background: var(--card-hover); }
+    details > summary::-webkit-details-marker { display: none; }
+    details > summary::before {
+      content: '';
+      display: inline-block;
+      width: 0.5em;
+      height: 0.5em;
+      border-right: 2px solid var(--muted);
+      border-bottom: 2px solid var(--muted);
+      transform: rotate(-45deg) translateY(-0.1em);
+      transition: transform 0.25s var(--ease-spring);
+    }
+    details[open] > summary::before { transform: rotate(45deg) translateY(0.1em); border-color: var(--accent); }
+    details > summary:hover { background: var(--nav-hover); color: var(--accent); }
+    details > summary:hover::before { border-color: var(--accent); }
+    details > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    input[type="checkbox"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    [data-agent] {
+      border-left: 3px solid var(--accent);
+      padding-left: 1rem;
+      margin: 1rem 0;
+    }
+    [data-agent="0"] { border-left-color: #0969da; }
+    [data-agent="1"] { border-left-color: #8250df; }
+    [data-agent="2"] { border-left-color: #cf222e; }
+    [data-agent="3"] { border-left-color: #bf8700; }
+    [data-agent="4"] { border-left-color: #0550ae; }
+    [data-agent="5"] { border-left-color: #1a7f37; }
+    [data-agent="6"] { border-left-color: #a011af; }
+    [data-agent="7"] { border-left-color: #cf222e; }
+    [data-agent="8"] { border-left-color: #8250df; }
+    [data-agent="9"] { border-left-color: #1a7f37; }
+    [data-agent="1-4"], [data-agent="all"] { border-left-color: var(--highlight); }
+    .meta { font-size: 0.8rem; color: var(--muted); margin-top: 0.4rem; margin-bottom: 0.25rem; }
+    #changelog { background: var(--nav-bg); border-color: var(--border); }
+    #changelog h2 { margin-top: 1.5rem; }
+    #changelog ul { list-style: none; padding-left: 0; }
+    #changelog li { padding: 0.35rem 0; border-bottom: 1px solid var(--border); margin: 0; }
+    #changelog li:last-child { border-bottom: none; }
+    details > section { margin-left: 0.85rem; margin-right: 0.85rem; margin-bottom: 0.85rem; }
+    details > section:first-of-type { margin-top: 0.6rem; }
+    details[id^="day-"] { scroll-margin-top: 5rem; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .page > #usage { animation: fadeUp 0.4s var(--ease-out) 0.05s both; }
+    .page > h2 { animation: fadeUp 0.4s var(--ease-out) 0.1s both; }
+    .page details { animation: fadeUp 0.35s var(--ease-out) both; }
+    .page details:nth-of-type(1) { animation-delay: 0.12s; }
+    .page details:nth-of-type(2) { animation-delay: 0.16s; }
+    .page details:nth-of-type(3) { animation-delay: 0.2s; }
+    .page details:nth-of-type(4) { animation-delay: 0.24s; }
+    .page details:nth-of-type(5) { animation-delay: 0.28s; }
+    .page details:nth-of-type(6) { animation-delay: 0.32s; }
+    .page details:nth-of-type(7) { animation-delay: 0.36s; }
+    .page details:nth-of-type(8) { animation-delay: 0.4s; }
+    .page details:nth-of-type(9) { animation-delay: 0.44s; }
+    .page details:nth-of-type(10) { animation-delay: 0.48s; }
+    .page details:nth-of-type(11) { animation-delay: 0.52s; }
+    .page details:nth-of-type(12) { animation-delay: 0.56s; }
+    .page details:nth-of-type(13) { animation-delay: 0.6s; }
+    .page details:nth-of-type(14) { animation-delay: 0.64s; }
+    .page details:nth-of-type(15) { animation-delay: 0.68s; }
+    .page #changelog { animation: fadeUp 0.4s var(--ease-out) 0.72s both; }
+    @media (max-width: 768px) {
+      .cockpit-body { flex-direction: column; }
+      .cockpit-nav { width: 100%; position: static; max-height: none; border-right: none; border-bottom: 1px solid var(--border); padding: 0.75rem 1rem; display: flex; flex-wrap: wrap; gap: 0.25rem; align-items: center; }
+      .cockpit-nav-title { flex-basis: 100%; padding: 0 0 0.35rem 0; margin: 0; }
+      .cockpit-nav a { padding: 0.35rem 0.6rem; border-left: none; border-bottom: 2px solid transparent; }
+      .cockpit-nav a:hover { border-left: none; border-bottom-color: var(--accent); }
+    }
+  </style>
+</head>
+<body>
+<div class="cockpit">
+  <header class="cockpit-header">
+    <div class="cockpit-header-left">
+      <h1 class="cockpit-title"><span>Agent</span> 进度监控</h1>
+      <p class="cockpit-tagline">数字银行 POC · 14 日任务跟踪</p>
+    </div>
+    <span class="cockpit-strip">Day 1–14</span>
+  </header>
+  <div class="cockpit-body">
+    <nav class="cockpit-nav" aria-label="按 Day 跳转">
+      <p class="cockpit-nav-title">按 Day 跳转</p>
+      <a href="#day-1">Day 1</a>
+      <a href="#day-2">Day 2</a>
+      <a href="#day-3">Day 3</a>
+      <a href="#day-4">Day 4</a>
+      <a href="#day-5">Day 5</a>
+      <a href="#day-6">Day 6</a>
+      <a href="#day-7">Day 7</a>
+      <a href="#day-8">Day 8</a>
+      <a href="#day-9">Day 9</a>
+      <a href="#day-10">Day 10</a>
+      <a href="#day-11">Day 11</a>
+      <a href="#day-12">Day 12</a>
+      <a href="#day-13">Day 13</a>
+      <a href="#day-14">Day 14</a>
+    </nav>
+    <main class="cockpit-main">
+      <div class="page">
+
+<section id="usage">
+  <div class="accent-bar"></div>
+  <h1>使用说明</h1>
+  <p><strong>用途</strong>：跟踪各 Agent 每日详细操作步骤的完成情况。在浏览器中打开本页即可查看；Agent 通过<strong>编辑本 HTML 文件</strong>更新状态。</p>
+  <p><strong>更新规则</strong>：每完成<strong>一项</strong>本人当日任务后，编辑本文件：找到对应任务的 <code>&lt;input type="checkbox"&gt;</code>，为其添加 <code>checked</code> 属性（即 <code>&lt;input type="checkbox" checked&gt;</code>）。可选在该 <code>&lt;li&gt;</code> 上增加 <code>data-done="HH:mm"</code> 或旁注完成时间。</p>
+  <p><strong>更新范围</strong>：仅修改<strong>本人、当日</strong>所属区块（见各区块 <code>data-agent</code>、<code>data-day</code>）。勿改动其他 Agent 的区块。</p>
+  <p class="meta">任务列表与 <code>digital_bank_poc_workplan.md</code> 对齐；若 workplan 有变更，请同步更新本页。</p>
+</section>
+
+<h2>按 Day 查看</h2>
+
+<details open id="day-1">
+  <summary>Day 1 — 项目启动与架构设计</summary>
+  <section data-day="1" data-agent="0">
+    <h3>Agent 0：架构管控中枢</h3>
+    <p class="meta">决策窗口1 (10:00–12:00)</p>
+    <ul>
+      <li><input type="checkbox" id="d1a0t1" checked><label for="d1a0t1">项目启动会议（虚拟）</label></li>
+      <li><input type="checkbox" id="d1a0t2" checked><label for="d1a0t2">架构设计原则确认</label></li>
+      <li><input type="checkbox" id="d1a0t3" checked><label for="d1a0t3">技术栈最终确认</label></li>
+      <li><input type="checkbox" id="d1a0t4" checked><label for="d1a0t4">生成架构决策记录 ADR-001：技术栈选择</label></li>
+      <li><input type="checkbox" id="d1a0t5" checked><label for="d1a0t5">生成架构决策记录 ADR-002：微服务拆分策略</label></li>
+      <li><input type="checkbox" id="d1a0t6" checked><label for="d1a0t6">发布技术标准规范 v1.0</label></li>
+    </ul>
+    <p class="meta">决策窗口2 (22:00–23:00)</p>
+    <ul>
+      <li><input type="checkbox" id="d1a0t7" checked><label for="d1a0t7">审查各Agent提交的架构设计</label></li>
+      <li><input type="checkbox" id="d1a0t8" checked><label for="d1a0t8">审批数据模型设计</label></li>
+      <li><input type="checkbox" id="d1a0t9" checked><label for="d1a0t9">审批API接口规范</label></li>
+      <li><input type="checkbox" id="d1a0t10" checked><label for="d1a0t10">生成每日进度简报 Day-1</label></li>
+    </ul>
+  </section>
+  <section data-day="1" data-agent="5">
+    <h3>Agent 5：应用基础设施层</h3>
+    <ul>
+      <li><input type="checkbox" id="d1a5t1" checked><label for="d1a5t1">创建Kubernetes集群配置</label></li>
+      <li><input type="checkbox" id="d1a5t2" checked><label for="d1a5t2">配置Nginx反向代理</label></li>
+      <li><input type="checkbox" id="d1a5t3" checked><label for="d1a5t3">部署Consul服务注册中心</label></li>
+      <li><input type="checkbox" id="d1a5t4" checked><label for="d1a5t4">配置Kong API Gateway基础规则</label></li>
+      <li><input type="checkbox" id="d1a5t5" checked><label for="d1a5t5">生成基础设施即代码(IaC)脚本</label></li>
+      <li><input type="checkbox" id="d1a5t6" checked><label for="d1a5t6">创建Dev环境并验证</label></li>
+    </ul>
+  </section>
+  <section data-day="1" data-agent="8">
+    <h3>Agent 8：运维自动化引擎</h3>
+    <ul>
+      <li><input type="checkbox" id="d1a8t1" checked><label for="d1a8t1">配置GitLab CI/CD基础流水线</label></li>
+      <li><input type="checkbox" id="d1a8t2" checked><label for="d1a8t2">创建Docker镜像构建脚本</label></li>
+      <li><input type="checkbox" id="d1a8t3" checked><label for="d1a8t3">配置Prometheus监控基础</label></li>
+      <li><input type="checkbox" id="d1a8t4" checked><label for="d1a8t4">设置Grafana仪表板模板</label></li>
+      <li><input type="checkbox" id="d1a8t5" checked><label for="d1a8t5">配置基础告警规则</label></li>
+      <li><input type="checkbox" id="d1a8t6" checked><label for="d1a8t6">创建环境部署脚本</label></li>
+    </ul>
+  </section>
+  <section data-day="1" data-agent="9">
+    <h3>Agent 9：数据处理分析师</h3>
+    <ul>
+      <li><input type="checkbox" id="d1a9t1" checked><label for="d1a9t1">分析业务需求，设计数据模型</label></li>
+      <li><input type="checkbox" id="d1a9t2" checked><label for="d1a9t2">创建ER图（账户、交易、客户）</label></li>
+      <li><input type="checkbox" id="d1a9t3" checked><label for="d1a9t3">设计PostgreSQL Schema</label></li>
+      <li><input type="checkbox" id="d1a9t4" checked><label for="d1a9t4">设计MongoDB Collection结构</label></li>
+      <li><input type="checkbox" id="d1a9t5" checked><label for="d1a9t5">生成数据字典v1.0</label></li>
+      <li><input type="checkbox" id="d1a9t6" checked><label for="d1a9t6">创建Flyway迁移脚本框架</label></li>
+    </ul>
+  </section>
+  <section data-day="1" data-agent="7">
+    <h3>Agent 7：安全扫描卫士</h3>
+    <ul>
+      <li><input type="checkbox" id="d1a7t1" checked><label for="d1a7t1">配置SonarQube项目</label></li>
+      <li><input type="checkbox" id="d1a7t2" checked><label for="d1a7t2">配置OWASP ZAP扫描规则</label></li>
+      <li><input type="checkbox" id="d1a7t3" checked><label for="d1a7t3">设置HashiCorp Vault密钥管理</label></li>
+      <li><input type="checkbox" id="d1a7t4" checked><label for="d1a7t4">创建安全配置基线文档</label></li>
+      <li><input type="checkbox" id="d1a7t5" checked><label for="d1a7t5">配置依赖漏洞扫描（Snyk/Dependabot）</label></li>
+    </ul>
+  </section>
+</details>
+
+<details id="day-2">
+  <summary>Day 2 — 架构细化与环境就绪</summary>
+  <section data-day="2" data-agent="0">
+    <h3>Agent 0：架构管控中枢</h3>
+    <p class="meta">决策窗口1</p>
+    <ul>
+      <li><input type="checkbox" id="d2a0t1" checked><label for="d2a0t1">审查数据模型设计</label></li>
+      <li><input type="checkbox" id="d2a0t2" checked><label for="d2a0t2">审批API接口规范初稿</label></li>
+      <li><input type="checkbox" id="d2a0t3" checked><label for="d2a0t3">生成架构决策记录 ADR-003：数据存储策略</label></li>
+      <li><input type="checkbox" id="d2a0t4" checked><label for="d2a0t4">生成架构决策记录 ADR-004：服务间通信方式</label></li>
+      <li><input type="checkbox" id="d2a0t5" checked><label for="d2a0t5">发布API设计规范 v1.0</label></li>
+    </ul>
+    <p class="meta">决策窗口2</p>
+    <ul>
+      <li><input type="checkbox" id="d2a0t6" checked><label for="d2a0t6">审查各Agent提交的设计文档</label></li>
+      <li><input type="checkbox" id="d2a0t7" checked><label for="d2a0t7">审批基础设施配置</label></li>
+      <li><input type="checkbox" id="d2a0t8" checked><label for="d2a0t8">生成每日进度简报 Day-2</label></li>
+    </ul>
+  </section>
+  <section data-day="2" data-agent="1">
+    <h3>Agent 1：核心银行服务引擎</h3>
+    <ul>
+      <li><input type="checkbox" id="d2a1t1" checked><label for="d2a1t1">创建Spring Boot项目骨架</label></li>
+      <li><input type="checkbox" id="d2a1t2" checked><label for="d2a1t2">配置PostgreSQL连接</label></li>
+      <li><input type="checkbox" id="d2a1t3" checked><label for="d2a1t3">设计RESTful API规范（OpenAPI 3.0）</label></li>
+      <li><input type="checkbox" id="d2a1t4" checked><label for="d2a1t4">生成API接口文档</label></li>
+      <li><input type="checkbox" id="d2a1t5" checked><label for="d2a1t5">创建基础实体类（Account, Customer, Transaction）</label></li>
+      <li><input type="checkbox" id="d2a1t6" checked><label for="d2a1t6">创建Repository层接口</label></li>
+      <li><input type="checkbox" id="d2a1t7" checked><label for="d2a1t7">编写基础单元测试框架</label></li>
+    </ul>
+  </section>
+  <section data-day="2" data-agent="2">
+    <h3>Agent 2：支付清算处理器</h3>
+    <ul>
+      <li><input type="checkbox" id="d2a2t1" checked><label for="d2a2t1">创建Node.js项目骨架</label></li>
+      <li><input type="checkbox" id="d2a2t2" checked><label for="d2a2t2">配置Express框架</label></li>
+      <li><input type="checkbox" id="d2a2t3" checked><label for="d2a2t3">配置MongoDB连接（Mongoose）</label></li>
+      <li><input type="checkbox" id="d2a2t4" checked><label for="d2a2t4">设计支付API规范（OpenAPI 3.0）</label></li>
+      <li><input type="checkbox" id="d2a2t5" checked><label for="d2a2t5">创建数据模型（Payment, Settlement）</label></li>
+      <li><input type="checkbox" id="d2a2t6" checked><label for="d2a2t6">创建基础路由结构</label></li>
+      <li><input type="checkbox" id="d2a2t7" checked><label for="d2a2t7">配置Mock支付网关接口</label></li>
+    </ul>
+  </section>
+  <section data-day="2" data-agent="3">
+    <h3>Agent 3：风控合规守护者</h3>
+    <ul>
+      <li><input type="checkbox" id="d2a3t1" checked><label for="d2a3t1">创建FastAPI项目骨架</label></li>
+      <li><input type="checkbox" id="d2a3t2" checked><label for="d2a3t2">配置Elasticsearch连接</label></li>
+      <li><input type="checkbox" id="d2a3t3" checked><label for="d2a3t3">设计风控API规范</label></li>
+      <li><input type="checkbox" id="d2a3t4" checked><label for="d2a3t4">创建风控规则引擎框架</label></li>
+      <li><input type="checkbox" id="d2a3t5" checked><label for="d2a3t5">设计规则配置YAML格式</label></li>
+      <li><input type="checkbox" id="d2a3t6" checked><label for="d2a3t6">创建基础风控规则（限额、频率）</label></li>
+      <li><input type="checkbox" id="d2a3t7" checked><label for="d2a3t7">配置黑名单数据结构</label></li>
+    </ul>
+  </section>
+  <section data-day="2" data-agent="4">
+    <h3>Agent 4：前端体验构建器</h3>
+    <ul>
+      <li><input type="checkbox" id="d2a4t1" checked><label for="d2a4t1">创建React + TypeScript项目</label></li>
+      <li><input type="checkbox" id="d2a4t2" checked><label for="d2a4t2">配置Tailwind CSS</label></li>
+      <li><input type="checkbox" id="d2a4t3" checked><label for="d2a4t3">设计组件库结构</label></li>
+      <li><input type="checkbox" id="d2a4t4" checked><label for="d2a4t4">创建设计系统（颜色、字体、间距）</label></li>
+      <li><input type="checkbox" id="d2a4t5" checked><label for="d2a4t5">创建基础组件（Button, Input, Card）</label></li>
+      <li><input type="checkbox" id="d2a4t6" checked><label for="d2a4t6">配置路由（React Router）</label></li>
+      <li><input type="checkbox" id="d2a4t7" checked><label for="d2a4t7">配置API客户端（Axios）</label></li>
+    </ul>
+  </section>
+  <section data-day="2" data-agent="6">
+    <h3>Agent 6：测试执行自动机</h3>
+    <ul>
+      <li><input type="checkbox" id="d2a6t1" checked><label for="d2a6t1">配置Postman测试集合框架</label></li>
+      <li><input type="checkbox" id="d2a6t2" checked><label for="d2a6t2">配置Cypress E2E测试框架</label></li>
+      <li><input type="checkbox" id="d2a6t3" checked><label for="d2a6t3">配置JMeter性能测试框架</label></li>
+      <li><input type="checkbox" id="d2a6t4" checked><label for="d2a6t4">创建测试数据生成脚本</label></li>
+      <li><input type="checkbox" id="d2a6t5" checked><label for="d2a6t5">配置TestRail测试管理</label></li>
+      <li><input type="checkbox" id="d2a6t6" checked><label for="d2a6t6">生成基础测试用例模板</label></li>
+    </ul>
+  </section>
+</details>
+
+<details id="day-3">
+  <summary>Day 3 — 核心服务开发启动</summary>
+  <section data-day="3" data-agent="0">
+    <h3>Agent 0：架构管控中枢</h3>
+    <p class="meta">决策窗口1</p>
+    <ul>
+      <li><input type="checkbox" id="d3a0t1" checked><label for="d3a0t1">审查各服务API设计</label></li>
+      <li><input type="checkbox" id="d3a0t2" checked><label for="d3a0t2">审批服务间接口协议</label></li>
+      <li><input type="checkbox" id="d3a0t3" checked><label for="d3a0t3">生成架构决策记录 ADR-005：服务间通信协议</label></li>
+      <li><input type="checkbox" id="d3a0t4" checked><label for="d3a0t4">协调服务依赖关系</label></li>
+    </ul>
+    <p class="meta">决策窗口2</p>
+    <ul>
+      <li><input type="checkbox" id="d3a0t5" checked><label for="d3a0t5">审查开发进度</label></li>
+      <li><input type="checkbox" id="d3a0t6" checked><label for="d3a0t6">处理技术阻塞问题</label></li>
+      <li><input type="checkbox" id="d3a0t7" checked><label for="d3a0t7">生成每日进度简报 Day-3</label></li>
+    </ul>
+  </section>
+  <section data-day="3" data-agent="1">
+    <h3>Agent 1：核心银行服务引擎</h3>
+    <ul>
+      <li><input type="checkbox" id="d3a1t1" checked><label for="d3a1t1">实现Account实体和Repository</label></li>
+      <li><input type="checkbox" id="d3a1t2" checked><label for="d3a1t2">实现Customer实体和Repository</label></li>
+      <li><input type="checkbox" id="d3a1t3" checked><label for="d3a1t3">实现Transaction实体和Repository</label></li>
+      <li><input type="checkbox" id="d3a1t4" checked><label for="d3a1t4">实现AccountService业务逻辑</label>
+        <ul>
+          <li><input type="checkbox" id="d3a1t4a" checked><label for="d3a1t4a">开户接口</label></li>
+          <li><input type="checkbox" id="d3a1t4b" checked><label for="d3a1t4b">查询账户接口</label></li>
+          <li><input type="checkbox" id="d3a1t4c" checked><label for="d3a1t4c">余额查询接口</label></li>
+        </ul>
+      </li>
+      <li><input type="checkbox" id="d3a1t5" checked><label for="d3a1t5">实现AccountController REST API</label></li>
+      <li><input type="checkbox" id="d3a1t6" checked><label for="d3a1t6">编写单元测试（覆盖率≥70%）</label></li>
+      <li><input type="checkbox" id="d3a1t7" checked><label for="d3a1t7">编写集成测试</label></li>
+    </ul>
+  </section>
+  <section data-day="3" data-agent="2">
+    <h3>Agent 2：支付清算处理器</h3>
+    <ul>
+      <li><input type="checkbox" id="d3a2t1" checked><label for="d3a2t1">实现Payment模型和Schema</label></li>
+      <li><input type="checkbox" id="d3a2t2" checked><label for="d3a2t2">实现Settlement模型和Schema</label></li>
+      <li><input type="checkbox" id="d3a2t3" checked><label for="d3a2t3">实现PaymentService业务逻辑</label>
+        <ul>
+          <li><input type="checkbox" id="d3a2t3a" checked><label for="d3a2t3a">创建支付订单</label></li>
+          <li><input type="checkbox" id="d3a2t3b" checked><label for="d3a2t3b">支付处理</label></li>
+          <li><input type="checkbox" id="d3a2t3c" checked><label for="d3a2t3c">支付状态查询</label></li>
+        </ul>
+      </li>
+      <li><input type="checkbox" id="d3a2t4" checked><label for="d3a2t4">实现PaymentController REST API</label></li>
+      <li><input type="checkbox" id="d3a2t5" checked><label for="d3a2t5">集成Mock支付网关</label></li>
+      <li><input type="checkbox" id="d3a2t6" checked><label for="d3a2t6">编写单元测试</label></li>
+      <li><input type="checkbox" id="d3a2t7" checked><label for="d3a2t7">编写API测试</label></li>
+    </ul>
+  </section>
+  <section data-day="3" data-agent="3">
+    <h3>Agent 3：风控合规守护者</h3>
+    <ul>
+      <li><input type="checkbox" id="d3a3t1" checked><label for="d3a3t1">实现规则引擎核心逻辑</label></li>
+      <li><input type="checkbox" id="d3a3t2" checked><label for="d3a3t2">实现限额检查规则</label></li>
+      <li><input type="checkbox" id="d3a3t3" checked><label for="d3a3t3">实现频率检查规则</label></li>
+      <li><input type="checkbox" id="d3a3t4" checked><label for="d3a3t4">实现黑名单检查规则</label></li>
+      <li><input type="checkbox" id="d3a3t5" checked><label for="d3a3t5">实现RiskService业务逻辑</label></li>
+      <li><input type="checkbox" id="d3a3t6" checked><label for="d3a3t6">实现RiskController REST API</label></li>
+      <li><input type="checkbox" id="d3a3t7" checked><label for="d3a3t7">配置Elasticsearch索引</label></li>
+      <li><input type="checkbox" id="d3a3t8" checked><label for="d3a3t8">编写单元测试</label></li>
+    </ul>
+  </section>
+  <section data-day="3" data-agent="4">
+    <h3>Agent 4：前端体验构建器</h3>
+    <ul>
+      <li><input type="checkbox" id="d3a4t1" checked><label for="d3a4t1">实现登录页面组件</label></li>
+      <li><input type="checkbox" id="d3a4t2" checked><label for="d3a4t2">实现注册页面组件</label></li>
+      <li><input type="checkbox" id="d3a4t3" checked><label for="d3a4t3">实现账户概览页面</label></li>
+      <li><input type="checkbox" id="d3a4t4" checked><label for="d3a4t4">集成认证API</label></li>
+      <li><input type="checkbox" id="d3a4t5" checked><label for="d3a4t5">集成账户查询API</label></li>
+      <li><input type="checkbox" id="d3a4t6" checked><label for="d3a4t6">实现状态管理（Context/Redux）</label></li>
+      <li><input type="checkbox" id="d3a4t7" checked><label for="d3a4t7">编写组件单元测试</label></li>
+    </ul>
+  </section>
+  <section data-day="3" data-agent="5">
+    <h3>Agent 5：应用基础设施层</h3>
+    <ul>
+      <li><input type="checkbox" id="d3a5t1" checked><label for="d3a5t1">配置Kong API Gateway路由规则</label></li>
+      <li><input type="checkbox" id="d3a5t2" checked><label for="d3a5t2">配置服务注册（Consul）</label></li>
+      <li><input type="checkbox" id="d3a5t3" checked><label for="d3a5t3">配置负载均衡规则</label></li>
+      <li><input type="checkbox" id="d3a5t4" checked><label for="d3a5t4">配置限流规则</label></li>
+      <li><input type="checkbox" id="d3a5t5" checked><label for="d3a5t5">部署核心银行服务到K8s</label></li>
+      <li><input type="checkbox" id="d3a5t6" checked><label for="d3a5t6">验证服务发现</label></li>
+    </ul>
+  </section>
+  <section data-day="3" data-agent="8">
+    <h3>Agent 8：运维自动化引擎</h3>
+    <ul>
+      <li><input type="checkbox" id="d3a8t1" checked><label for="d3a8t1">配置核心银行服务CI/CD流水线</label></li>
+      <li><input type="checkbox" id="d3a8t2" checked><label for="d3a8t2">配置支付服务CI/CD流水线</label></li>
+      <li><input type="checkbox" id="d3a8t3" checked><label for="d3a8t3">配置风控服务CI/CD流水线</label></li>
+      <li><input type="checkbox" id="d3a8t4" checked><label for="d3a8t4">配置前端CI/CD流水线</label></li>
+      <li><input type="checkbox" id="d3a8t5" checked><label for="d3a8t5">部署到Dev环境</label></li>
+      <li><input type="checkbox" id="d3a8t6" checked><label for="d3a8t6">验证自动化部署</label></li>
+    </ul>
+  </section>
+  <section data-day="3" data-agent="9">
+    <h3>Agent 9：数据处理分析师</h3>
+    <ul>
+      <li><input type="checkbox" id="d3a9t1" checked><label for="d3a9t1">执行PostgreSQL Schema迁移</label></li>
+      <li><input type="checkbox" id="d3a9t2" checked><label for="d3a9t2">执行MongoDB Collection创建</label></li>
+      <li><input type="checkbox" id="d3a9t3" checked><label for="d3a9t3">生成测试数据（账户10万+）</label></li>
+      <li><input type="checkbox" id="d3a9t4" checked><label for="d3a9t4">生成测试数据（客户5万+）</label></li>
+      <li><input type="checkbox" id="d3a9t5" checked><label for="d3a9t5">验证数据模型完整性</label></li>
+      <li><input type="checkbox" id="d3a9t6" checked><label for="d3a9t6">生成数据质量报告</label></li>
+    </ul>
+  </section>
+</details>
+
+<details id="day-4">
+  <summary>Day 4 — 核心功能深化</summary>
+  <section data-day="4" data-agent="0">
+    <h3>Agent 0：架构管控中枢</h3>
+    <p class="meta">决策窗口1</p>
+    <ul>
+      <li><input type="checkbox" id="d4a0t1" checked><label for="d4a0t1">审查服务实现进度</label></li>
+      <li><input type="checkbox" id="d4a0t2" checked><label for="d4a0t2">审批异常处理策略</label></li>
+      <li><input type="checkbox" id="d4a0t3" checked><label for="d4a0t3">审批日志规范</label></li>
+    </ul>
+    <p class="meta">决策窗口2</p>
+    <ul>
+      <li><input type="checkbox" id="d4a0t4" checked><label for="d4a0t4">审查集成测试结果</label></li>
+      <li><input type="checkbox" id="d4a0t5" checked><label for="d4a0t5">生成每日进度简报 Day-4</label></li>
+    </ul>
+  </section>
+  <section data-day="4" data-agent="1">
+    <h3>Agent 1：核心银行服务引擎</h3>
+    <ul>
+      <li><input type="checkbox" id="d4a1t1" checked><label for="d4a1t1">实现TransactionService业务逻辑</label>
+        <ul>
+          <li><input type="checkbox" id="d4a1t1a" checked><label for="d4a1t1a">行内转账接口</label></li>
+          <li><input type="checkbox" id="d4a1t1b" checked><label for="d4a1t1b">交易查询接口</label></li>
+          <li><input type="checkbox" id="d4a1t1c" checked><label for="d4a1t1c">交易历史查询</label></li>
+        </ul>
+      </li>
+      <li><input type="checkbox" id="d4a1t2" checked><label for="d4a1t2">实现CustomerService业务逻辑</label>
+        <ul>
+          <li><input type="checkbox" id="d4a1t2a" checked><label for="d4a1t2a">客户注册</label></li>
+          <li><input type="checkbox" id="d4a1t2b" checked><label for="d4a1t2b">客户信息查询</label></li>
+          <li><input type="checkbox" id="d4a1t2c" checked><label for="d4a1t2c">客户信息更新</label></li>
+        </ul>
+      </li>
+      <li><input type="checkbox" id="d4a1t3" checked><label for="d4a1t3">实现TransactionController REST API</label></li>
+      <li><input type="checkbox" id="d4a1t4" checked><label for="d4a1t4">实现CustomerController REST API</label></li>
+      <li><input type="checkbox" id="d4a1t5" checked><label for="d4a1t5">集成风控服务调用</label></li>
+      <li><input type="checkbox" id="d4a1t6" checked><label for="d4a1t6">编写单元测试和集成测试</label></li>
+    </ul>
+  </section>
+  <section data-day="4" data-agent="2">
+    <h3>Agent 2：支付清算处理器</h3>
+    <ul>
+      <li><input type="checkbox" id="d4a2t1" checked><label for="d4a2t1">实现清算引擎核心逻辑</label></li>
+      <li><input type="checkbox" id="d4a2t2" checked><label for="d4a2t2">实现对账功能</label></li>
+      <li><input type="checkbox" id="d4a2t3" checked><label for="d4a2t3">实现支付回调处理</label></li>
+      <li><input type="checkbox" id="d4a2t4" checked><label for="d4a2t4">实现异步任务处理（Bull/Agenda）</label></li>
+      <li><input type="checkbox" id="d4a2t5" checked><label for="d4a2t5">集成核心银行服务（账户扣款）</label></li>
+      <li><input type="checkbox" id="d4a2t6" checked><label for="d4a2t6">编写集成测试</label></li>
+    </ul>
+  </section>
+  <section data-day="4" data-agent="3">
+    <h3>Agent 3：风控合规守护者</h3>
+    <ul>
+      <li><input type="checkbox" id="d4a3t1" checked><label for="d4a3t1">扩展风控规则（10-15条）</label></li>
+      <li><input type="checkbox" id="d4a3t2" checked><label for="d4a3t2">实现风险评分算法</label></li>
+      <li><input type="checkbox" id="d4a3t3" checked><label for="d4a3t3">实现规则链执行引擎</label></li>
+      <li><input type="checkbox" id="d4a3t4" checked><label for="d4a3t4">实现风控日志记录（Elasticsearch）</label></li>
+      <li><input type="checkbox" id="d4a3t5" checked><label for="d4a3t5">实现风控报告生成</label></li>
+      <li><input type="checkbox" id="d4a3t6" checked><label for="d4a3t6">优化规则执行性能</label></li>
+    </ul>
+  </section>
+  <section data-day="4" data-agent="4">
+    <h3>Agent 4：前端体验构建器</h3>
+    <ul>
+      <li><input type="checkbox" id="d4a4t1" checked><label for="d4a4t1">实现转账页面</label></li>
+      <li><input type="checkbox" id="d4a4t2" checked><label for="d4a4t2">实现交易历史页面</label></li>
+      <li><input type="checkbox" id="d4a4t3" checked><label for="d4a4t3">实现管理后台基础框架</label></li>
+      <li><input type="checkbox" id="d4a4t4" checked><label for="d4a4t4">集成转账API</label></li>
+      <li><input type="checkbox" id="d4a4t5" checked><label for="d4a4t5">集成交易查询API</label></li>
+      <li><input type="checkbox" id="d4a4t6" checked><label for="d4a4t6">实现表单验证</label></li>
+      <li><input type="checkbox" id="d4a4t7" checked><label for="d4a4t7">实现错误处理</label></li>
+    </ul>
+  </section>
+  <section data-day="4" data-agent="6">
+    <h3>Agent 6：测试执行自动机</h3>
+    <ul>
+      <li><input type="checkbox" id="d4a6t1" checked><label for="d4a6t1">生成API测试用例（基于OpenAPI）</label></li>
+      <li><input type="checkbox" id="d4a6t2" checked><label for="d4a6t2">执行API回归测试</label></li>
+      <li><input type="checkbox" id="d4a6t3" checked><label for="d4a6t3">生成E2E测试脚本（登录、转账流程）</label></li>
+      <li><input type="checkbox" id="d4a6t4" checked><label for="d4a6t4">执行基础E2E测试</label></li>
+      <li><input type="checkbox" id="d4a6t5" checked><label for="d4a6t5">生成测试报告</label></li>
+    </ul>
+  </section>
+  <section data-day="4" data-agent="7">
+    <h3>Agent 7：安全扫描卫士</h3>
+    <ul>
+      <li><input type="checkbox" id="d4a7t1" checked><label for="d4a7t1">执行SAST代码扫描（核心银行服务）</label></li>
+      <li><input type="checkbox" id="d4a7t2" checked><label for="d4a7t2">执行SAST代码扫描（支付服务）</label></li>
+      <li><input type="checkbox" id="d4a7t3" checked><label for="d4a7t3">执行依赖漏洞扫描</label></li>
+      <li><input type="checkbox" id="d4a7t4" checked><label for="d4a7t4">分析扫描结果</label></li>
+      <li><input type="checkbox" id="d4a7t5" checked><label for="d4a7t5">生成安全报告 Day-4</label></li>
+      <li><input type="checkbox" id="d4a7t6" checked><label for="d4a7t6">修复高危漏洞（如有）</label></li>
+    </ul>
+  </section>
+</details>
+
+<details id="day-5">
+  <summary>Day 5 — 服务集成与优化</summary>
+  <section data-day="5" data-agent="0">
+    <h3>Agent 0：架构管控中枢</h3>
+    <p class="meta">决策窗口1</p>
+    <ul>
+      <li><input type="checkbox" id="d5a0t1" checked><label for="d5a0t1">审查服务集成方案</label></li>
+      <li><input type="checkbox" id="d5a0t2" checked><label for="d5a0t2">审批消息队列使用（如需要）</label></li>
+      <li><input type="checkbox" id="d5a0t3" checked><label for="d5a0t3">生成架构决策记录 ADR-006：异步处理策略</label></li>
+    </ul>
+    <p class="meta">决策窗口2</p>
+    <ul>
+      <li><input type="checkbox" id="d5a0t4" checked><label for="d5a0t4">审查集成测试结果</label></li>
+      <li><input type="checkbox" id="d5a0t5" checked><label for="d5a0t5">生成每日进度简报 Day-5</label></li>
+    </ul>
+  </section>
+  <section data-day="5" data-agent="1">
+    <h3>Agent 1：核心银行服务引擎</h3>
+    <ul>
+      <li><input type="checkbox" id="d5a1t1" checked><label for="d5a1t1">集成支付服务（调用支付API）</label></li>
+      <li><input type="checkbox" id="d5a1t2" checked><label for="d5a1t2">集成风控服务（调用风控API）</label></li>
+      <li><input type="checkbox" id="d5a1t3" checked><label for="d5a1t3">实现事务管理（分布式事务处理）</label></li>
+      <li><input type="checkbox" id="d5a1t4" checked><label for="d5a1t4">实现消息通知（可选）</label></li>
+      <li><input type="checkbox" id="d5a1t5" checked><label for="d5a1t5">优化数据库查询性能</label></li>
+      <li><input type="checkbox" id="d5a1t6" checked><label for="d5a1t6">完善异常处理</label></li>
+      <li><input type="checkbox" id="d5a1t7" checked><label for="d5a1t7">完善日志记录</label></li>
+    </ul>
+  </section>
+  <section data-day="5" data-agent="2">
+    <h3>Agent 2：支付清算处理器</h3>
+    <ul>
+      <li><input type="checkbox" id="d5a2t1" checked><label for="d5a2t1">完善支付流程（与核心银行服务集成）</label></li>
+      <li><input type="checkbox" id="d5a2t2" checked><label for="d5a2t2">实现支付重试机制</label></li>
+      <li><input type="checkbox" id="d5a2t3" checked><label for="d5a2t3">实现支付超时处理</label></li>
+      <li><input type="checkbox" id="d5a2t4" checked><label for="d5a2t4">优化MongoDB查询性能</label></li>
+      <li><input type="checkbox" id="d5a2t5" checked><label for="d5a2t5">实现支付状态同步</label></li>
+      <li><input type="checkbox" id="d5a2t6" checked><label for="d5a2t6">完善错误处理</label></li>
+    </ul>
+  </section>
+  <section data-day="5" data-agent="3">
+    <h3>Agent 3：风控合规守护者</h3>
+    <ul>
+      <li><input type="checkbox" id="d5a3t1" checked><label for="d5a3t1">优化规则引擎性能</label></li>
+      <li><input type="checkbox" id="d5a3t2" checked><label for="d5a3t2">实现规则缓存机制</label></li>
+      <li><input type="checkbox" id="d5a3t3" checked><label for="d5a3t3">优化Elasticsearch查询</label></li>
+      <li><input type="checkbox" id="d5a3t4" checked><label for="d5a3t4">实现实时风控监控</label></li>
+      <li><input type="checkbox" id="d5a3t5" checked><label for="d5a3t5">完善风控报告功能</label></li>
+    </ul>
+  </section>
+  <section data-day="5" data-agent="4">
+    <h3>Agent 4：前端体验构建器</h3>
+    <ul>
+      <li><input type="checkbox" id="d5a4t1" checked><label for="d5a4t1">完善UI/UX设计</label></li>
+      <li><input type="checkbox" id="d5a4t2" checked><label for="d5a4t2">实现响应式布局</label></li>
+      <li><input type="checkbox" id="d5a4t3" checked><label for="d5a4t3">实现加载状态和骨架屏</label></li>
+      <li><input type="checkbox" id="d5a4t4" checked><label for="d5a4t4">实现错误提示和成功提示</label></li>
+      <li><input type="checkbox" id="d5a4t5" checked><label for="d5a4t5">优化页面性能</label></li>
+      <li><input type="checkbox" id="d5a4t6" checked><label for="d5a4t6">实现国际化（可选）</label></li>
+    </ul>
+  </section>
+  <section data-day="5" data-agent="5">
+    <h3>Agent 5：应用基础设施层</h3>
+    <ul>
+      <li><input type="checkbox" id="d5a5t1" checked><label for="d5a5t1">配置所有服务路由规则</label></li>
+      <li><input type="checkbox" id="d5a5t2" checked><label for="d5a5t2">配置API限流规则</label></li>
+      <li><input type="checkbox" id="d5a5t3" checked><label for="d5a5t3">配置API认证（JWT）</label></li>
+      <li><input type="checkbox" id="d5a5t4" checked><label for="d5a5t4">配置跨域（CORS）</label></li>
+      <li><input type="checkbox" id="d5a5t5" checked><label for="d5a5t5">配置SSL/TLS</label></li>
+      <li><input type="checkbox" id="d5a5t6" checked><label for="d5a5t6">验证网关功能</label></li>
+    </ul>
+  </section>
+  <section data-day="5" data-agent="8">
+    <h3>Agent 8：运维自动化引擎</h3>
+    <ul>
+      <li><input type="checkbox" id="d5a8t1" checked><label for="d5a8t1">部署所有服务到QA环境</label></li>
+      <li><input type="checkbox" id="d5a8t2" checked><label for="d5a8t2">配置QA环境监控</label></li>
+      <li><input type="checkbox" id="d5a8t3" checked><label for="d5a8t3">配置告警规则</label></li>
+      <li><input type="checkbox" id="d5a8t4" checked><label for="d5a8t4">验证自动化部署流程</label></li>
+      <li><input type="checkbox" id="d5a8t5" checked><label for="d5a8t5">创建回滚脚本</label></li>
+    </ul>
+  </section>
+  <section data-day="5" data-agent="6">
+    <h3>Agent 6：测试执行自动机</h3>
+    <ul>
+      <li><input type="checkbox" id="d5a6t1" checked><label for="d5a6t1">执行完整API回归测试</label></li>
+      <li><input type="checkbox" id="d5a6t2" checked><label for="d5a6t2">执行集成测试</label></li>
+      <li><input type="checkbox" id="d5a6t3" checked><label for="d5a6t3">执行E2E测试（完整用户流程）</label></li>
+      <li><input type="checkbox" id="d5a6t4" checked><label for="d5a6t4">生成测试覆盖率报告</label></li>
+      <li><input type="checkbox" id="d5a6t5" checked><label for="d5a6t5">分析测试结果</label></li>
+    </ul>
+  </section>
+</details>
+
+<details id="day-6">
+  <summary>Day 6 — 功能完善</summary>
+  <section data-day="6" data-agent="0">
+    <h3>Agent 0：架构管控中枢</h3>
+    <p class="meta">决策窗口1</p>
+    <ul>
+      <li><input type="checkbox" id="d6a0t1" checked><label for="d6a0t1">审查功能完整性</label></li>
+      <li><input type="checkbox" id="d6a0t2" checked><label for="d6a0t2">审批性能优化方案</label></li>
+    </ul>
+    <p class="meta">决策窗口2</p>
+    <ul>
+      <li><input type="checkbox" id="d6a0t3" checked><label for="d6a0t3">生成每日进度简报 Day-6</label></li>
+    </ul>
+  </section>
+  <section data-day="6" data-agent="1"><h3>Agent 1：核心银行服务引擎</h3><ul><li><input type="checkbox" id="d6a1t1" checked><label for="d6a1t1">完善核心银行服务功能</label></li></ul></section>
+  <section data-day="6" data-agent="2"><h3>Agent 2：支付清算处理器</h3><ul><li><input type="checkbox" id="d6a2t1" checked><label for="d6a2t1">完善支付清算功能</label></li></ul></section>
+  <section data-day="6" data-agent="3"><h3>Agent 3：风控合规守护者</h3><ul><li><input type="checkbox" id="d6a3t1" checked><label for="d6a3t1">完善风控合规功能</label></li></ul></section>
+  <section data-day="6" data-agent="4"><h3>Agent 4：前端体验构建器</h3><ul><li><input type="checkbox" id="d6a4t1" checked><label for="d6a4t1">完善前端功能</label></li></ul></section>
+  <section data-day="6" data-agent="5"><h3>Agent 5：应用基础设施层</h3><ul><li><input type="checkbox" id="d6a5t1" checked><label for="d6a5t1">完善基础设施配置</label></li></ul></section>
+  <section data-day="6" data-agent="6"><h3>Agent 6：测试执行自动机</h3><ul><li><input type="checkbox" id="d6a6t1" checked><label for="d6a6t1">持续测试</label></li></ul></section>
+  <section data-day="6" data-agent="7"><h3>Agent 7：安全扫描卫士</h3><ul><li><input type="checkbox" id="d6a7t1" checked><label for="d6a7t1">持续安全扫描</label></li></ul></section>
+  <section data-day="6" data-agent="8"><h3>Agent 8：运维自动化引擎</h3><ul><li><input type="checkbox" id="d6a8t1" checked><label for="d6a8t1">持续运维优化</label></li></ul></section>
+  <section data-day="6" data-agent="9"><h3>Agent 9：数据处理分析师</h3><ul><li><input type="checkbox" id="d6a9t1" checked><label for="d6a9t1">数据质量检查</label></li></ul></section>
+</details>
+
+<details id="day-7">
+  <summary>Day 7 — 核心服务完成</summary>
+  <section data-day="7" data-agent="0">
+    <h3>Agent 0：架构管控中枢</h3>
+    <p class="meta">决策窗口1</p>
+    <ul>
+      <li><input type="checkbox" id="d7a0t1" checked><label for="d7a0t1">核心服务阶段验收</label></li>
+      <li><input type="checkbox" id="d7a0t2" checked><label for="d7a0t2">生成架构决策记录 ADR-007：性能优化策略</label></li>
+      <li><input type="checkbox" id="d7a0t3" checked><label for="d7a0t3">发布技术标准规范 v2.0</label></li>
+    </ul>
+    <p class="meta">决策窗口2</p>
+    <ul>
+      <li><input type="checkbox" id="d7a0t4" checked><label for="d7a0t4">审查核心服务完成情况</label></li>
+      <li><input type="checkbox" id="d7a0t5" checked><label for="d7a0t5">生成阶段1-2进度报告</label></li>
+    </ul>
+  </section>
+  <section data-day="7" data-agent="0" data-role="milestone">
+    <h3>里程碑检查点</h3>
+    <ul>
+      <li><input type="checkbox" id="d7m1" checked><label for="d7m1">核心银行服务：15-20个API完成</label></li>
+      <li><input type="checkbox" id="d7m2" checked><label for="d7m2">支付清算服务：10-15个API完成</label></li>
+      <li><input type="checkbox" id="d7m3" checked><label for="d7m3">风控合规服务：8-10个API完成</label></li>
+      <li><input type="checkbox" id="d7m4" checked><label for="d7m4">前端：5-8个页面完成</label></li>
+      <li><input type="checkbox" id="d7m5" checked><label for="d7m5">基础设施：所有服务可访问</label></li>
+      <li><input type="checkbox" id="d7m6" checked><label for="d7m6">测试覆盖率：≥60%</label></li>
+    </ul>
+  </section>
+</details>
+
+<details id="day-8" open>
+  <summary>Day 8 — 阶段3扩展功能</summary>
+  <section data-day="8" data-agent="0">
+    <h3>Agent 0：架构管控中枢</h3>
+    <p class="meta">决策窗口1</p>
+    <ul>
+      <li><input type="checkbox" id="d8a0t1" checked><label for="d8a0t1">审查扩展功能需求</label></li>
+      <li><input type="checkbox" id="d8a0t2" checked><label for="d8a0t2">发布 ADR-008 批量与预约转账策略</label></li>
+    </ul>
+    <p class="meta">决策窗口2</p>
+    <ul>
+      <li><input type="checkbox" id="d8a0t3" checked><label for="d8a0t3">生成每日进度简报 Day-8</label></li>
+    </ul>
+  </section>
+  <section data-day="8" data-agent="1">
+    <h3>Agent 1：核心银行服务引擎</h3>
+    <ul>
+      <li><input type="checkbox" id="d8a1t1" checked><label for="d8a1t1">实现批量转账 API (POST /batch-transfer)</label></li>
+      <li><input type="checkbox" id="d8a1t2" checked><label for="d8a1t2">实现预约转账创建 API (POST /scheduled)</label></li>
+      <li><input type="checkbox" id="d8a1t3" checked><label for="d8a1t3">实现预约转账查询 API (GET /scheduled)</label></li>
+      <li><input type="checkbox" id="d8a1t4" checked><label for="d8a1t4">实现预约转账取消 API (DELETE /scheduled/{id})</label></li>
+      <li><input type="checkbox" id="d8a1t5" checked><label for="d8a1t5">实现预约调度任务 (@Scheduled)</label></li>
+      <li><input type="checkbox" id="d8a1t6" checked><label for="d8a1t6">创建数据库迁移 V6</label></li>
+    </ul>
+  </section>
+  <section data-day="8" data-agent="2">
+    <h3>Agent 2：支付清算处理器</h3>
+    <ul>
+      <li><input type="checkbox" id="d8a2t1" checked><label for="d8a2t1">实现账单支付 API (POST /payments/bill)</label></li>
+      <li><input type="checkbox" id="d8a2t2" checked><label for="d8a2t2">实现账单支付查询 API</label></li>
+      <li><input type="checkbox" id="d8a2t3" checked><label for="d8a2t3">实现 Mock 账单系统</label></li>
+      <li><input type="checkbox" id="d8a2t4" checked><label for="d8a2t4">集成核心银行扣款</label></li>
+    </ul>
+  </section>
+  <section data-day="8" data-agent="4">
+    <h3>Agent 4：前端体验构建器</h3>
+    <ul>
+      <li><input type="checkbox" id="d8a4t1" checked><label for="d8a4t1">批量转账页面</label></li>
+      <li><input type="checkbox" id="d8a4t2" checked><label for="d8a4t2">预约转账页面</label></li>
+      <li><input type="checkbox" id="d8a4t3" checked><label for="d8a4t3">账单支付页面</label></li>
+    </ul>
+  </section>
+  <section data-day="8" data-agent="6">
+    <h3>Agent 6：测试执行自动机</h3>
+    <ul>
+      <li><input type="checkbox" id="d8a6t1" checked><label for="d8a6t1">批量转账 E2E 测试</label></li>
+      <li><input type="checkbox" id="d8a6t2" checked><label for="d8a6t2">预约转账 E2E 测试</label></li>
+      <li><input type="checkbox" id="d8a6t3" checked><label for="d8a6t3">账单支付 E2E 测试</label></li>
+    </ul>
+  </section>
+</details>
+
+<details id="day-9" open>
+  <summary>Day 9 — 集成验证与规则扩展</summary>
+  <section data-day="9" data-agent="0">
+    <h3>Agent 0：架构管控中枢</h3>
+    <p class="meta">决策窗口1</p>
+    <ul>
+      <li><input type="checkbox" id="d9a0t1" checked><label for="d9a0t1">更新 rules.yaml (v1.1.0)</label></li>
+      <li><input type="checkbox" id="d9a0t2" checked><label for="d9a0t2">审查规则扩展方案</label></li>
+    </ul>
+    <p class="meta">决策窗口2</p>
+    <ul>
+      <li><input type="checkbox" id="d9a0t3" checked><label for="d9a0t3">生成每日进度简报 Day-9</label></li>
+    </ul>
+  </section>
+  <section data-day="9" data-agent="3">
+    <h3>Agent 3：风控合规守护者</h3>
+    <ul>
+      <li><input type="checkbox" id="d9a3t1" checked><label for="d9a3t1">创建 batch_limit_rule.py</label></li>
+      <li><input type="checkbox" id="d9a3t2" checked><label for="d9a3t2">创建 scheduled_limit_rule.py</label></li>
+      <li><input type="checkbox" id="d9a3t3" checked><label for="d9a3t3">修改 rule_engine.py 添加规则分发</label></li>
+      <li><input type="checkbox" id="d9a3t4" checked><label for="d9a3t4">创建单元测试（16个用例）</label></li>
+    </ul>
+  </section>
+  <section data-day="9" data-agent="6">
+    <h3>Agent 6：测试执行自动机</h3>
+    <ul>
+      <li><input type="checkbox" id="d9a6t1" checked><label for="d9a6t1">生成性能测试报告</label></li>
+    </ul>
+  </section>
+  <section data-day="9" data-agent="7">
+    <h3>Agent 7：安全扫描卫士</h3>
+    <ul>
+      <li><input type="checkbox" id="d9a7t1" checked><label for="d9a7t1">生成安全复核报告</label></li>
+    </ul>
+  </section>
+</details>
+
+<details id="day-10">
+  <summary>Day 10 — 性能优化</summary>
+  <section data-day="10" data-agent="0">
+    <h3>Agent 0：架构管控中枢</h3>
+    <p class="meta">决策窗口1</p>
+    <ul>
+      <li><input type="checkbox" id="d10a0t1" checked><label for="d10a0t1">审查性能测试结果</label></li>
+      <li><input type="checkbox" id="d10a0t2" checked><label for="d10a0t2">审批性能优化方案</label></li>
+    </ul>
+    <p class="meta">决策窗口2</p>
+    <ul>
+      <li><input type="checkbox" id="d10a0t3" checked><label for="d10a0t3">生成每日进度简报 Day-10</label></li>
+    </ul>
+  </section>
+  <section data-day="10" data-agent="1-4">
+    <h3>Agent 1-4：性能优化</h3>
+    <ul>
+      <li><input type="checkbox" id="d10a14t1" checked><label for="d10a14t1">数据库查询优化</label></li>
+      <li><input type="checkbox" id="d10a14t2" checked><label for="d10a14t2">缓存策略实施（Redis）</label></li>
+      <li><input type="checkbox" id="d10a14t3" checked><label for="d10a14t3">API响应时间优化</label></li>
+      <li><input type="checkbox" id="d10a14t4" checked><label for="d10a14t4">并发处理优化</label></li>
+    </ul>
+  </section>
+  <section data-day="10" data-agent="6">
+    <h3>Agent 6：测试执行自动机</h3>
+    <ul>
+      <li><input type="checkbox" id="d10a6t1" checked><label for="d10a6t1">执行性能压力测试</label></li>
+      <li><input type="checkbox" id="d10a6t2" checked><label for="d10a6t2">验证100 TPS并发能力</label></li>
+      <li><input type="checkbox" id="d10a6t3" checked><label for="d10a6t3">验证P95响应时间&lt;2s</label></li>
+      <li><input type="checkbox" id="d10a6t4" checked><label for="d10a6t4">生成性能测试报告</label></li>
+    </ul>
+  </section>
+  <section data-day="10" data-agent="8">
+    <h3>Agent 8：运维自动化引擎</h3>
+    <ul>
+      <li><input type="checkbox" id="d10a8t1" checked><label for="d10a8t1">配置弹性伸缩（HPA）</label></li>
+      <li><input type="checkbox" id="d10a8t2" checked><label for="d10a8t2">配置资源限制</label></li>
+      <li><input type="checkbox" id="d10a8t3" checked><label for="d10a8t3">优化容器资源分配</label></li>
+      <li><input type="checkbox" id="d10a8t4" checked><label for="d10a8t4">配置性能监控</label></li>
+    </ul>
+  </section>
+</details>
+
+<details id="day-11">
+  <summary>Day 11 — 全面测试</summary>
+  <section data-day="11" data-agent="0">
+    <h3>Agent 0：架构管控中枢</h3>
+    <p class="meta">决策窗口1</p>
+    <ul>
+      <li><input type="checkbox" id="d11a0t1" checked><label for="d11a0t1">审查测试覆盖率</label></li>
+      <li><input type="checkbox" id="d11a0t2" checked><label for="d11a0t2">审批测试报告</label></li>
+    </ul>
+    <p class="meta">决策窗口2</p>
+    <ul>
+      <li><input type="checkbox" id="d11a0t3" checked><label for="d11a0t3">生成每日进度简报 Day-11</label></li>
+    </ul>
+  </section>
+  <section data-day="11" data-agent="1">
+    <h3>Agent 1：核心银行服务引擎（安全加固）</h3>
+    <ul>
+      <li><input type="checkbox" id="d11a1t1" checked><label for="d11a1t1">实现账户归属校验</label></li>
+      <li><input type="checkbox" id="d11a1t2" checked><label for="d11a1t2">实现日志脱敏工具</label></li>
+      <li><input type="checkbox" id="d11a1t3" checked><label for="d11a1t3">配置 Logback 脱敏布局</label></li>
+      <li><input type="checkbox" id="d11a1t4" checked><label for="d11a1t4">创建单元测试（22个用例）</label></li>
+    </ul>
+  </section>
+  <section data-day="11" data-agent="6">
+    <h3>Agent 6：测试执行自动机</h3>
+    <ul>
+      <li><input type="checkbox" id="d11a6t1" checked><label for="d11a6t1">执行完整测试套件</label>
+        <ul>
+          <li><input type="checkbox" id="d11a6t1a" checked><label for="d11a6t1a">API测试：100+用例</label></li>
+          <li><input type="checkbox" id="d11a6t1b" checked><label for="d11a6t1b">E2E测试：10+场景</label></li>
+          <li><input type="checkbox" id="d11a6t1c" checked><label for="d11a6t1c">性能测试：5+场景</label></li>
+          <li><input type="checkbox" id="d11a6t1d" checked><label for="d11a6t1d">安全测试：完整扫描</label></li>
+        </ul>
+      </li>
+      <li><input type="checkbox" id="d11a6t2" checked><label for="d11a6t2">生成综合测试报告</label></li>
+      <li><input type="checkbox" id="d11a6t3" checked><label for="d11a6t3">验证测试覆盖率≥70%（实际89%）</label></li>
+    </ul>
+  </section>
+  <section data-day="11" data-agent="7">
+    <h3>Agent 7：安全扫描卫士</h3>
+    <ul>
+      <li><input type="checkbox" id="d11a7t1" checked><label for="d11a7t1">执行完整安全扫描</label></li>
+      <li><input type="checkbox" id="d11a7t2" checked><label for="d11a7t2">执行渗透测试</label></li>
+      <li><input type="checkbox" id="d11a7t3" checked><label for="d11a7t3">验证零高危漏洞</label></li>
+      <li><input type="checkbox" id="d11a7t4" checked><label for="d11a7t4">生成最终安全报告</label></li>
+    </ul>
+  </section>
+  <section data-day="11" data-agent="9">
+    <h3>Agent 9：数据处理分析师</h3>
+    <ul>
+      <li><input type="checkbox" id="d11a9t1" checked><label for="d11a9t1">生成完整测试数据（100万+交易）</label></li>
+      <li><input type="checkbox" id="d11a9t2" checked><label for="d11a9t2">执行数据质量检查</label></li>
+      <li><input type="checkbox" id="d11a9t3" checked><label for="d11a9t3">生成数据质量报告（≥95分）</label></li>
+      <li><input type="checkbox" id="d11a9t4" checked><label for="d11a9t4">生成性能分析报告</label></li>
+    </ul>
+  </section>
+</details>
+
+<details id="day-12">
+  <summary>Day 12 — 文档完善</summary>
+  <section data-day="12" data-agent="0">
+    <h3>Agent 0：架构管控中枢</h3>
+    <p class="meta">决策窗口1</p>
+    <ul>
+      <li><input type="checkbox" id="d12a0t1" checked><label for="d12a0t1">审查文档完整性</label></li>
+      <li><input type="checkbox" id="d12a0t2" checked><label for="d12a0t2">审批交付文档清单</label></li>
+    </ul>
+    <p class="meta">决策窗口2</p>
+    <ul>
+      <li><input type="checkbox" id="d12a0t3" checked><label for="d12a0t3">生成每日进度简报 Day-12</label></li>
+    </ul>
+  </section>
+  <section data-day="12" data-agent="all">
+    <h3>所有Agent：文档编写</h3>
+    <ul>
+      <li><input type="checkbox" id="d12allt1" checked><label for="d12allt1">API文档完善（Swagger/OpenAPI）</label></li>
+      <li><input type="checkbox" id="d12allt2" checked><label for="d12allt2">架构设计文档</label></li>
+      <li><input type="checkbox" id="d12allt3" checked><label for="d12allt3">部署文档</label></li>
+      <li><input type="checkbox" id="d12allt4" checked><label for="d12allt4">运维手册</label></li>
+      <li><input type="checkbox" id="d12allt5" checked><label for="d12allt5">用户手册</label></li>
+      <li><input type="checkbox" id="d12allt6" checked><label for="d12allt6">开发指南</label></li>
+    </ul>
+  </section>
+  <section data-day="12" data-agent="4">
+    <h3>Agent 4：前端体验构建器（缺陷修复）</h3>
+    <ul>
+      <li><input type="checkbox" id="d12a4t1" checked><label for="d12a4t1">修复金额格式化P3缺陷</label></li>
+      <li><input type="checkbox" id="d12a4t2" checked><label for="d12a4t2">创建格式化工具测试</label></li>
+    </ul>
+  </section>
+  <section data-day="12" data-agent="8">
+    <h3>Agent 8：运维自动化引擎</h3>
+    <ul>
+      <li><input type="checkbox" id="d12a8t1" checked><label for="d12a8t1">部署到UAT环境</label></li>
+      <li><input type="checkbox" id="d12a8t2" checked><label for="d12a8t2">部署到Demo环境</label></li>
+      <li><input type="checkbox" id="d12a8t3" checked><label for="d12a8t3">配置演示环境</label></li>
+      <li><input type="checkbox" id="d12a8t4" checked><label for="d12a8t4">验证所有环境可用</label></li>
+    </ul>
+  </section>
+</details>
+
+<details id="day-13">
+  <summary>Day 13 — 最终验收准备</summary>
+  <section data-day="13" data-agent="0">
+    <h3>Agent 0：架构管控中枢</h3>
+    <p class="meta">决策窗口1</p>
+    <ul>
+      <li><input type="checkbox" id="d13a0t1" checked><label for="d13a0t1">最终验收检查清单</label></li>
+      <li><input type="checkbox" id="d13a0t2" checked><label for="d13a0t2">生成架构决策记录汇总</label></li>
+    </ul>
+    <p class="meta">决策窗口2</p>
+    <ul>
+      <li><input type="checkbox" id="d13a0t3" checked><label for="d13a0t3">生成最终进度报告</label></li>
+    </ul>
+  </section>
+  <section data-day="13" data-agent="all">
+    <h3>所有Agent：最终检查</h3>
+    <ul>
+      <li><input type="checkbox" id="d13allt1" checked><label for="d13allt1">功能完整性检查</label></li>
+      <li><input type="checkbox" id="d13allt2" checked><label for="d13allt2">性能指标验证</label></li>
+      <li><input type="checkbox" id="d13allt3" checked><label for="d13allt3">安全扫描最终验证</label></li>
+      <li><input type="checkbox" id="d13allt4" checked><label for="d13allt4">文档完整性检查</label></li>
+      <li><input type="checkbox" id="d13allt5" checked><label for="d13allt5">演示环境准备</label></li>
+    </ul>
+  </section>
+  <section data-day="13" data-agent="0" data-role="daily-tasks">
+    <h3>Agent 0：全天任务</h3>
+    <ul>
+      <li><input type="checkbox" id="d13a0t4" checked><label for="d13a0t4">生成最终验收报告</label></li>
+      <li><input type="checkbox" id="d13a0t5" checked><label for="d13a0t5">生成项目总结报告</label></li>
+      <li><input type="checkbox" id="d13a0t6" checked><label for="d13a0t6">准备演示方案</label></li>
+    </ul>
+  </section>
+</details>
+
+<details id="day-14">
+  <summary>Day 14 — 项目交付 ✅</summary>
+  <section data-day="14" data-agent="0">
+    <h3>Agent 0：架构管控中枢</h3>
+    <p class="meta">决策窗口1</p>
+    <ul>
+      <li><input type="checkbox" id="d14a0t1" checked><label for="d14a0t1">最终验收</label></li>
+      <li><input type="checkbox" id="d14a0t2" checked><label for="d14a0t2">交付物确认</label></li>
+      <li><input type="checkbox" id="d14a0t3" checked><label for="d14a0t3">项目总结</label></li>
+    </ul>
+    <p class="meta">决策窗口2</p>
+    <ul>
+      <li><input type="checkbox" id="d14a0t4" checked><label for="d14a0t4">生成最终交付报告</label></li>
+      <li><input type="checkbox" id="d14a0t5" checked><label for="d14a0t5">生成项目复盘文档</label></li>
+    </ul>
+  </section>
+  <section data-day="14" data-agent="all">
+    <h3>最终交付清单</h3>
+    <p class="meta">代码交付</p>
+    <ul>
+      <li><input type="checkbox" id="d14ft1" checked><label for="d14ft1">核心银行服务（Java + Spring Boot）~8,000行</label></li>
+      <li><input type="checkbox" id="d14ft2" checked><label for="d14ft2">支付清算服务（Node.js + Express）~3,500行</label></li>
+      <li><input type="checkbox" id="d14ft3" checked><label for="d14ft3">风控合规服务（Python + FastAPI）~2,500行</label></li>
+      <li><input type="checkbox" id="d14ft4" checked><label for="d14ft4">前端应用（React + TypeScript）~6,000行</label></li>
+      <li><input type="checkbox" id="d14ft5" checked><label for="d14ft5">基础设施代码（Terraform + K8s）~1,500行</label></li>
+    </ul>
+    <p class="meta">文档交付</p>
+    <ul>
+      <li><input type="checkbox" id="d14ft6" checked><label for="d14ft6">架构设计文档（8 ADR + 3 规范）</label></li>
+      <li><input type="checkbox" id="d14ft7" checked><label for="d14ft7">API文档（api-reference-v1.0）</label></li>
+      <li><input type="checkbox" id="d14ft8" checked><label for="d14ft8">部署文档（production-checklist）</label></li>
+      <li><input type="checkbox" id="d14ft9" checked><label for="d14ft9">运维手册</label></li>
+      <li><input type="checkbox" id="d14ft10" checked><label for="d14ft10">用户手册</label></li>
+      <li><input type="checkbox" id="d14ft11" checked><label for="d14ft11">测试报告（4份）</label></li>
+      <li><input type="checkbox" id="d14ft12" checked><label for="d14ft12">安全报告</label></li>
+      <li><input type="checkbox" id="d14ft13" checked><label for="d14ft13">数据模型文档</label></li>
+    </ul>
+    <p class="meta">环境交付</p>
+    <ul>
+      <li><input type="checkbox" id="d14ft14" checked><label for="d14ft14">Dev环境（开发测试）</label></li>
+      <li><input type="checkbox" id="d14ft15" checked><label for="d14ft15">QA环境（质量保证）</label></li>
+      <li><input type="checkbox" id="d14ft16" checked><label for="d14ft16">UAT环境（用户验收）</label></li>
+      <li><input type="checkbox" id="d14ft17" checked><label for="d14ft17">Demo环境（演示）</label></li>
+    </ul>
+    <p class="meta">演示准备</p>
+    <ul>
+      <li><input type="checkbox" id="d14ft18" checked><label for="d14ft18">演示脚本（20分钟）</label></li>
+      <li><input type="checkbox" id="d14ft19" checked><label for="d14ft19">演示数据</label></li>
+      <li><input type="checkbox" id="d14ft20" checked><label for="d14ft20">演示环境</label></li>
+      <li><input type="checkbox" id="d14ft21" checked><label for="d14ft21">项目总结报告</label></li>
+    </ul>
+  </section>
+</details>
+
+<section id="changelog">
+  <h2>更新日志</h2>
+  <p class="meta">可选：按时间倒序追加「Agent X | Day Y | 任务简述 | 完成 | HH:mm」。</p>
+  <ul>
+    <li>Agent 0 | Day 8 | 决策窗口2：生成每日进度简报 Day-8 | 完成</li>
+    <li>Agent 0 | Day 8 | 决策窗口1：审查扩展功能需求、发布 ADR-008 批量与预约转账策略 | 完成</li>
+    <li>Agent 0 | Day 7 | 决策窗口2：审查核心服务完成情况、生成阶段1-2进度报告 | 完成</li>
+    <li>Agent 0 | Day 7 | 决策窗口1：核心服务阶段验收、ADR-007 性能优化策略、发布技术标准规范 v2.0 | 完成</li>
+    <li>Agent 0 | Day 6 | 决策窗口2：生成每日进度简报 Day-6 | 完成</li>
+    <li>Agent 1 | Day 6 | 修复 Mockito/JDK25：RiskClient/PaymentClient 抽象为接口+HTTP实现，Surefire 增加 net.bytebuddy.experimental，JaCoCo 升级至 0.8.14；日志改为 JSON 结构化输出 | 完成</li>
+    <li>Agent 0 | Day 6 | 决策窗口1：审查功能完整性、审批性能优化方案 | 完成</li>
+    <li>Agent 4 | Day 5 | 完善 UI/UX、响应式、加载/骨架屏、错误与成功提示、性能、国际化（可选）（d5a4t1–d5a4t6）| 完成</li>
+    <li>Agent 1 | Day 5 | PaymentClient（支付回调调用）、风控/支付 header 透传与 MDC 链路、Outbox（V4 表+服务+在 debit/transfer 落事件）、可选 OutboxPublisher、transactions 索引优化（V5）、异常处理增强、logback 链路字段 | 完成</li>
+    <li>Agent 0 | Day 5 | 决策窗口1：审查服务集成方案、审批消息队列、ADR-006 异步处理策略 | 完成</li>
+    <li>Agent 3 | Day 5 | 规则热更新/缓存（2s 检查）、ES 黑名单单次查询、risk_events 增强字段 reject_error_code、报告增强（时序/交易类型/错误码/P95）、实时监控 GET /api/v1/risk/monitor/realtime（内存降级 + ES 聚合）| 完成</li>
+    <li>Agent 0 | Day 4 | 决策窗口2：审查集成测试结果、每日进度简报 Day-4 | 完成</li>
+    <li>Agent 7 | Day 4 | SAST（核心银行、支付）、依赖漏洞扫描、结果分析、安全报告 Day-4、高危漏洞修复（无高危）（d4a7t1–d4a7t6）| 完成</li>
+    <li>Agent 3 | Day 4 | 扩展风控规则 12 条、risk_scoring、规则链 RKB005、风控日志 ES（decision_id/processing_time_ms/triggered_rules/risk_level）、GET /api/v1/risk/report、get_risk_context_aggregates 与 _enabled_rules 性能优化（d4a3t1–d4a3t6）| 完成</li>
+    <li>Agent 2 | Day 4 | 清算 processSettlement、对账 reconcileReport、支付回调 callback、Bull 队列、core-bank-client balance+debit、processPayment 集成、集成测试（d4a2t1–d4a2t6）| 完成</li>
+    <li>Agent 4 | Day 4 | 转账页、交易历史页、管理后台基础框架、转账与交易查询 API 集成、表单验证、错误处理（d4a4t1–d4a4t7）| 完成</li>
+    <li>Agent 1 | Day 4 | POST /api/v1/transactions/debit（幂等 refId）、TransactionService/CustomerService、TransactionController/CustomerController、RiskClient、单元与集成测试（d4a1t1–d4a1t6、d4a1t1a–c、d4a1t2a–c）| 完成</li>
+    <li>Agent 0 | Day 4 | 决策窗口1：审查服务实现进度、审批异常处理策略、审批日志规范 | 完成</li>
+    <li>Agent 0 | Day 3 | 决策窗口2：审查开发进度、处理阻塞、每日进度简报 Day-3 | 完成</li>
+    <li>Agent 4 | Day 3 | 登录/注册/账户概览、认证API与账户API、AuthContext 状态管理、Button/Input/Card/Login/Register/AccountOverview 单元测试（d3a4t1–d3a4t7）| 完成</li>
+    <li>Agent 1 | Day 3 | Account/Customer/Transaction 实体与 Repository、AccountService（开户/查询/余额）、AccountController、单元与集成测试（d3a1t1–d3a1t7、d3a1t4a–c）| 完成</li>
+    <li>Agent 0 | Day 3 | 决策窗口1：审查API设计、审批服务间接口、ADR-005、协调服务依赖（d3a0t1–d3a0t4）| 完成</li>
+    <li>Agent 0 | Day 2 | 决策窗口2：审查设计文档、审批基础设施、每日进度简报 Day-2 | 完成</li>
+    <li>Agent 6 | Day 2 | Postman、Cypress、JMeter、测试数据生成、TestRail 等价物、测试用例模板（d2a6t1–d2a6t6）| 完成</li>
+    <li>Agent 3 | Day 3 | 规则引擎+限额/频率/黑名单规则、RiskService/RiskController、ES 索引与降级、单元测试（d3a3t1–d3a3t8）| 完成</li>
+    <li>Agent 1 | Day 2 | Spring Boot 骨架、PostgreSQL、OpenAPI、实体、Repository、单元测试框架（d2a1t1–d2a1t7）| 完成</li>
+    <li>Agent 3 | Day 2 | FastAPI 骨架、ES 连接、风控 API 规范、规则引擎、YAML 规则、限额/频率规则、黑名单结构（d2a3t1–d2a3t7）| 完成</li>
+    <li>Agent 4 | Day 2 | React+TS(Vite)、Tailwind、组件库结构、设计系统、Button/Input/Card、React Router、Axios（d2a4t1–d2a4t7）| 完成</li>
+    <li>Agent 0 | Day 2 | 决策窗口1：审查数据模型、审批API规范、ADR-003/004、API设计规范v1.0 | 完成</li>
+    <li>Agent 0 | Day 1 | 决策窗口2：审查、审批、每日进度简报 Day-1 | 完成</li>
+    <li>Agent 7 | Day 1 | SonarQube、OWASP ZAP、Vault、安全基线、依赖漏洞扫描 | 完成</li>
+    <li>Agent 9 | Day 1 | 数据模型、ER 图、PostgreSQL/MongoDB、数据字典、Flyway 迁移 | 完成</li>
+    <li>Agent 8 | Day 1 | GitLab CI/CD、Docker、Prometheus、Grafana、告警、部署脚本 | 完成</li>
+  </ul>
+</section>
+
+</div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

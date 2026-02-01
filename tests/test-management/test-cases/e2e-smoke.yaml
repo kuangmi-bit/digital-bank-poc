@@ -1,0 +1,23 @@
+# E2E 冒烟用例（TestRail 可导入）
+
+- id: TC-E2E-001
+  title: 登录流程 - 访问根路径应展示登录相关 UI
+  suite: e2e
+  priority: 1
+  steps:
+    - action: 访问 /
+    - action: 检查页面含登录表单或登录入口（data-testid 或等效）
+  expected: 登录相关元素可见
+  tags: [e2e, login, smoke]
+
+- id: TC-E2E-002
+  title: 转账流程 - 登录后进入转账页，提交有效数据应成功
+  suite: e2e
+  priority: 1
+  steps:
+    - action: 登录
+    - action: 进入 /transfer，填写金额、对方账号
+    - action: 提交，检查成功提示
+  expected: 成功提示或结果页
+  preconditions: 已有可用的账号与认证
+  tags: [e2e, transfer, smoke]

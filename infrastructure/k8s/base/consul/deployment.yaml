@@ -1,0 +1,101 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consul-server
+  namespace: digital-bank-poc
+  labels:
+    app: consul
+    component: server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: consul
+      component: server
+  template:
+    metadata:
+      labels:
+        app: consul
+        component: server
+    spec:
+      initContainers:
+      - name: copy-consul-config
+        image: busybox:1.36
+        command: ['sh', '-c']
+        args:
+          - |
+            echo "Starting initContainer..."
+            ls -la /consul-config-source/
+            mkdir -p /consul/config
+            cp /consul-config-source/consul-config.json /consul/config/consul-config.json
+            chmod 644 /consul/config/consul-config.json
+            echo "Config file copied successfully:"
+            ls -la /consul/config/
+            cat /consul/config/consul-config.json
+            echo "InitContainer completed successfully"
+        volumeMounts:
+        - name: consul-config-source
+          mountPath: /consul-config-source
+          readOnly: true
+        - name: consul-config
+          mountPath: /consul/config
+      containers:
+      - name: consul
+        image: hashicorp/consul:1.22.2
+        args:
+          - agent
+          - -server
+          - -ui
+          - -bootstrap-expect=1
+          - -client=0.0.0.0
+          - -bind=0.0.0.0
+          - -data-dir=/consul/data
+          - -config-dir=/consul/config
+        ports:
+        - name: http
+          containerPort: 8500
+          protocol: TCP
+        - name: dns
+          containerPort: 8600
+          protocol: UDP
+        - name: serf-lan
+          containerPort: 8301
+          protocol: TCP
+        - name: serf-wan
+          containerPort: 8302
+          protocol: TCP
+        - name: server
+          containerPort: 8300
+          protocol: TCP
+        volumeMounts:
+        - name: consul-data
+          mountPath: /consul/data
+        - name: consul-config
+          mountPath: /consul/config
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        livenessProbe:
+          httpGet:
+            path: /v1/status/leader
+            port: 8500
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /v1/status/leader
+            port: 8500
+          initialDelaySeconds: 10
+          periodSeconds: 5
+      volumes:
+      - name: consul-data
+        emptyDir: {}
+      - name: consul-config
+        emptyDir: {}
+      - name: consul-config-source
+        configMap:
+          name: consul-config

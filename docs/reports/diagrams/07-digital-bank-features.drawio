@@ -1,0 +1,219 @@
+<mxfile host="app.diagrams.net" modified="2026-02-01T00:00:00.000Z" agent="Claude" version="21.0.0" etag="digital-bank-features" type="device">
+  <diagram id="features" name="数字银行功能全景图">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- 背景框 -->
+        <mxCell id="bg-frame" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#E0E0E0;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="30" width="1520" height="940" as="geometry" />
+        </mxCell>
+
+        <!-- 标题 -->
+        <mxCell id="title" value="数字银行功能全景图" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="600" y="50" width="400" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- 核心功能模块 -->
+        <mxCell id="core-module" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#4CAF50;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="80" y="110" width="1440" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="core-module-title" value="核心功能模块" style="text;html=1;strokeColor=none;fillColor=#4CAF50;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=16;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="700" y="120" width="200" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- 客户管理 -->
+        <mxCell id="customer-mgmt" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#66BB6A;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="170" width="300" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="customer-mgmt-icon" value="👤" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=28;" vertex="1" parent="1">
+          <mxGeometry x="130" y="180" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="customer-mgmt-title" value="客户管理" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="175" y="185" width="100" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="customer-mgmt-func" value="• 创建客户&#xa;• 查询客户&#xa;• 客户状态管理&#xa;• 客户信息更新" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="140" y="220" width="260" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- 账户管理 -->
+        <mxCell id="account-mgmt" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#66BB6A;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="460" y="170" width="300" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="account-mgmt-icon" value="💼" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=28;" vertex="1" parent="1">
+          <mxGeometry x="470" y="180" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="account-mgmt-title" value="账户管理" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="515" y="185" width="100" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="account-mgmt-func" value="• 开户&#xa;• 查询余额&#xa;• 账户列表&#xa;• 冻结/解冻" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="480" y="220" width="260" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- 支付扣款 -->
+        <mxCell id="payment" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#66BB6A;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="800" y="170" width="300" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="payment-icon" value="💳" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=28;" vertex="1" parent="1">
+          <mxGeometry x="810" y="180" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="payment-title" value="支付扣款" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="855" y="185" width="100" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="payment-func" value="• 幂等扣款&#xa;• 回调通知&#xa;• 交易记录&#xa;• 扣款查询" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="820" y="220" width="260" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- 行内转账 -->
+        <mxCell id="transfer" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#66BB6A;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="170" width="300" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="transfer-icon" value="🔄" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=28;" vertex="1" parent="1">
+          <mxGeometry x="1150" y="180" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="transfer-title" value="行内转账" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="1195" y="185" width="100" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="transfer-func" value="• 实时转账&#xa;• 风控检查&#xa;• 双向记账&#xa;• 交易查询" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="220" width="260" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- 扩展功能模块 -->
+        <mxCell id="ext-module" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1976D2;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="80" y="370" width="1440" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-module-title" value="扩展功能模块" style="text;html=1;strokeColor=none;fillColor=#1976D2;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=16;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="700" y="380" width="200" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- 批量转账 -->
+        <mxCell id="batch-transfer" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#42A5F5;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="430" width="400" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="batch-transfer-icon" value="📦" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=28;" vertex="1" parent="1">
+          <mxGeometry x="130" y="440" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="batch-transfer-title" value="批量转账" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="175" y="445" width="100" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="batch-transfer-func" value="• 单批最多 100 笔&#xa;• 并行处理&#xa;• 部分成功/失败&#xa;• 详细结果报告&#xa;• 幂等 batchId" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="140" y="480" width="360" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- 预约转账 -->
+        <mxCell id="scheduled-transfer" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#42A5F5;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="430" width="400" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="scheduled-transfer-icon" value="⏰" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=28;" vertex="1" parent="1">
+          <mxGeometry x="570" y="440" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="scheduled-transfer-title" value="预约转账" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="615" y="445" width="100" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="scheduled-transfer-func" value="• 定时执行&#xa;• 取消预约&#xa;• 失败重试(3次)&#xa;• 状态查询&#xa;• 列表查询" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="580" y="480" width="360" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- 账单支付 -->
+        <mxCell id="bill-payment" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#42A5F5;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="430" width="440" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="bill-payment-icon" value="📄" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=28;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="440" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="bill-payment-title" value="账单支付" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="1055" y="445" width="100" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="bill-payment-func" value="• 电费缴纳&#xa;• 水费缴纳&#xa;• 燃气费缴纳&#xa;• 话费充值&#xa;• 缴费记录查询" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="480" width="400" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- 风控合规模块 -->
+        <mxCell id="risk-module" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#C62828;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="80" y="630" width="1440" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="risk-module-title" value="风控合规模块" style="text;html=1;strokeColor=none;fillColor=#C62828;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=16;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="700" y="640" width="200" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- 限额检查 -->
+        <mxCell id="limit-check" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#EF5350;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="690" width="300" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="limit-check-icon" value="📊" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=28;" vertex="1" parent="1">
+          <mxGeometry x="130" y="700" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="limit-check-title" value="限额检查" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#B71C1C;" vertex="1" parent="1">
+          <mxGeometry x="175" y="705" width="100" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="limit-check-func" value="• 单笔限额&#xa;• 日累计额&#xa;• 批量总额&#xa;• 预约笔数限制" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="140" y="740" width="260" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- 频率检查 -->
+        <mxCell id="freq-check" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#EF5350;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="460" y="690" width="300" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="freq-check-icon" value="⏱️" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=28;" vertex="1" parent="1">
+          <mxGeometry x="470" y="700" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="freq-check-title" value="频率检查" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#B71C1C;" vertex="1" parent="1">
+          <mxGeometry x="515" y="705" width="100" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="freq-check-func" value="• 日交易次数&#xa;• 小时频率限制&#xa;• 批量频率控制" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="480" y="740" width="260" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- 黑名单 -->
+        <mxCell id="blacklist" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#EF5350;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="800" y="690" width="300" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="blacklist-icon" value="🚫" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=28;" vertex="1" parent="1">
+          <mxGeometry x="810" y="700" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="blacklist-title" value="黑名单" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#B71C1C;" vertex="1" parent="1">
+          <mxGeometry x="855" y="705" width="100" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="blacklist-func" value="• 账户黑名单&#xa;• 客户黑名单&#xa;• 风险标记" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="820" y="740" width="260" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- 规则引擎 -->
+        <mxCell id="rule-engine" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#EF5350;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="690" width="300" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="rule-engine-icon" value="⚙️" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=28;" vertex="1" parent="1">
+          <mxGeometry x="1150" y="700" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="rule-engine-title" value="规则引擎" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#B71C1C;" vertex="1" parent="1">
+          <mxGeometry x="1195" y="705" width="100" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="rule-engine-func" value="• YAML 配置&#xa;• 热加载&#xa;• 优先级控制&#xa;• 多规则组合" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="740" width="260" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- 统计信息 -->
+        <mxCell id="stats-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#E0E0E0;" vertex="1" parent="1">
+          <mxGeometry x="80" y="890" width="1440" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="stats-title" value="功能统计:" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="100" y="905" width="80" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="stats1" value="核心功能 4 项" style="text;html=1;strokeColor=none;fillColor=#E8F5E9;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=11;fontColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="200" y="905" width="100" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="stats2" value="扩展功能 3 项" style="text;html=1;strokeColor=none;fillColor=#E3F2FD;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=11;fontColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="320" y="905" width="100" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="stats3" value="风控功能 4 项" style="text;html=1;strokeColor=none;fillColor=#FFEBEE;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=11;fontColor=#B71C1C;" vertex="1" parent="1">
+          <mxGeometry x="440" y="905" width="100" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="stats4" value="API 端点 35 个" style="text;html=1;strokeColor=none;fillColor=#F3E5F5;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=11;fontColor=#7B1FA2;" vertex="1" parent="1">
+          <mxGeometry x="560" y="905" width="100" height="25" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,369 @@
+# 风控合规服务 API 规范 - OpenAPI 3.0
+# 遵循 api-design-spec-v1.0、technical-standards-v1.0、naming-conventions
+# 路径 kebab-case: /api/v1/risk/check, /api/v1/risk/blacklist
+
+openapi: "3.0.3"
+info:
+  title: Risk Service API - 风控合规服务
+  version: "0.1.0"
+  description: |
+    交易限额检查、风控规则引擎、黑名单管理。供核心银行、支付服务在转账/支付前调用。
+    Agent 3 风控合规守护者。存储与日志：Elasticsearch（risk_events, risk_blacklist）。
+    服务间调用约定：请求体与查询参数采用 snake_case（如 customer_id、account_id、page_size）；
+    若调用方使用 camelCase，可在请求时做字段映射或由网关转换。
+
+servers:
+  - url: http://localhost:8000
+    description: 本地 / 开发
+
+paths:
+  /api/v1/risk/check:
+    post:
+      summary: 风控检查
+      description: 对交易进行风控检查，返回是否通过、风险评分与等级。未通过时调用方应拒绝交易（403）。
+      operationId: checkRisk
+      tags: [risk]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RiskCheckRequest"
+      responses:
+        "200":
+          description: 检查通过，返回风控结果
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RiskCheckSuccessResponse"
+        "403":
+          description: 风控拦截（RKB001 等）
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                code: 403
+                message: "风控拦截"
+                errorCode: "RKB001"
+                timestamp: "2026-01-27T00:00:00Z"
+        "500":
+          description: 规则引擎异常等（RKS001）
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /api/v1/risk/blacklist:
+    get:
+      summary: 黑名单查询
+      description: 分页查询黑名单。Day 2 为占位，返回空列表；Day 3 对接 risk_blacklist 索引。
+      operationId: listBlacklist
+      tags: [risk]
+      parameters:
+        - name: type
+          in: query
+          schema:
+            type: string
+            enum: [customer, account, card, ip, device]
+          description: 黑名单类型筛选
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+      responses:
+        "200":
+          description: 成功，分页列表
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BlacklistListResponse"
+
+  /api/v1/risk/report:
+    get:
+      summary: 风控报告
+      description: 按时间范围聚合 risk_events，返回总量、通过/拒绝、风险等级分布、平均评分、top 触发规则。ES 不可用时 503 RKS002。
+      operationId: getReport
+      tags: [risk]
+      parameters:
+        - name: from_date
+          in: query
+          required: true
+          schema:
+            type: string
+            example: "2026-01-01"
+          description: 开始日期，ISO 日期
+        - name: to_date
+          in: query
+          required: true
+          schema:
+            type: string
+            example: "2026-01-27"
+          description: 结束日期，ISO 日期
+      responses:
+        "200":
+          description: 成功，风控报告
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RiskReportResponse"
+        "503":
+          description: Elasticsearch 不可用（RKS002）
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /api/v1/risk/monitor/realtime:
+    get:
+      summary: 实时风控监控
+      description: 最近窗口实时统计；in_memory 永远可用，es 可用时返回时间序列与 P95 等。
+      operationId: getRealtimeMonitor
+      tags: [risk]
+      parameters:
+        - name: window
+          in: query
+          required: false
+          schema:
+            type: string
+            default: "5m"
+            example: "5m"
+          description: 时间窗口，如 1m/5m/15m/1h
+      responses:
+        "200":
+          description: 成功，实时监控数据
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RiskRealtimeMonitorResponse"
+
+components:
+  schemas:
+    RiskCheckRequest:
+      type: object
+      required: [customer_id, amount, transaction_type]
+      properties:
+        customer_id:
+          type: string
+          description: 客户ID
+        account_id:
+          type: string
+          nullable: true
+        amount:
+          type: number
+          minimum: 0
+          description: 交易金额
+        transaction_type:
+          type: string
+          example: transfer
+        recipient_account_id:
+          type: string
+          nullable: true
+        metadata:
+          type: object
+          additionalProperties: true
+
+    RiskCheckResult:
+      type: object
+      properties:
+        approved:
+          type: boolean
+        risk_score:
+          type: number
+          minimum: 0
+          maximum: 100
+        risk_level:
+          type: string
+          enum: [low, medium, high, critical]
+        message:
+          type: string
+          nullable: true
+        triggered_rules:
+          type: array
+          items:
+            type: string
+        timestamp:
+          type: string
+          format: date-time
+
+    RiskCheckSuccessResponse:
+      type: object
+      required: [code, message, data, timestamp]
+      properties:
+        code:
+          type: integer
+          example: 200
+        message:
+          type: string
+          example: Success
+        data:
+          $ref: "#/components/schemas/RiskCheckResult"
+        timestamp:
+          type: string
+          format: date-time
+
+    BlacklistEntry:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum: [customer, account, card, ip, device]
+        value:
+          type: string
+        reason:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        expires_at:
+          type: string
+          format: date-time
+          nullable: true
+        is_active:
+          type: boolean
+
+    BlacklistListResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 200
+        message:
+          type: string
+          example: Success
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: "#/components/schemas/BlacklistEntry"
+            total:
+              type: integer
+            page:
+              type: integer
+            pageSize:
+              type: integer
+        timestamp:
+          type: string
+          format: date-time
+
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+        errorCode:
+          type: string
+          description: "technical-standards: RKB001 风控拦截, RKB002 黑名单, RKB003 超额, RKB004 频率, RKB005 风险评分过高, RKV001 参数, RKS001 规则引擎, RKS002 ES 不可用"
+        timestamp:
+          type: string
+          format: date-time
+
+    RiskReportData:
+      type: object
+      properties:
+        from_date:
+          type: string
+        to_date:
+          type: string
+        total_count:
+          type: integer
+        approve_count:
+          type: integer
+        reject_count:
+          type: integer
+        approve_rate:
+          type: number
+          format: float
+        by_decision:
+          type: object
+          additionalProperties: { type: integer }
+        by_risk_level:
+          type: object
+          additionalProperties: { type: integer }
+        by_transaction_type:
+          type: object
+          additionalProperties: { type: integer }
+        by_reject_error_code:
+          type: object
+          additionalProperties: { type: integer }
+        avg_risk_score:
+          type: number
+          format: float
+        p50_processing_time_ms:
+          type: integer
+        p95_processing_time_ms:
+          type: integer
+        p99_processing_time_ms:
+          type: integer
+        top_triggered_rules:
+          type: array
+          items:
+            type: object
+            properties:
+              rule: { type: string }
+              count: { type: integer }
+        daily:
+          type: array
+          items:
+            type: object
+            properties:
+              date: { type: string }
+              total: { type: integer }
+              approve: { type: integer }
+              reject: { type: integer }
+
+    RiskReportResponse:
+      type: object
+      required: [code, message, data, timestamp]
+      properties:
+        code: { type: integer, example: 200 }
+        message: { type: string, example: Success }
+        data: { $ref: "#/components/schemas/RiskReportData" }
+        timestamp: { type: string, format: date-time }
+
+    RiskRealtimeMonitorData:
+      type: object
+      properties:
+        window: { type: string }
+        es_available: { type: boolean }
+        in_memory:
+          type: object
+          additionalProperties: true
+        es:
+          type: object
+          nullable: true
+          additionalProperties: true
+
+    RiskRealtimeMonitorResponse:
+      type: object
+      required: [code, message, data, timestamp]
+      properties:
+        code: { type: integer, example: 200 }
+        message: { type: string, example: Success }
+        data: { $ref: "#/components/schemas/RiskRealtimeMonitorData" }
+        timestamp: { type: string, format: date-time }
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+# 若需认证，在 path 上增加 security: [{"bearerAuth": []}]
+# security: []

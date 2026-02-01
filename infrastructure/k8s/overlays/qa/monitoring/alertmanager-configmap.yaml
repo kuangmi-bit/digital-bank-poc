@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alertmanager-config
+  labels:
+    app: alertmanager
+data:
+  alertmanager.yml: |-
+    # Alertmanager 配置 - 数字银行 POC (QA)
+    global:
+      resolve_timeout: 5m
+
+    route:
+      group_by: [alertname, job]
+      group_wait: 30s
+      group_interval: 5m
+      repeat_interval: 4h
+      receiver: default
+      routes:
+        - match:
+            severity: critical
+          receiver: critical-alerts
+          group_wait: 10s
+        - match:
+            severity: warning
+          receiver: warning-alerts
+
+    receivers:
+      # 这里使用占位 webhook（可替换为企业微信/钉钉/邮件等）
+      - name: default
+        webhook_configs:
+          - url: "http://alert-receiver:9090/alert"
+            send_resolved: true
+
+      - name: critical-alerts
+        webhook_configs:
+          - url: "http://alert-receiver:9090/critical"
+            send_resolved: true
+
+      - name: warning-alerts
+        webhook_configs:
+          - url: "http://alert-receiver:9090/warning"
+            send_resolved: true
+
+    inhibit_rules:
+      - source_match:
+          severity: critical
+        target_match:
+          severity: warning
+        equal: [alertname, job]

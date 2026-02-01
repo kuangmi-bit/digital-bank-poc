@@ -1,0 +1,79 @@
+# Kong 路由片段：核心银行服务 (core-bank-service)
+# 依据: kong/kong.yml, ADR-004, technical-standards-v1.0, api-design-spec-v1.0
+# 此文件为参考，实际生效配置在 k8s/base/kong/configmap.yaml 与 kong/kong.yml
+
+_format_version: "3.0"
+
+services:
+  - name: core-bank-service
+    url: http://core-bank-service.digital-bank-poc.svc.cluster.local:8080
+    protocol: http
+    host: core-bank-service.digital-bank-poc.svc.cluster.local
+    port: 8080
+    path: /
+    connect_timeout: 5000
+    read_timeout: 10000
+    write_timeout: 10000
+    retries: 3
+    tags:
+      - banking
+      - core
+      - api
+
+routes:
+  - name: core-bank-accounts-route
+    service: core-bank-service
+    paths:
+      - /api/v1/accounts
+    methods:
+      - GET
+      - POST
+      - PUT
+      - PATCH
+      - DELETE
+    strip_path: false
+    protocols: [http, https]
+
+  - name: core-bank-customers-route
+    service: core-bank-service
+    paths:
+      - /api/v1/customers
+    methods:
+      - GET
+      - POST
+      - PUT
+      - PATCH
+      - DELETE
+    strip_path: false
+    protocols: [http, https]
+
+  - name: core-bank-transactions-route
+    service: core-bank-service
+    paths:
+      - /api/v1/transactions
+    methods:
+      - GET
+      - POST
+    strip_path: false
+    protocols: [http, https]
+
+  - name: core-bank-health-route
+    service: core-bank-service
+    paths:
+      - /api/v1/health
+      - /health
+      - /actuator/health
+    methods: [GET]
+    strip_path: false
+    protocols: [http, https]
+
+plugins:
+  - name: rate-limiting
+    service: core-bank-service
+    route: core-bank-accounts-route
+    config:
+      minute: 100
+      hour: 1000
+      day: 10000
+      limit_by: ip
+      policy: local

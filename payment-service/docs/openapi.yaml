@@ -1,0 +1,348 @@
+# 支付服务 API 规范 - OpenAPI 3.0
+# 遵循 technical-standards-v1.0、naming-conventions、agent-2-payment
+
+openapi: 3.0.3
+info:
+  title: Payment Service API
+  description: 数字银行 POC - 支付清算处理器 REST API
+  version: 1.0.0
+  contact:
+    name: Digital Bank POC Team
+
+servers:
+  - url: http://localhost:3001/api/v1
+    description: 本地开发
+  - url: https://api.example.com/api/v1
+    description: 网关代理（示例）
+
+tags:
+  - name: payments
+    description: 支付订单
+  - name: settlements
+    description: 清算对账
+
+paths:
+  /payments:
+    post:
+      tags: [payments]
+      summary: 创建支付订单
+      operationId: createPayment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePaymentRequest'
+      responses:
+        '201':
+          description: 创建成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /payments/{payment-id}:
+    parameters:
+      - $ref: '#/components/parameters/PaymentId'
+    get:
+      tags: [payments]
+      summary: 查询支付状态
+      operationId: getPaymentById
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /payments/{payment-id}/process:
+    parameters:
+      - $ref: '#/components/parameters/PaymentId'
+    post:
+      tags: [payments]
+      summary: 处理支付
+      description: |
+        若 accountId 存在且 CORE_BANK_SERVICE_URL 已配置，先 GET /api/v1/accounts/{id}/balance、
+        POST /api/v1/transactions/debit（refId=paymentId 幂等，ADR-005）；余额不足或扣款失败置 failed。
+        未配置核心银行或无 accountId 时仅走 Mock 网关。
+      operationId: processPayment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                simulateFailure:
+                  type: boolean
+                  description: Mock 网关模拟失败
+      responses:
+        '200':
+          description: 处理成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          description: 渠道/核心银行不可用（PYB002）
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+  /payments/callback:
+    post:
+      tags: [payments]
+      summary: 支付回调（d4a2t3）
+      operationId: paymentCallback
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [paymentId, status]
+              properties:
+                paymentId: { type: string }
+                status: { type: string, enum: [completed, failed] }
+                gatewayOrderId: { type: string }
+                code: { type: string }
+                message: { type: string }
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code: { type: integer }
+                  message: { type: string }
+                  data:
+                    type: object
+                    properties:
+                      processed: { type: boolean }
+                      paymentId: { type: string }
+                      reason: { type: string }
+                  timestamp: { type: string, format: date-time }
+
+  /settlements/reconcile:
+    post:
+      tags: [settlements]
+      summary: 对账
+      operationId: reconcileSettlement
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReconcileRequest'
+      responses:
+        '201':
+          description: 对账批次已创建
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SettlementResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /settlements/{settlement-id}:
+    parameters:
+      - $ref: '#/components/parameters/SettlementId'
+    get:
+      tags: [settlements]
+      summary: 查询清算状态
+      operationId: getSettlementById
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SettlementResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /settlements/{settlement-id}/process:
+    parameters:
+      - $ref: '#/components/parameters/SettlementId'
+    post:
+      tags: [settlements]
+      summary: 清算处理（d4a2t1）
+      description: pending -> processing -> completed|failed；校验 paymentIds 对应 Payment 均为 completed 且金额与 totalAmount 一致
+      operationId: processSettlement
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SettlementResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+components:
+  parameters:
+    PaymentId:
+      name: payment-id
+      in: path
+      required: true
+      description: 支付单号
+      schema:
+        type: string
+        example: pay-1738012800000-abc12de
+    SettlementId:
+      name: settlement-id
+      in: path
+      required: true
+      description: 清算单号
+      schema:
+        type: string
+        example: stl-1738012800000-xyz78ab
+
+  schemas:
+    CreatePaymentRequest:
+      type: object
+      required: [orderId, userId, amount]
+      properties:
+        orderId:
+          type: string
+          description: 业务订单号
+        userId:
+          type: string
+          description: 用户/客户标识
+        accountId:
+          type: string
+          description: 扣款账户 ID（可选）
+        amount:
+          type: number
+          minimum: 0.01
+          description: 支付金额
+        currency:
+          type: string
+          default: CNY
+          example: CNY
+        channel:
+          type: string
+          enum: [wechat, alipay, bank_card, mock]
+          default: mock
+
+    ReconcileRequest:
+      type: object
+      properties:
+        batchId:
+          type: string
+          description: 批次号（可选，缺省自动生成）
+        paymentIds:
+          type: array
+          items:
+            type: string
+          description: 纳入对账的 paymentId 列表
+
+    Payment:
+      type: object
+      properties:
+        _id: { type: string }
+        paymentId: { type: string }
+        orderId: { type: string }
+        userId: { type: string }
+        accountId: { type: string }
+        amount: { type: number }
+        currency: { type: string }
+        status:
+          type: string
+          enum: [pending, processing, completed, failed, refunded, cancelled]
+        channel: { type: string }
+        gatewayResponse:
+          type: object
+          properties:
+            gatewayOrderId: { type: string }
+            code: { type: string }
+            message: { type: string }
+            paidAt: { type: string, format: date-time }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+
+    Settlement:
+      type: object
+      properties:
+        _id: { type: string }
+        settlementId: { type: string }
+        batchId: { type: string }
+        totalAmount: { type: number }
+        paymentCount: { type: integer }
+        paymentIds: { type: array, items: { type: string } }
+        status:
+          type: string
+          enum: [pending, processing, completed, failed]
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+
+    ApiResponse:
+      type: object
+      required: [code, message, timestamp]
+      properties:
+        code: { type: integer }
+        message: { type: string }
+        data: {}
+        timestamp: { type: string, format: date-time }
+
+    PaymentResponse:
+      allOf:
+        - $ref: '#/components/schemas/ApiResponse'
+        - type: object
+          properties:
+            data: { $ref: '#/components/schemas/Payment' }
+
+    SettlementResponse:
+      allOf:
+        - $ref: '#/components/schemas/ApiResponse'
+        - type: object
+          properties:
+            data: { $ref: '#/components/schemas/Settlement' }
+
+    ErrorResponse:
+      type: object
+      properties:
+        code: { type: integer }
+        message: { type: string }
+        errorCode: { type: string }
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field: { type: string }
+              message: { type: string }
+        timestamp: { type: string, format: date-time }
+
+  responses:
+    BadRequest:
+      description: 请求参数错误
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+          example:
+            code: 400
+            message: Bad Request
+            errorCode: PYV001
+            errors: [{ field: 'amount', message: 'amount is required' }]
+            timestamp: '2026-01-27T12:00:00.000Z'
+    NotFound:
+      description: 资源不存在
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+          example:
+            code: 404
+            message: Not Found
+            errorCode: PYB003
+            timestamp: '2026-01-27T12:00:00.000Z'

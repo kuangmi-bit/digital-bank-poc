@@ -1,0 +1,113 @@
+# 数字银行 POC - Docker Compose
+# 用于本地/CI 构建与监控栈运行
+# 遵循: digitalbank/{service-name}:{tag}, 环境 dev/qa/uat/prod
+
+version: "3.9"
+
+services:
+  # ---------- 监控栈 (Prometheus + Grafana + Alertmanager) ----------
+  prometheus:
+    image: prom/prometheus:v2.48.0
+    container_name: digitalbank-prometheus
+    volumes:
+      - ../monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ../monitoring/prometheus/alerts:/etc/prometheus/alerts:ro
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.enable-lifecycle"
+    ports:
+      - "9090:9090"
+    networks:
+      - digitalbank-net
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:10.2.2
+    container_name: digitalbank-grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SERVER_HTTP_PORT=3000
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+    volumes:
+      - ../monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana_data:/var/lib/grafana
+    ports:
+      - "3000:3000"
+    networks:
+      - digitalbank-net
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+
+  alertmanager:
+    image: prom/alertmanager:v0.26.0
+    container_name: digitalbank-alertmanager
+    volumes:
+      - ../monitoring/alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+    command:
+      - "--config.file=/etc/alertmanager/alertmanager.yml"
+      - "--storage.path=/alertmanager"
+    ports:
+      - "9093:9093"
+    networks:
+      - digitalbank-net
+    restart: unless-stopped
+
+  # ---------- 应用服务占位 (待 Agent 1–4 实现后取消注释并构建) ----------
+  # core-bank-service:
+  #   build:
+  #     context: ..
+  #     dockerfile: core-bank-service/Dockerfile
+  #   image: digitalbank/core-bank-service:dev
+  #   container_name: digitalbank-core-bank-service
+  #   ports:
+  #     - "8080:8080"
+  #   environment:
+  #     - SPRING_PROFILES_ACTIVE=dev
+  #   networks:
+  #     - digitalbank-net
+
+  # payment-service:
+  #   build:
+  #     context: ..
+  #     dockerfile: payment-service/Dockerfile
+  #   image: digitalbank/payment-service:dev
+  #   container_name: digitalbank-payment-service
+  #   ports:
+  #     - "3001:3001"
+  #   networks:
+  #     - digitalbank-net
+
+  # risk-service:
+  #   build:
+  #     context: ..
+  #     dockerfile: risk-service/Dockerfile
+  #   image: digitalbank/risk-service:dev
+  #   container_name: digitalbank-risk-service
+  #   ports:
+  #     - "8000:8000"
+  #   networks:
+  #     - digitalbank-net
+
+  # frontend:
+  #   build:
+  #     context: ..
+  #     dockerfile: frontend/Dockerfile
+  #   image: digitalbank/frontend:dev
+  #   container_name: digitalbank-frontend
+  #   ports:
+  #     - "80:80"
+  #   networks:
+  #     - digitalbank-net
+
+networks:
+  digitalbank-net:
+    driver: bridge
+
+volumes:
+  prometheus_data:
+  grafana_data:

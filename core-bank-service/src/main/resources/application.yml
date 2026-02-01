@@ -1,0 +1,94 @@
+# 核心银行服务 - 主配置
+# 遵循: technical-standards-v1.0, naming-conventions
+# 环境变量: CORE_BANK_DB_* 可覆盖对应配置
+
+spring:
+  application:
+    name: core-bank-service
+
+  datasource:
+    url: jdbc:postgresql://${CORE_BANK_DB_HOST:localhost}:${CORE_BANK_DB_PORT:5432}/${CORE_BANK_DB_NAME:digitalbank}
+    username: ${CORE_BANK_DB_USER:digitalbank}
+    password: ${CORE_BANK_DB_PASSWORD:digitalbank}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 300000
+      max-lifetime: 1800000
+      connection-timeout: 5000
+      pool-name: CoreBankHikariPool
+      # 性能优化配置 (Day 10)
+      validation-timeout: 3000
+      leak-detection-threshold: 60000
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        default_schema: public
+        jdbc:
+          time_zone: UTC
+    open-in-view: false
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    date-format: com.fasterxml.jackson.databind.util.StdDateFormat
+    default-property-inclusion: non_null
+
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: when-authorized
+  health:
+    db:
+      enabled: true
+
+# OpenAPI / Swagger
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+
+# 服务间调用
+services:
+  risk:
+    url: ${SERVICES_RISK_URL:}
+# 风控服务 base URL，如 http://localhost:8000。空则转账时跳过风控检查。
+  payment:
+    url: ${SERVICES_PAYMENT_URL:}
+# 支付服务 base URL，如 http://localhost:3001。空则跳过支付服务调用（本地/测试）。
+
+# Outbox 发布器（可选：轮询 outbox_events 并投递到下游）
+outbox:
+  publisher:
+    enabled: ${OUTBOX_PUBLISHER_ENABLED:false}
+    poll-interval-ms: ${OUTBOX_PUBLISHER_POLL_INTERVAL_MS:1000}
+    batch-size: ${OUTBOX_PUBLISHER_BATCH_SIZE:50}
+    max-attempts: ${OUTBOX_PUBLISHER_MAX_ATTEMPTS:10}
+
+logging:
+  level:
+    root: INFO
+    com.digitalbank: DEBUG
+    org.hibernate.SQL: DEBUG

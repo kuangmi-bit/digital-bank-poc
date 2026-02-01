@@ -1,0 +1,82 @@
+{
+  "scanner": "zap",
+  "version": "2.14",
+  "project": "digital-bank-poc",
+  "description": "OWASP ZAP 扫描配置 - Digital Bank POC，符合技术标准规范 v1.0",
+
+  "target": {
+    "baseUrl": "https://api.digitalbank-poc.example.com",
+    "apiBaseUrl": "https://api.digitalbank-poc.example.com/api/v1",
+    "frontendUrl": "https://app.digitalbank-poc.example.com"
+  },
+
+  "scanType": "full",
+  "scanPolicy": "API-scan",
+  "reportFormat": "json",
+  "reportHtml": true,
+  "reportMarkdown": true,
+
+  "context": {
+    "name": "digital-bank-poc",
+    "urls": [
+      "https://api.digitalbank-poc.example.com/",
+      "https://app.digitalbank-poc.example.com/"
+    ],
+    "auth": {
+      "type": "form",
+      "loginUrl": "https://app.digitalbank-poc.example.com/login",
+      "usernameField": "username",
+      "passwordField": "password",
+      "loggedInRegex": "\"authenticated\":\\s*true"
+    }
+  },
+
+  "scanners": {
+    "spider": {
+      "maxDepth": 5,
+      "maxChildren": 10,
+      "acceptCookie": true
+    },
+    "ajax": {
+      "enabled": true,
+      "inScopeOnly": true
+    },
+    "passiveScan": {
+      "enabled": true,
+      "maxAlertsPerRule": 10
+    },
+    "activeScan": {
+      "enabled": true,
+      "policy": "API-scan",
+      "scanHeadersAllRequests": true,
+      "injectPluginIdInHeader": true
+    }
+  },
+
+  "rules": {
+    "exclude": ["40012", "40014", "40016", "40017", "40018", "90011"],
+    "include": [],
+    "strength": "MEDIUM",
+    "threshold": "LOW"
+  },
+
+  "alerts": {
+    "maxResults": 500,
+    "riskThreshold": "High",
+    "failOnHigh": true
+  },
+
+  "owaspTop10": true,
+  "cweTop25": true,
+
+  "schedule": {
+    "cron": "0 */12 * * *",
+    "description": "每12小时执行一次 DAST 扫描（符合技术标准规范）"
+  },
+
+  "output": {
+    "jsonPath": "security/reports/dast-report.json",
+    "htmlPath": "security/reports/dast-report.html",
+    "mdPath": "security/reports/dast-report.md"
+  }
+}

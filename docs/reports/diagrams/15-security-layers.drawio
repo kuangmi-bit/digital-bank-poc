@@ -1,0 +1,357 @@
+<mxfile host="app.diagrams.net" modified="2026-02-01T00:00:00.000Z" agent="Claude" version="21.0.0" etag="security-layers" type="device">
+  <diagram id="security" name="安全防护层次图">
+    <mxGraphModel dx="1400" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- 背景框 -->
+        <mxCell id="bg-frame" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#E0E0E0;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="30" width="1320" height="940" as="geometry" />
+        </mxCell>
+
+        <!-- 标题 -->
+        <mxCell id="title" value="安全防护层次图" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="550" y="50" width="300" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- L1: 边界安全层 -->
+        <mxCell id="l1-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#C62828;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="100" y="120" width="1200" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="l1-title" value="L1: 边界安全层 (Perimeter Security)" style="text;html=1;strokeColor=none;fillColor=#C62828;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=16;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="500" y="130" width="400" height="35" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l1-waf" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#EF5350;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="180" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="l1-waf-icon" value="🛡️" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="160" y="190" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="l1-waf-title" value="WAF 防火墙" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#C62828;" vertex="1" parent="1">
+          <mxGeometry x="200" y="195" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="l1-waf-desc" value="Web应用防火墙&#xa;防止恶意请求" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="160" y="225" width="160" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l1-ddos" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#EF5350;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="180" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="l1-ddos-icon" value="🚧" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="370" y="190" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="l1-ddos-title" value="DDoS 防护" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#C62828;" vertex="1" parent="1">
+          <mxGeometry x="410" y="195" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="l1-ddos-desc" value="分布式拒绝服务&#xa;攻击防护" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="370" y="225" width="160" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l1-ssl" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#EF5350;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="180" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="l1-ssl-icon" value="🔒" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="580" y="190" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="l1-ssl-title" value="SSL 终止" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#C62828;" vertex="1" parent="1">
+          <mxGeometry x="620" y="195" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="l1-ssl-desc" value="TLS 1.3加密&#xa;证书管理" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="580" y="225" width="160" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l1-ip" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#EF5350;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="780" y="180" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="l1-ip-icon" value="📋" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="790" y="190" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="l1-ip-title" value="IP 白名单" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#C62828;" vertex="1" parent="1">
+          <mxGeometry x="830" y="195" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="l1-ip-desc" value="允许IP列表&#xa;访问控制" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="790" y="225" width="160" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l1-rate" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#EF5350;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="990" y="180" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="l1-rate-icon" value="⏱️" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="190" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="l1-rate-title" value="限流 1000/m" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#C62828;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="195" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="l1-rate-desc" value="请求频率控制&#xa;防止滥用" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="225" width="160" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- 箭头 L1 -> L2 -->
+        <mxCell id="arrow1" style="endArrow=classic;html=1;strokeWidth=3;strokeColor=#1976D2;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="700" y="290" as="sourcePoint" />
+            <mxPoint x="700" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- L2: 认证授权层 -->
+        <mxCell id="l2-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#F57C00;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="100" y="320" width="1200" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="l2-title" value="L2: 认证授权层 (Authentication &amp; Authorization)" style="text;html=1;strokeColor=none;fillColor=#F57C00;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=16;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="450" y="330" width="500" height="35" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l2-jwt" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#FFB74D;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="380" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="l2-jwt-icon" value="🔑" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="160" y="390" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="l2-jwt-title" value="JWT 认证" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#E65100;" vertex="1" parent="1">
+          <mxGeometry x="200" y="395" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="l2-jwt-desc" value="JSON Web Token&#xa;无状态认证" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="160" y="425" width="160" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l2-rbac" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#FFB74D;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="380" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="l2-rbac-icon" value="👥" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="370" y="390" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="l2-rbac-title" value="RBAC 授权" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#E65100;" vertex="1" parent="1">
+          <mxGeometry x="410" y="395" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="l2-rbac-desc" value="角色权限控制&#xa;细粒度授权" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="370" y="425" width="160" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l2-owner" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#FFB74D;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="380" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="l2-owner-icon" value="✅" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="580" y="390" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="l2-owner-title" value="账户归属校验" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#E65100;" vertex="1" parent="1">
+          <mxGeometry x="620" y="395" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="l2-owner-desc" value="确保用户只能&#xa;访问自己的账户" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="580" y="425" width="160" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l2-refresh" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#FFB74D;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="780" y="380" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="l2-refresh-icon" value="🔄" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="790" y="390" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="l2-refresh-title" value="Token 刷新" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#E65100;" vertex="1" parent="1">
+          <mxGeometry x="830" y="395" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="l2-refresh-desc" value="令牌续期机制&#xa;安全过期策略" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="790" y="425" width="160" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l2-apikey" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#FFB74D;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="990" y="380" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="l2-apikey-icon" value="🔐" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="390" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="l2-apikey-title" value="API Key 管理" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#E65100;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="395" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="l2-apikey-desc" value="第三方接入&#xa;密钥管理" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="425" width="160" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- 箭头 L2 -> L3 -->
+        <mxCell id="arrow2" style="endArrow=classic;html=1;strokeWidth=3;strokeColor=#1976D2;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="700" y="490" as="sourcePoint" />
+            <mxPoint x="700" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- L3: 应用安全层 -->
+        <mxCell id="l3-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#388E3C;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="100" y="520" width="1200" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="l3-title" value="L3: 应用安全层 (Application Security)" style="text;html=1;strokeColor=none;fillColor=#388E3C;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=16;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="500" y="530" width="400" height="35" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l3-input" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#66BB6A;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="580" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="l3-input-icon" value="📝" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="160" y="590" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="l3-input-title" value="输入验证" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="200" y="595" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="l3-input-desc" value="参数校验&#xa;类型安全" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="160" y="625" width="160" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l3-sql" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#66BB6A;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="580" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="l3-sql-icon" value="💉" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="370" y="590" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="l3-sql-title" value="SQL注入防护" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="410" y="595" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="l3-sql-desc" value="参数化查询&#xa;预编译语句" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="370" y="625" width="160" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l3-xss" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#66BB6A;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="580" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="l3-xss-icon" value="🔗" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="580" y="590" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="l3-xss-title" value="XSS 防护" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="620" y="595" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="l3-xss-desc" value="输出编码&#xa;内容安全策略" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="580" y="625" width="160" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l3-csrf" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#66BB6A;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="780" y="580" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="l3-csrf-icon" value="🎭" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="790" y="590" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="l3-csrf-title" value="CSRF 防护" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="830" y="595" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="l3-csrf-desc" value="Token验证&#xa;同源策略" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="790" y="625" width="160" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l3-log" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#66BB6A;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="990" y="580" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="l3-log-icon" value="📋" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="590" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="l3-log-title" value="日志脱敏" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="595" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="l3-log-desc" value="敏感信息遮蔽&#xa;合规记录" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="625" width="160" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- 箭头 L3 -> L4 -->
+        <mxCell id="arrow3" style="endArrow=classic;html=1;strokeWidth=3;strokeColor=#1976D2;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="700" y="690" as="sourcePoint" />
+            <mxPoint x="700" y="720" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- L4: 数据安全层 -->
+        <mxCell id="l4-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1976D2;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="100" y="720" width="1200" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="l4-title" value="L4: 数据安全层 (Data Security)" style="text;html=1;strokeColor=none;fillColor=#1976D2;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=16;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="500" y="730" width="400" height="35" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l4-class" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#42A5F5;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="780" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="l4-class-icon" value="📊" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="160" y="790" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="l4-class-title" value="数据分类" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="200" y="795" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="l4-class-desc" value="敏感数据识别&#xa;分级保护" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="160" y="825" width="160" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l4-tls" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#42A5F5;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="780" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="l4-tls-icon" value="🔐" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="370" y="790" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="l4-tls-title" value="传输加密 TLS" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="410" y="795" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="l4-tls-desc" value="端到端加密&#xa;TLS 1.3" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="370" y="825" width="160" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l4-storage" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#42A5F5;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="780" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="l4-storage-icon" value="💾" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="580" y="790" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="l4-storage-title" value="存储加密" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="620" y="795" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="l4-storage-desc" value="静态数据加密&#xa;密钥管理" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="580" y="825" width="160" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l4-backup" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#42A5F5;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="780" y="780" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="l4-backup-icon" value="💿" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="790" y="790" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="l4-backup-title" value="备份加密" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="830" y="795" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="l4-backup-desc" value="备份数据加密&#xa;异地存储" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="790" y="825" width="160" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l4-audit" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#42A5F5;strokeWidth=2;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="990" y="780" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="l4-audit-icon" value="📜" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="790" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="l4-audit-title" value="审计日志" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="795" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="l4-audit-desc" value="操作记录&#xa;合规审计" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="825" width="160" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- 图例 -->
+        <mxCell id="legend-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#E0E0E0;" vertex="1" parent="1">
+          <mxGeometry x="100" y="910" width="600" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-title" value="图例:" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="115" y="920" width="40" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="l1-legend" value="L1 边界" style="text;html=1;strokeColor=none;fillColor=#FFEBEE;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=10;fontColor=#C62828;" vertex="1" parent="1">
+          <mxGeometry x="170" y="925" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="l2-legend" value="L2 认证" style="text;html=1;strokeColor=none;fillColor=#FFF3E0;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=10;fontColor=#E65100;" vertex="1" parent="1">
+          <mxGeometry x="250" y="925" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="l3-legend" value="L3 应用" style="text;html=1;strokeColor=none;fillColor=#E8F5E9;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=10;fontColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="330" y="925" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="l4-legend" value="L4 数据" style="text;html=1;strokeColor=none;fillColor=#E3F2FD;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=10;fontColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="410" y="925" width="60" height="20" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

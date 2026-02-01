@@ -1,0 +1,120 @@
+{
+  "datacenter": "digital-bank-poc",
+  "data_dir": "/consul/data",
+  "log_level": "INFO",
+  "node_name": "consul-server",
+  "server": true,
+  "bootstrap_expect": 1,
+  "ui_config": {
+    "enabled": true,
+    "content_path": "/ui/"
+  },
+  "client_addr": "0.0.0.0",
+  "bind_addr": "0.0.0.0",
+  "ports": {
+    "http": 8500,
+    "dns": 8600,
+    "serf_lan": 8301,
+    "serf_wan": 8302,
+    "server": 8300
+  },
+  "connect": {
+    "enabled": true
+  },
+  "acl": {
+    "enabled": false,
+    "default_policy": "allow"
+  },
+  "services": [
+    {
+      "id": "core-bank-service",
+      "name": "core-bank-service",
+      "tags": [
+        "banking",
+        "api",
+        "java",
+        "spring-boot"
+      ],
+      "port": 8080,
+      "address": "core-bank-service.digital-bank-poc.svc.cluster.local",
+      "check": {
+        "http": "http://core-bank-service.digital-bank-poc.svc.cluster.local:8080/health",
+        "interval": "10s",
+        "timeout": "3s",
+        "deregister_critical_service_after": "30s"
+      }
+    },
+    {
+      "id": "payment-service",
+      "name": "payment-service",
+      "tags": [
+        "payment",
+        "settlement",
+        "api",
+        "nodejs",
+        "express"
+      ],
+      "port": 3000,
+      "address": "payment-service.digital-bank-poc.svc.cluster.local",
+      "check": {
+        "http": "http://payment-service.digital-bank-poc.svc.cluster.local:3000/health",
+        "interval": "10s",
+        "timeout": "3s",
+        "deregister_critical_service_after": "30s"
+      }
+    },
+    {
+      "id": "risk-service",
+      "name": "risk-service",
+      "tags": [
+        "risk",
+        "compliance",
+        "api",
+        "python",
+        "fastapi"
+      ],
+      "port": 8000,
+      "address": "risk-service.digital-bank-poc.svc.cluster.local",
+      "check": {
+        "http": "http://risk-service.digital-bank-poc.svc.cluster.local:8000/health",
+        "interval": "10s",
+        "timeout": "3s",
+        "deregister_critical_service_after": "30s"
+      }
+    },
+    {
+      "id": "kong-gateway",
+      "name": "kong-gateway",
+      "tags": [
+        "gateway",
+        "api-gateway",
+        "proxy"
+      ],
+      "port": 8000,
+      "address": "kong.digital-bank-poc.svc.cluster.local",
+      "check": {
+        "http": "http://kong.digital-bank-poc.svc.cluster.local:8001/status",
+        "interval": "10s",
+        "timeout": "3s",
+        "deregister_critical_service_after": "30s"
+      }
+    },
+    {
+      "id": "nginx",
+      "name": "nginx",
+      "tags": [
+        "nginx",
+        "reverse-proxy",
+        "load-balancer"
+      ],
+      "port": 80,
+      "address": "nginx.digital-bank-poc.svc.cluster.local",
+      "check": {
+        "http": "http://nginx.digital-bank-poc.svc.cluster.local:80/health",
+        "interval": "10s",
+        "timeout": "3s",
+        "deregister_critical_service_after": "30s"
+      }
+    }
+  ]
+}

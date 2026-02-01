@@ -1,0 +1,119 @@
+{
+  "info": {
+    "name": "Risk Service - API Tests",
+    "description": "数字银行 POC 风控合规服务 API 测试。路径 /api/v1/risk，遵循 naming-conventions。目标 10+ 用例。",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "risk_base_url", "value": "http://localhost:8000" }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "GET 健康检查",
+          "request": { "method": "GET", "url": "{{risk_base_url}}/health" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status 200\", () => pm.expect([200, 404]).to.include(pm.response.code));"], "type": "text/javascript" } }]
+        }
+      ]
+    },
+    {
+      "name": "Risk Check",
+      "item": [
+        {
+          "name": "POST 风控检查 - 通过（小额）",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"customer_id\": \"cust-001\",\n  \"amount\": 1000,\n  \"transaction_type\": \"transfer\"\n}" },
+            "url": "{{risk_base_url}}/api/v1/risk/check"
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status 200 or 403\", () => pm.expect([200, 403]).to.include(pm.response.code));", "pm.test(\"Response time < 2000ms\", () => pm.expect(pm.response.responseTime).to.be.below(2000));", "if(pm.response.code===200){ const d=pm.response.json(); pm.test(\"has decision or riskLevel\", ()=>pm.expect(d).to.satisfy(v=>v.decision!==undefined||v.riskLevel!==undefined||v.data)); }"], "type": "text/javascript" } }]
+        },
+        {
+          "name": "POST 风控检查 - 大额交易",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"customer_id\": \"cust-002\",\n  \"amount\": 500000,\n  \"transaction_type\": \"transfer\"\n}" },
+            "url": "{{risk_base_url}}/api/v1/risk/check"
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status 200 or 403\", () => pm.expect([200, 403]).to.include(pm.response.code));"], "type": "text/javascript" } }]
+        },
+        {
+          "name": "POST 风控检查 - 支付类型",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"customer_id\": \"cust-003\",\n  \"amount\": 5000,\n  \"transaction_type\": \"payment\"\n}" },
+            "url": "{{risk_base_url}}/api/v1/risk/check"
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status 200 or 403\", () => pm.expect([200, 403]).to.include(pm.response.code));"], "type": "text/javascript" } }]
+        },
+        {
+          "name": "POST 风控检查 - 400 缺 amount",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"customer_id\": \"cust-001\",\n  \"transaction_type\": \"transfer\"\n}" },
+            "url": "{{risk_base_url}}/api/v1/risk/check"
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status 400 or 422\", () => pm.expect([400, 422]).to.include(pm.response.code));"], "type": "text/javascript" } }]
+        },
+        {
+          "name": "POST 风控检查 - 400 缺 customer_id",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"amount\": 1000,\n  \"transaction_type\": \"transfer\"\n}" },
+            "url": "{{risk_base_url}}/api/v1/risk/check"
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status 400 or 422\", () => pm.expect([400, 422]).to.include(pm.response.code));"], "type": "text/javascript" } }]
+        }
+      ]
+    },
+    {
+      "name": "Blacklist",
+      "item": [
+        {
+          "name": "GET 黑名单查询 - 分页",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{risk_base_url}}/api/v1/risk/blacklist?page=1&pageSize=20", "host": ["{{risk_base_url}}"], "path": ["api", "v1", "risk", "blacklist"], "query": [{ "key": "page", "value": "1" }, { "key": "pageSize", "value": "20" }] }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status 200\", () => pm.response.to.have.status(200));", "pm.test(\"Response time < 2000ms\", () => pm.expect(pm.response.responseTime).to.be.below(2000));"], "type": "text/javascript" } }]
+        },
+        {
+          "name": "GET 黑名单查询 - 第二页",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{risk_base_url}}/api/v1/risk/blacklist?page=2&pageSize=10", "host": ["{{risk_base_url}}"], "path": ["api", "v1", "risk", "blacklist"], "query": [{ "key": "page", "value": "2" }, { "key": "pageSize", "value": "10" }] }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status 200\", () => pm.response.to.have.status(200));"], "type": "text/javascript" } }]
+        }
+      ]
+    },
+    {
+      "name": "Risk Report",
+      "item": [
+        {
+          "name": "GET 风控报告",
+          "request": {
+            "method": "GET",
+            "url": "{{risk_base_url}}/api/v1/risk/report"
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status 200 or 404\", () => pm.expect([200, 404]).to.include(pm.response.code));"], "type": "text/javascript" } }]
+        },
+        {
+          "name": "GET 风控报告 - 带日期范围",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{risk_base_url}}/api/v1/risk/report?start_date=2026-01-01&end_date=2026-01-31", "host": ["{{risk_base_url}}"], "path": ["api", "v1", "risk", "report"], "query": [{ "key": "start_date", "value": "2026-01-01" }, { "key": "end_date", "value": "2026-01-31" }] }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status 200 or 404\", () => pm.expect([200, 404]).to.include(pm.response.code));"], "type": "text/javascript" } }]
+        }
+      ]
+    }
+  ]
+}

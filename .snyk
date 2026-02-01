@@ -1,0 +1,21 @@
+# Snyk (https://snyk.io) policy file - Digital Bank POC
+# 依赖漏洞扫描策略；高危/严重阻断。命名: 漏洞 ID 等见 naming-conventions (Agent 7)
+# 维护: Agent 7 (安全扫描卫士)
+
+version: v1.25.0
+
+# 补丁: 自动应用可用补丁（仅 patch，不自动 major/minor）
+patch: {}
+
+# 忽略: 仅经审批的例外，需注明到期与理由
+ignore: {}
+
+# 例外不建议在此新增；优先升级或换库。若确需忽略:
+# ignore:
+#   'SNYK-JAVA-ORGSPRINGFRAMEWORK-1234567':
+#     - '*':
+#         reason: 已评估暂无利用路径，计划 Q2 升级
+#         expires: 2026-06-30T00:00:00.000Z
+
+# 阻断阈值（与 dependency-scan-config 一致；CLI 可 -severity-threshold=high 覆盖）
+severity-threshold: high

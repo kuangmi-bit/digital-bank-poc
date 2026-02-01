@@ -1,0 +1,352 @@
+<mxfile host="app.diagrams.net" modified="2026-02-01T00:00:00.000Z" agent="Claude" version="21.0.0" etag="data-model" type="device">
+  <diagram id="er-diagram" name="核心银行数据模型">
+    <mxGraphModel dx="1600" dy="1100" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- 背景框 -->
+        <mxCell id="bg-frame" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#E0E0E0;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="30" width="1520" height="1040" as="geometry" />
+        </mxCell>
+
+        <!-- 标题 -->
+        <mxCell id="title" value="核心银行数据模型 (PostgreSQL)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="550" y="50" width="500" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- customers 表 -->
+        <mxCell id="customers-table" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1976D2;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="100" y="130" width="280" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="customers-header" value="customers" style="text;html=1;strokeColor=none;fillColor=#1976D2;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="100" y="130" width="280" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="customers-pk" value="🔑 id" style="text;html=1;strokeColor=none;fillColor=#E3F2FD;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#1976D2;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="100" y="165" width="200" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="customers-pk-type" value="PK" style="text;html=1;strokeColor=none;fillColor=#E3F2FD;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=1;fontColor=#1976D2;spacingRight=10;" vertex="1" parent="1">
+          <mxGeometry x="280" y="165" width="100" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="customers-name" value="name" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="100" y="190" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="customers-email" value="email" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="100" y="212" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="customers-phone" value="phone" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="100" y="234" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="customers-id-type" value="id_type" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="100" y="256" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="customers-id-number" value="id_number" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="100" y="278" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="customers-status" value="status" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="100" y="300" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="customers-created" value="created_at" style="text;html=1;strokeColor=none;fillColor=#F5F5F5;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#666666;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="100" y="325" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="customers-updated" value="updated_at" style="text;html=1;strokeColor=none;fillColor=#F5F5F5;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#666666;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="100" y="347" width="280" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- accounts 表 -->
+        <mxCell id="accounts-table" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#388E3C;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="500" y="130" width="280" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="accounts-header" value="accounts" style="text;html=1;strokeColor=none;fillColor=#388E3C;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="500" y="130" width="280" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="accounts-pk" value="🔑 id" style="text;html=1;strokeColor=none;fillColor=#E8F5E9;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#388E3C;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="500" y="165" width="200" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="accounts-pk-type" value="PK" style="text;html=1;strokeColor=none;fillColor=#E8F5E9;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=1;fontColor=#388E3C;spacingRight=10;" vertex="1" parent="1">
+          <mxGeometry x="680" y="165" width="100" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="accounts-number" value="account_number" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="500" y="190" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="accounts-fk" value="🔗 customer_id" style="text;html=1;strokeColor=none;fillColor=#FFF3E0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=1;fontColor=#F57C00;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="500" y="212" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="accounts-fk-type" value="FK" style="text;html=1;strokeColor=none;fillColor=#FFF3E0;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=1;fontColor=#F57C00;spacingRight=10;" vertex="1" parent="1">
+          <mxGeometry x="680" y="212" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="accounts-type" value="account_type" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="500" y="234" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="accounts-balance" value="balance" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="500" y="256" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="accounts-currency" value="currency" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="500" y="278" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="accounts-status" value="status" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="500" y="300" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="accounts-created" value="created_at" style="text;html=1;strokeColor=none;fillColor=#F5F5F5;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#666666;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="500" y="325" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="accounts-updated" value="updated_at" style="text;html=1;strokeColor=none;fillColor=#F5F5F5;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#666666;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="500" y="347" width="280" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- transactions 表 -->
+        <mxCell id="transactions-table" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=#F57C00;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="900" y="130" width="280" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="transactions-header" value="transactions" style="text;html=1;strokeColor=none;fillColor=#F57C00;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="900" y="130" width="280" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="transactions-pk" value="🔑 id" style="text;html=1;strokeColor=none;fillColor=#FFF3E0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#F57C00;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="900" y="165" width="200" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="transactions-pk-type" value="PK" style="text;html=1;strokeColor=none;fillColor=#FFF3E0;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=1;fontColor=#F57C00;spacingRight=10;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="165" width="100" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="transactions-tid" value="transaction_id" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="900" y="190" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="transactions-fk1" value="🔗 account_id" style="text;html=1;strokeColor=none;fillColor=#E8F5E9;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=1;fontColor=#388E3C;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="900" y="212" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="transactions-fk1-type" value="FK" style="text;html=1;strokeColor=none;fillColor=#E8F5E9;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=1;fontColor=#388E3C;spacingRight=10;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="212" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="transactions-counter" value="counter_acct_id" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="900" y="234" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="transactions-amount" value="amount" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="900" y="256" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="transactions-type" value="type" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="900" y="278" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="transactions-status" value="status" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="900" y="300" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="transactions-ref" value="ref_id" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="900" y="322" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="transactions-remark" value="remark" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="900" y="344" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="transactions-created" value="created_at" style="text;html=1;strokeColor=none;fillColor=#F5F5F5;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#666666;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="900" y="370" width="280" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- 关系连线 customers -> accounts -->
+        <mxCell id="rel-cust-acc" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#1976D2;endArrow=ERmany;endFill=0;startArrow=ERone;startFill=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="380" y="222" as="sourcePoint" />
+            <mxPoint x="500" y="222" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel-cust-acc-label" value="1:N" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=1;fontColor=#1976D2;" vertex="1" parent="1">
+          <mxGeometry x="420" y="200" width="40" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- 关系连线 accounts -> transactions -->
+        <mxCell id="rel-acc-txn" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#388E3C;endArrow=ERmany;endFill=0;startArrow=ERone;startFill=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="780" y="222" as="sourcePoint" />
+            <mxPoint x="900" y="222" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel-acc-txn-label" value="1:N" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=1;fontColor=#388E3C;" vertex="1" parent="1">
+          <mxGeometry x="820" y="200" width="40" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- batch_transfers 表 -->
+        <mxCell id="batch-table" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E1BEE7;strokeColor=#7B1FA2;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="100" y="480" width="280" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="batch-header" value="batch_transfers" style="text;html=1;strokeColor=none;fillColor=#7B1FA2;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="100" y="480" width="280" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="batch-pk" value="🔑 id" style="text;html=1;strokeColor=none;fillColor=#F3E5F5;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#7B1FA2;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="100" y="515" width="200" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="batch-pk-type" value="PK" style="text;html=1;strokeColor=none;fillColor=#F3E5F5;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=1;fontColor=#7B1FA2;spacingRight=10;" vertex="1" parent="1">
+          <mxGeometry x="280" y="515" width="100" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="batch-bid" value="batch_id" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="100" y="540" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="batch-status" value="status" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="100" y="562" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="batch-total" value="total_count" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="100" y="584" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="batch-success" value="success_count" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="100" y="606" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="batch-failed" value="failed_count" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="100" y="628" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="batch-created" value="created_at" style="text;html=1;strokeColor=none;fillColor=#F5F5F5;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#666666;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="100" y="655" width="280" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- scheduled_transfers 表 -->
+        <mxCell id="scheduled-table" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#B2DFDB;strokeColor=#00796B;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="500" y="480" width="280" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="scheduled-header" value="scheduled_transfers" style="text;html=1;strokeColor=none;fillColor=#00796B;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="500" y="480" width="280" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="scheduled-pk" value="🔑 id" style="text;html=1;strokeColor=none;fillColor=#E0F2F1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#00796B;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="500" y="515" width="200" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="scheduled-pk-type" value="PK" style="text;html=1;strokeColor=none;fillColor=#E0F2F1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=1;fontColor=#00796B;spacingRight=10;" vertex="1" parent="1">
+          <mxGeometry x="680" y="515" width="100" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="scheduled-sid" value="scheduled_id" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="500" y="540" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="scheduled-from" value="🔗 from_account_id" style="text;html=1;strokeColor=none;fillColor=#E8F5E9;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=1;fontColor=#388E3C;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="500" y="562" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="scheduled-from-fk" value="FK" style="text;html=1;strokeColor=none;fillColor=#E8F5E9;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=1;fontColor=#388E3C;spacingRight=10;" vertex="1" parent="1">
+          <mxGeometry x="680" y="562" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="scheduled-to" value="🔗 to_account_id" style="text;html=1;strokeColor=none;fillColor=#E8F5E9;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=1;fontColor=#388E3C;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="500" y="584" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="scheduled-to-fk" value="FK" style="text;html=1;strokeColor=none;fillColor=#E8F5E9;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=1;fontColor=#388E3C;spacingRight=10;" vertex="1" parent="1">
+          <mxGeometry x="680" y="584" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="scheduled-amount" value="amount" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="500" y="606" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="scheduled-time" value="scheduled_time" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="500" y="628" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="scheduled-status" value="status" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="500" y="650" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="scheduled-txn" value="🔗 transaction_id" style="text;html=1;strokeColor=none;fillColor=#FFF3E0;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=1;fontColor=#F57C00;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="500" y="672" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="scheduled-txn-fk" value="FK" style="text;html=1;strokeColor=none;fillColor=#FFF3E0;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=1;fontColor=#F57C00;spacingRight=10;" vertex="1" parent="1">
+          <mxGeometry x="680" y="672" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="scheduled-retry" value="retry_count" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="500" y="694" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="scheduled-error" value="error_message" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="500" y="716" width="280" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- outbox_events 表 -->
+        <mxCell id="outbox-table" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFCCBC;strokeColor=#E64A19;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="900" y="510" width="280" height="290" as="geometry" />
+        </mxCell>
+        <mxCell id="outbox-header" value="outbox_events" style="text;html=1;strokeColor=none;fillColor=#E64A19;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="900" y="510" width="280" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="outbox-badge" value="Outbox Pattern&#xa;分布式事务" style="text;html=1;strokeColor=#E64A19;fillColor=#FFF3E0;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=10;fontStyle=1;fontColor=#E64A19;" vertex="1" parent="1">
+          <mxGeometry x="1190" y="515" width="80" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="outbox-pk" value="🔑 id" style="text;html=1;strokeColor=none;fillColor=#FFCCBC;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#E64A19;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="900" y="545" width="200" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="outbox-pk-type" value="PK" style="text;html=1;strokeColor=none;fillColor=#FFCCBC;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=1;fontColor=#E64A19;spacingRight=10;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="545" width="100" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="outbox-event-type" value="event_type" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="900" y="570" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="outbox-agg-type" value="aggregate_type" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="900" y="592" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="outbox-agg-id" value="aggregate_id" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="900" y="614" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="outbox-idem" value="idempotency_key" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="900" y="636" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="outbox-payload" value="payload (JSONB)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="900" y="658" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="outbox-status" value="status" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="900" y="680" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="outbox-created" value="created_at" style="text;html=1;strokeColor=none;fillColor=#F5F5F5;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#666666;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="900" y="705" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="outbox-processed" value="processed_at" style="text;html=1;strokeColor=none;fillColor=#F5F5F5;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#666666;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="900" y="727" width="280" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- 关系连线 scheduled -> accounts -->
+        <mxCell id="rel-sched-acc" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#00796B;endArrow=ERone;endFill=0;startArrow=ERmany;startFill=0;dashed=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="640" y="480" as="sourcePoint" />
+            <mxPoint x="640" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 关系连线 scheduled -> transactions -->
+        <mxCell id="rel-sched-txn" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#F57C00;endArrow=ERzeroToOne;endFill=0;startArrow=ERone;startFill=0;dashed=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="780" y="682" as="sourcePoint" />
+            <mxPoint x="900" y="344" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="840" y="682" />
+              <mxPoint x="840" y="344" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 图例 -->
+        <mxCell id="legend-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#E0E0E0;" vertex="1" parent="1">
+          <mxGeometry x="100" y="850" width="800" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-title" value="图例" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="120" y="860" width="50" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-pk" value="🔑 PK" style="text;html=1;strokeColor=none;fillColor=#E3F2FD;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=10;fontStyle=1;fontColor=#1976D2;" vertex="1" parent="1">
+          <mxGeometry x="120" y="890" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-pk-text" value="主键" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="185" y="890" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-fk" value="🔗 FK" style="text;html=1;strokeColor=none;fillColor=#FFF3E0;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=10;fontStyle=1;fontColor=#F57C00;" vertex="1" parent="1">
+          <mxGeometry x="240" y="890" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-fk-text" value="外键" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="305" y="890" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-1n" value="─●" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="360" y="890" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-1n-text" value="一对多" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="405" y="890" width="50" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-audit" value="created/updated" style="text;html=1;strokeColor=none;fillColor=#F5F5F5;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=9;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="470" y="890" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-audit-text" value="审计字段" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="575" y="890" width="60" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- 表说明 -->
+        <mxCell id="table-note" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#4CAF50;" vertex="1" parent="1">
+          <mxGeometry x="950" y="850" width="550" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="table-note-title" value="数据表说明" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="970" y="860" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="table-note-content" value="• customers: 客户基本信息  • accounts: 账户信息（关联客户）&#xa;• transactions: 交易记录  • batch_transfers: 批量转账任务&#xa;• scheduled_transfers: 预约转账  • outbox_events: 分布式事务事件表" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="970" y="880" width="510" height="45" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

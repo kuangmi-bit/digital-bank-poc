@@ -1,0 +1,406 @@
+_format_version: "3.0"
+_transform: true
+
+# Kong API Gateway基础配置
+# 用于数字银行POC系统的API网关路由、限流、认证等规则
+
+# 服务定义
+services:
+  # 核心银行服务
+  - name: core-bank-service
+    url: http://core-bank-service.digital-bank-poc.svc.cluster.local:8080
+    protocol: http
+    host: core-bank-service.digital-bank-poc.svc.cluster.local
+    port: 8080
+    path: /
+    # technical-standards: API 网关超时 60s；ADR-004: 重试最多 3 次
+    connect_timeout: 5000
+    read_timeout: 60000
+    write_timeout: 60000
+    retries: 3
+    tags:
+      - banking
+      - core
+      - api
+
+  # 支付清算服务
+  - name: payment-service
+    url: http://payment-service.digital-bank-poc.svc.cluster.local:3000
+    protocol: http
+    host: payment-service.digital-bank-poc.svc.cluster.local
+    port: 3000
+    path: /
+    connect_timeout: 5000
+    read_timeout: 60000
+    write_timeout: 60000
+    retries: 3
+    tags:
+      - payment
+      - settlement
+      - api
+
+  # 风控合规服务
+  - name: risk-service
+    url: http://risk-service.digital-bank-poc.svc.cluster.local:8000
+    protocol: http
+    host: risk-service.digital-bank-poc.svc.cluster.local
+    port: 8000
+    path: /
+    connect_timeout: 5000
+    read_timeout: 60000
+    write_timeout: 60000
+    retries: 3
+    tags:
+      - risk
+      - compliance
+      - api
+
+# 路由定义
+routes:
+  # 核心银行服务路由
+  - name: core-bank-accounts-route
+    service: core-bank-service
+    paths:
+      - /api/v1/accounts
+    methods:
+      - GET
+      - POST
+      - PUT
+      - PATCH
+      - DELETE
+    strip_path: false
+    preserve_host: false
+    protocols:
+      - http
+      - https
+    tags:
+      - accounts
+      - banking
+
+  - name: core-bank-customers-route
+    service: core-bank-service
+    paths:
+      - /api/v1/customers
+    methods:
+      - GET
+      - POST
+      - PUT
+      - PATCH
+      - DELETE
+    strip_path: false
+    preserve_host: false
+    protocols:
+      - http
+      - https
+    tags:
+      - customers
+      - banking
+
+  - name: core-bank-transactions-route
+    service: core-bank-service
+    paths:
+      - /api/v1/transactions
+    methods:
+      - GET
+      - POST
+    strip_path: false
+    preserve_host: false
+    protocols:
+      - http
+      - https
+    tags:
+      - transactions
+      - banking
+
+  - name: core-bank-health-route
+    service: core-bank-service
+    paths:
+      - /api/v1/health
+      - /health
+      - /actuator/health
+    methods:
+      - GET
+    strip_path: false
+    preserve_host: false
+    protocols:
+      - http
+      - https
+    tags:
+      - health
+      - monitoring
+
+  # 支付服务路由
+  - name: payment-process-route
+    service: payment-service
+    paths:
+      - /api/v1/payments
+    methods:
+      - GET
+      - POST
+    strip_path: false
+    preserve_host: false
+    protocols:
+      - http
+      - https
+    tags:
+      - payment
+      - processing
+
+  - name: payment-settlement-route
+    service: payment-service
+    paths:
+      - /api/v1/settlements
+    methods:
+      - GET
+      - POST
+    strip_path: false
+    preserve_host: false
+    protocols:
+      - http
+      - https
+    tags:
+      - settlement
+      - payment
+
+  - name: payment-callback-route
+    service: payment-service
+    paths:
+      - /api/v1/payments/callback
+    methods:
+      - POST
+    strip_path: false
+    preserve_host: false
+    protocols:
+      - http
+      - https
+    tags:
+      - callback
+      - payment
+
+  # 风控服务路由
+  - name: risk-check-route
+    service: risk-service
+    paths:
+      - /api/v1/risk/check
+    methods:
+      - POST
+    strip_path: false
+    preserve_host: false
+    protocols:
+      - http
+      - https
+    tags:
+      - risk
+      - check
+
+  - name: risk-rules-route
+    service: risk-service
+    paths:
+      - /api/v1/risk/rules
+    methods:
+      - GET
+      - POST
+      - PUT
+      - DELETE
+    strip_path: false
+    preserve_host: false
+    protocols:
+      - http
+      - https
+    tags:
+      - risk
+      - rules
+
+  - name: risk-blacklist-route
+    service: risk-service
+    paths:
+      - /api/v1/risk/blacklist
+    methods:
+      - GET
+      - POST
+      - DELETE
+    strip_path: false
+    preserve_host: false
+    protocols:
+      - http
+      - https
+    tags:
+      - risk
+      - blacklist
+
+# 插件配置
+plugins:
+  # 全局CORS配置
+  - name: cors
+    config:
+      origins:
+        # 避免 credentials=true + "*" 导致浏览器拒绝
+        - "http://localhost"
+        - "http://127.0.0.1"
+        - "http://localhost:5173"
+        - "http://127.0.0.1:5173"
+        - "http://localhost:3000"
+      methods:
+        - GET
+        - POST
+        - PUT
+        - PATCH
+        - DELETE
+        - OPTIONS
+      headers:
+        - Accept
+        - Accept-Version
+        - Content-Length
+        - Content-MD5
+        - Content-Type
+        - Date
+        - Authorization
+        - X-Requested-With
+      exposed_headers:
+        - X-Auth-Token
+      credentials: true
+      max_age: 3600
+    tags:
+      - global
+      - cors
+
+  # 全局限流: 1000/min, 10000/h（technical-standards 全局限流 1000 req/s，POC 取 1000/min）
+  - name: rate-limiting
+    config:
+      minute: 1000
+      hour: 10000
+      limit_by: ip
+      policy: local
+      fault_tolerant: true
+    tags:
+      - global
+      - rate-limiting
+
+  # JWT 认证（technical-standards 安全规范 / ADR-004）
+  # 仅对业务路由启用；health 与 callback 放行，避免探针/回调被拦截
+  - name: jwt
+    route: core-bank-accounts-route
+    config:
+      key_claim_name: iss
+      claims_to_verify: [exp]
+      run_on_preflight: false
+    tags: [authentication, jwt]
+
+  - name: jwt
+    route: core-bank-customers-route
+    config:
+      key_claim_name: iss
+      claims_to_verify: [exp]
+      run_on_preflight: false
+    tags: [authentication, jwt]
+
+  - name: jwt
+    route: core-bank-transactions-route
+    config:
+      key_claim_name: iss
+      claims_to_verify: [exp]
+      run_on_preflight: false
+    tags: [authentication, jwt]
+
+  - name: jwt
+    route: payment-process-route
+    config:
+      key_claim_name: iss
+      claims_to_verify: [exp]
+      run_on_preflight: false
+    tags: [authentication, jwt]
+
+  - name: jwt
+    route: payment-settlement-route
+    config:
+      key_claim_name: iss
+      claims_to_verify: [exp]
+      run_on_preflight: false
+    tags: [authentication, jwt]
+
+  # payment-callback-route 放行（外部回调建议后续改为签名/白名单）
+
+  - name: jwt
+    route: risk-check-route
+    config:
+      key_claim_name: iss
+      claims_to_verify: [exp]
+      run_on_preflight: false
+    tags: [authentication, jwt]
+
+  - name: jwt
+    route: risk-rules-route
+    config:
+      key_claim_name: iss
+      claims_to_verify: [exp]
+      run_on_preflight: false
+    tags: [authentication, jwt]
+
+  - name: jwt
+    route: risk-blacklist-route
+    config:
+      key_claim_name: iss
+      claims_to_verify: [exp]
+      run_on_preflight: false
+    tags: [authentication, jwt]
+
+  # 账户API限流
+  - name: rate-limiting
+    service: core-bank-service
+    route: core-bank-accounts-route
+    config:
+      minute: 100
+      hour: 1000
+      day: 10000
+      limit_by: ip
+      policy: local
+    tags:
+      - rate-limiting
+      - accounts
+
+  # 支付API限流（更严格）
+  - name: rate-limiting
+    service: payment-service
+    route: payment-process-route
+    config:
+      minute: 50
+      hour: 500
+      day: 5000
+      limit_by: ip
+      policy: local
+    tags:
+      - rate-limiting
+      - payment
+
+  # 风控API限流
+  - name: rate-limiting
+    service: risk-service
+    route: risk-check-route
+    config:
+      minute: 200
+      hour: 2000
+      day: 20000
+      limit_by: ip
+      policy: local
+    tags:
+      - rate-limiting
+      - risk
+
+  # 请求ID追踪
+  - name: correlation-id
+    config:
+      header_name: X-Request-ID
+      echo_downstream: true
+      generator: uuid
+    tags:
+      - tracing
+      - global
+
+# 消费者（POC/Dev 示例；生产需接入 Vault/IdP，勿使用硬编码密钥）
+consumers:
+  - username: api-client
+    tags: [client, dev]
+    jwt_secrets:
+      - key: api-client
+        secret: digitalbank-jwt-dev-secret
+        algorithm: HS256

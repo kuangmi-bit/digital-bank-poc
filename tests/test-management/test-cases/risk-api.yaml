@@ -1,0 +1,20 @@
+# 风控服务 API 用例（TestRail 可导入）
+
+- id: TC-RK-001
+  title: POST 风控检查 - 通过返回 200，拦截返回 403
+  suite: risk
+  priority: 1
+  steps:
+    - action: POST /api/v1/risk/check，body 含 customer_id、amount、transaction_type
+    - action: 检查 code 为 200 或 403，200 时含 decision/riskLevel
+  expected: 200 含风控结果；403 含 errorCode（如 RKB001）
+  tags: [api, risk, smoke]
+
+- id: TC-RK-002
+  title: GET 黑名单查询 - 分页应返回 200
+  suite: risk
+  priority: 2
+  steps:
+    - action: GET /api/v1/risk/blacklist?page=1&pageSize=20
+  expected: 200，分页列表
+  tags: [api, risk, blacklist]

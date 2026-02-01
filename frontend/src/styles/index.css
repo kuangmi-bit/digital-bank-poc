@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 设计系统：全局字体与基础样式 */
+@layer base {
+  html {
+    @apply antialiased;
+  }
+  body {
+    @apply font-sans text-neutral-text bg-neutral-surface-2;
+  }
+}
+
+/* 设计系统：Google Fonts（在 index.html 中通过 link 引入） */
+/* Outfit: 400, 500, 600, 700 | IBM Plex Mono: 400, 500 */
+
+/* Toast 入场动画 */
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

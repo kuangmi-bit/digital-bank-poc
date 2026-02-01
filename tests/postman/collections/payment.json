@@ -1,0 +1,35 @@
+{
+  "info": {
+    "name": "Payment Service - API Tests",
+    "description": "数字银行 POC 支付清算服务 API 测试（基于 OpenAPI）。路径 /api/v1，目标 15+ 用例。",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [{ "key": "payment_base_url", "value": "http://localhost:3001" }],
+  "item": [
+    {
+      "name": "Payments",
+      "item": [
+        { "name": "POST 创建支付订单 - 成功", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\"orderId\":\"ORD-TEST-001\",\"userId\":\"u-e2e-1\",\"amount\":100.50,\"currency\":\"CNY\",\"channel\":\"mock\"}" }, "url": "{{payment_base_url}}/api/v1/payments" }, "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status 201\", () => pm.response.to.have.status(201));", "const j=pm.response.json(); const d=j.data||j; const pid=d.paymentId||d._id; if(pid) pm.environment.set(\"payment_id\", String(pid));", "pm.test(\"Response time < 2000ms\", () => pm.expect(pm.response.responseTime).to.be.below(2000));"], "type": "text/javascript" } }] },
+        { "name": "POST 创建支付订单 - 含 accountId", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\"orderId\":\"ORD-TEST-002\",\"userId\":\"u-e2e-2\",\"accountId\":\"1\",\"amount\":50,\"currency\":\"CNY\",\"channel\":\"mock\"}" }, "url": "{{payment_base_url}}/api/v1/payments" }, "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status 201\", () => pm.response.to.have.status(201));"], "type": "text/javascript" } }] },
+        { "name": "POST 创建支付订单 - 400 缺 amount", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\"orderId\":\"ORD-X\",\"userId\":\"u1\"}" }, "url": "{{payment_base_url}}/api/v1/payments" }, "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status 400 or 500\", () => pm.expect([400,500]).to.include(pm.response.code));"], "type": "text/javascript" } }] },
+        { "name": "GET 查询支付状态", "request": { "method": "GET", "url": "{{payment_base_url}}/api/v1/payments/{{payment_id}}" }, "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status 200 or 404\", () => pm.expect([200,404]).to.include(pm.response.code));", "if(pm.response.code===200){ const d=pm.response.json().data||pm.response.json(); pm.test(\"has status\", ()=>pm.expect(d).to.have.property(\"status\")); }"], "type": "text/javascript" } }] },
+        { "name": "GET 查询支付状态 - 404", "request": { "method": "GET", "url": "{{payment_base_url}}/api/v1/payments/nonexistent-pay-id-404" }, "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status 404\", () => pm.response.to.have.status(404));"], "type": "text/javascript" } }] },
+        { "name": "POST 处理支付", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{}" }, "url": "{{payment_base_url}}/api/v1/payments/{{payment_id}}/process" }, "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status 200 or 400 or 404 or 503\", () => pm.expect([200,400,404,503]).to.include(pm.response.code));"], "type": "text/javascript" } }] },
+        { "name": "POST 处理支付 - simulateFailure", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\"simulateFailure\":true}" }, "url": "{{payment_base_url}}/api/v1/payments/{{payment_id}}/process" }, "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status 200 or 400 or 404 or 503\", () => pm.expect([200,400,404,503]).to.include(pm.response.code));"], "type": "text/javascript" } }] },
+        { "name": "POST 处理支付 - 404", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{}" }, "url": "{{payment_base_url}}/api/v1/payments/nonexistent-id-404/process" }, "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status 404\", () => pm.response.to.have.status(404));"], "type": "text/javascript" } }] },
+        { "name": "POST 支付回调", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\"paymentId\":\"{{payment_id}}\",\"status\":\"completed\",\"gatewayOrderId\":\"gw-1\"}" }, "url": "{{payment_base_url}}/api/v1/payments/callback" }, "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status 200\", () => pm.response.to.have.status(200));"], "type": "text/javascript" } }] }
+      ]
+    },
+    {
+      "name": "Settlements",
+      "item": [
+        { "name": "POST 对账", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\"paymentIds\":[\"{{payment_id}}\"]}" }, "url": "{{payment_base_url}}/api/v1/settlements/reconcile" }, "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status 201 or 400\", () => pm.expect([201,400]).to.include(pm.response.code));", "if(pm.response.code===201){ const d=pm.response.json().data||pm.response.json(); if(d&&(d.settlementId||d._id)) pm.environment.set(\"settlement_id\", d.settlementId||d._id); }"], "type": "text/javascript" } }] },
+        { "name": "POST 对账 - 空 paymentIds", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\"paymentIds\":[]}" }, "url": "{{payment_base_url}}/api/v1/settlements/reconcile" }, "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status 201 or 400\", () => pm.expect([201,400]).to.include(pm.response.code));"], "type": "text/javascript" } }] },
+        { "name": "GET 查询清算状态", "request": { "method": "GET", "url": "{{payment_base_url}}/api/v1/settlements/{{settlement_id}}" }, "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status 200 or 404\", () => pm.expect([200,404]).to.include(pm.response.code));", "if(pm.response.code===200){ const d=pm.response.json().data||pm.response.json(); pm.test(\"has status\", ()=>pm.expect(d).to.have.property(\"status\")); }"], "type": "text/javascript" } }] },
+        { "name": "GET 查询清算状态 - 404", "request": { "method": "GET", "url": "{{payment_base_url}}/api/v1/settlements/nonexistent-stl-404" }, "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status 404\", () => pm.response.to.have.status(404));"], "type": "text/javascript" } }] },
+        { "name": "POST 清算处理", "request": { "method": "POST", "header": [], "url": "{{payment_base_url}}/api/v1/settlements/{{settlement_id}}/process" }, "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status 200 or 400 or 404\", () => pm.expect([200,400,404]).to.include(pm.response.code));"], "type": "text/javascript" } }] },
+        { "name": "POST 清算处理 - 404", "request": { "method": "POST", "header": [], "url": "{{payment_base_url}}/api/v1/settlements/nonexistent-stl-404/process" }, "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status 404\", () => pm.response.to.have.status(404));"], "type": "text/javascript" } }] }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "digital-bank-cypress-e2e",
+  "version": "1.0.0",
+  "description": "Cypress E2E tests for Digital Bank POC",
+  "private": true,
+  "scripts": {
+    "e2e": "cypress run",
+    "e2e:open": "cypress open"
+  },
+  "devDependencies": {
+    "cypress": "^13.6.0"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "digital-bank-postman-tests",
+  "version": "1.0.0",
+  "description": "Postman/Newman API tests for Digital Bank POC",
+  "private": true,
+  "scripts": {
+    "test:postman": "newman run collections/core-bank.json -e environments/dev.json --reporters cli,json --reporter-json-export ../reports/core-bank-test-report.json; newman run collections/payment.json -e environments/dev.json --reporters cli,json --reporter-json-export ../reports/payment-test-report.json; newman run collections/risk.json -e environments/dev.json --reporters cli,json --reporter-json-export ../reports/risk-test-report.json",
+    "test:postman:report": "newman run collections/core-bank.json -e environments/dev.json -r htmlextra --reporter-htmlextra-export ../reports/postman-report.html"
+  },
+  "devDependencies": {
+    "newman": "^6.1.0",
+    "newman-reporter-htmlextra": "^1.23.0"
+  }
+}

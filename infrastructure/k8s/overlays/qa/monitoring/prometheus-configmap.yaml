@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+  labels:
+    app: prometheus
+data:
+  prometheus.yml: |-
+    # Prometheus 监控基础配置 - 数字银行 POC (QA)
+    # 指标命名: {service}.{category}.{metric} (snake_case)
+
+    global:
+      scrape_interval: 15s
+      evaluation_interval: 15s
+
+    # Alertmanager
+    alerting:
+      alertmanagers:
+        - static_configs:
+            - targets:
+                - alertmanager:9093
+
+    # 告警规则
+    rule_files:
+      - /etc/prometheus/alerts/*.yml
+
+    # 抓取配置（同 namespace 内可直接用 Service 名）
+    scrape_configs:
+      - job_name: prometheus
+        static_configs:
+          - targets: [\"localhost:9090\"]
+
+      - job_name: core-bank-service
+        metrics_path: /actuator/prometheus
+        static_configs:
+          - targets: [\"core-bank-service:8080\"]
+
+      - job_name: payment-service
+        static_configs:
+          - targets: [\"payment-service:3001\"]
+
+      - job_name: risk-service
+        static_configs:
+          - targets: [\"risk-service:8000\"]
+
+      # 基础设施（base 中 Service 名为 consul-server）
+      - job_name: consul
+        static_configs:
+          - targets: [\"consul-server:8500\"]

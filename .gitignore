@@ -1,0 +1,91 @@
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# 依赖
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+
+# 构建产物
+target/
+dist/
+build/
+*.class
+*.jar
+*.war
+*.ear
+
+# 日志
+*.log
+logs/
+
+# 环境变量
+.env
+.env.local
+.env.*.local
+
+# 临时文件
+*.tmp
+*.temp
+~$*
+~WRL*.tmp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 测试覆盖率
+coverage/
+.nyc_output/
+
+# 数据库
+*.db
+*.sqlite
+*.sqlite3
+
+# 密钥和证书
+*.key
+*.pem
+*.crt
+secrets/
+
+# Maven（保留 Maven Wrapper：.mvn/、mvnw、mvnw.cmd 已提交，便于无 mvn 时使用 mvnw.cmd）
+
+# Gradle
+.gradle/
+gradlew
+gradlew.bat
+
+# Python
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Node.js
+.npm/
+.yarn/
+.pnp.*
+
+# 编译文件
+*.o
+*.so
+*.dylib
+
+# 备份文件
+*.bak
+*.backup
+
+# 本地配置
+local/
+local.*
+*.local

@@ -1,0 +1,15 @@
+{
+  "id": "digital-bank-dev",
+  "name": "Digital Bank POC - Dev",
+  "values": [
+    { "key": "core_bank_base_url", "value": "http://localhost:8080", "enabled": true },
+    { "key": "payment_base_url", "value": "http://localhost:3001", "enabled": true },
+    { "key": "risk_base_url", "value": "http://localhost:8000", "enabled": true },
+    { "key": "account_id", "value": "", "enabled": true },
+    { "key": "customer_id", "value": "", "enabled": true },
+    { "key": "payment_id", "value": "", "enabled": true },
+    { "key": "to_account_id", "value": "", "enabled": true },
+    { "key": "settlement_id", "value": "", "enabled": true }
+  ],
+  "_postman_variable_scope": "environment"
+}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Agents Overview</title>
+    <style>
+      body { font-family: "Segoe UI", Arial, "Microsoft YaHei", sans-serif; }
+      table { border-collapse: collapse; width: 100%; }
+      th, td { border: 1px solid #999; padding: 8px 10px; vertical-align: top; }
+      th { background: #efefef; font-weight: 700; text-align: left; }
+      td { white-space: pre-wrap; }
+      .col-agent { width: 10%; }
+      .col-role { width: 18%; }
+      .col-stack { width: 22%; }
+      .col-duty { width: 50%; }
+    </style>
+  </head>
+  <body>
+    <table>
+      <thead>
+        <tr>
+          <th class="col-agent">Agent</th>
+          <th class="col-role">角色</th>
+          <th class="col-stack">技术栈</th>
+          <th class="col-duty">核心职责（简要）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Agent 0</td>
+          <td>架构管控中枢</td>
+          <td>N/A</td>
+          <td>架构决策、进度协调、质量把关（双决策窗口 / ADR / 技术标准 / 每日简报）。</td>
+        </tr>
+        <tr>
+          <td>Agent 1</td>
+          <td>核心银行服务引擎</td>
+          <td>Java 17 + Spring Boot</td>
+          <td>账户管理、客户管理、交易处理（转账 / 扣款 / 批量 / 预约）；与风控/支付集成。</td>
+        </tr>
+        <tr>
+          <td>Agent 2</td>
+          <td>支付清算处理器</td>
+          <td>Node.js 20 + Express</td>
+          <td>支付流程、清算对账、支付回调与异步处理（队列 / 重试）；与核心银行扣款集成。</td>
+        </tr>
+        <tr>
+          <td>Agent 3</td>
+          <td>风控合规守护者</td>
+          <td>Python 3.11 + FastAPI</td>
+          <td>风控规则/评分/黑名单/报告与实时监控；规则引擎与性能优化。</td>
+        </tr>
+        <tr>
+          <td>Agent 4</td>
+          <td>前端体验构建器</td>
+          <td>React 18 + TypeScript</td>
+          <td>前端页面与交互体验、API 集成、状态管理、表单校验与错误提示。</td>
+        </tr>
+        <tr>
+          <td>Agent 5</td>
+          <td>应用基础设施层</td>
+          <td>Kong + Consul + Nginx</td>
+          <td>API 网关路由/认证/限流/CORS；服务注册发现；基础设施配置与验证。</td>
+        </tr>
+        <tr>
+          <td>Agent 6</td>
+          <td>测试执行自动机</td>
+          <td>Postman + Cypress + JMeter</td>
+          <td>自动化测试资产与执行（API/E2E/性能）；覆盖率与测试报告。</td>
+        </tr>
+        <tr>
+          <td>Agent 7</td>
+          <td>安全扫描卫士</td>
+          <td>SonarQube + OWASP ZAP + Vault</td>
+          <td>安全扫描与漏洞复核/加固建议；安全基线与合规检查。</td>
+        </tr>
+        <tr>
+          <td>Agent 8</td>
+          <td>运维自动化引擎</td>
+          <td>Kubernetes + Terraform</td>
+          <td>CI/CD、部署自动化、监控告警、弹性伸缩与运维工具链。</td>
+        </tr>
+        <tr>
+          <td>Agent 9</td>
+          <td>数据处理分析师</td>
+          <td>PostgreSQL + MongoDB + Redis + Flyway</td>
+          <td>数据模型/字典/迁移与测试数据；数据质量检查与分析报告。</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
+

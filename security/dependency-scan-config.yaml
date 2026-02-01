@@ -1,0 +1,93 @@
+# 依赖漏洞扫描配置 - Digital Bank POC
+# 支持: Snyk, Dependabot (GitHub), GitLab Dependency Scanning
+# 技术标准: 依赖扫描每日，高危阻断；命名规范 kebab-case
+# 维护者: Agent 7 (安全扫描卫士)
+
+project: digital-bank-poc
+schedule: "0 2 * * *"   # 每日 02:00，可被 CI 覆盖
+
+# --- 各服务扫描路径与包管理器 ---
+services:
+  - name: core-bank-service
+    path: core-bank-service
+    packageFile: pom.xml
+    manifest: pom.xml
+    ecosystem: maven
+
+  - name: payment-service
+    path: payment-service
+    packageFile: package.json
+    manifest: package-lock.json
+    ecosystem: npm
+
+  - name: risk-service
+    path: risk-service
+    packageFile: requirements.txt
+    manifest: requirements.txt
+    ecosystem: pip
+
+  - name: frontend
+    path: frontend
+    packageFile: package.json
+    manifest: package-lock.json
+    ecosystem: npm
+
+# --- 排除（glob，相对项目根） ---
+exclude:
+  - "**/node_modules/**"
+  - "**/vendor/**"
+  - "**/__pycache__/**"
+  - "**/target/**"
+  - "**/dist/**"
+  - "**/build/**"
+  - "**/*.min.js"
+
+# --- 策略 ---
+policy:
+  failOn: high          # high/critical 阻断
+  allow: []             # 例外需经 Agent 0 审批并记录
+  ignore: []            # 见 .snyk 中的 ignore（Snyk 以 .snyk 为准）
+
+# --- Snyk ---
+# 项目根放置 .snyk 策略；CI 中使用:
+#   snyk test --severity-threshold=high --policy-path=.snyk
+# 需在 GitLab CI 变量配置 SNYK_TOKEN
+snyk:
+  severityThreshold: high
+  policyPath: .snyk
+  monitor: true         # snyk monitor 上传依赖图（可选）
+
+# --- Dependabot (GitHub) ---
+# 使用 GitHub 时，在 .github/dependabot.yml 配置，示例:
+#
+# version: 2
+# updates:
+#   - package-ecosystem: "maven"
+#     directory: "/core-bank-service"
+#     schedule: { interval: "daily" }
+#     open-pull-requests-limit: 5
+#   - package-ecosystem: "npm"
+#     directory: "/payment-service"
+#     schedule: { interval: "daily" }
+#   - package-ecosystem: "npm"
+#     directory: "/frontend"
+#     schedule: { interval: "daily" }
+#   - package-ecosystem: "pip"
+#     directory: "/risk-service"
+#     schedule: { interval: "daily" }
+#
+# 本仓库当前为 GitLab，可选用 Renovate 或 GitLab 自带的 dependency_scanning 模板。
+
+# --- GitLab Dependency Scanning ---
+# 在 .gitlab-ci.yml 中加入:
+# dependency_scanning:
+#   variables:
+#     DS_DEFAULT_ANALYZERS: "gemnasium, retire.js"
+# 或 include: template: Security/Dependency-Scanning.gitlab-ci.yml
+# 并保证各服务存在对应的 package 文件。
+
+# --- 输出与报告 ---
+output:
+  format: json
+  file: security/reports/dependency-scan-{{ date }}.json
+  # 报告命名: {service}-security-scan-{date}.json 见 naming-conventions Agent 7

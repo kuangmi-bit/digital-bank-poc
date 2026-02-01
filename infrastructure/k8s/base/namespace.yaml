@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: digital-bank-poc
+  labels:
+    app: digital-bank-poc
+    environment: dev
+    managed-by: kubectl

@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TestCase",
+  "description": "Test case for TestRail import or local use. naming-conventions, technical-standards-v1.0",
+  "type": "object",
+  "required": ["id", "title", "suite"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^TC-[A-Z0-9]+-[0-9]+$", "description": "e.g. TC-CB-001" },
+    "title": { "type": "string" },
+    "suite": { "type": "string", "enum": ["core-bank", "payment", "risk", "e2e", "performance"] },
+    "priority": { "type": "integer", "minimum": 1, "maximum": 4, "default": 2 },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "action": { "type": "string" },
+          "expected": { "type": "string" }
+        }
+      }
+    },
+    "expected": { "type": "string" },
+    "preconditions": { "type": "string" },
+    "tags": { "type": "array", "items": { "type": "string" } }
+  }
+}

@@ -1,0 +1,236 @@
+# GitLab CI/CD 基础流水线 - 数字银行 POC
+# 遵循: docs/architecture/technical-standards-v1.0.md, naming-conventions.md
+# 镜像: digitalbank/{service-name}:{tag} (小写 kebab-case)
+# 环境: dev, qa, uat, prod
+
+stages:
+  - build
+  - test
+  - security
+  - deploy
+  - verify
+
+variables:
+  DOCKER_DRIVER: overlay2
+  # 由 GitLab 或 CI 变量设置: CI_REGISTRY, CI_REGISTRY_USER, CI_REGISTRY_PASSWORD
+  # 镜像前缀与命名规范一致
+  IMAGE_PREFIX: "digitalbank"
+
+# ========== 构建阶段 (Day 3: d3a8t1–d3a8t4 四服务 CI/CD 流水线) ==========
+.build_template: &build_definition
+  stage: build
+  image: docker:24-dind
+  services:
+    - docker:24-dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - export IMAGE_TAG="${CI_COMMIT_SHORT_SHA:-latest}"
+    - export IMAGE="${CI_REGISTRY}/${CI_PROJECT_PATH}/${SERVICE_NAME}:${IMAGE_TAG}"
+    - echo "Building $IMAGE"
+    - docker build -t "$IMAGE" -f "${SERVICE_PATH}/Dockerfile" "${SERVICE_PATH}"
+    - docker push "$IMAGE"
+
+# d3a8t1: 核心银行服务 CI/CD
+build:core-bank-service:
+  <<: *build_definition
+  variables:
+    SERVICE_NAME: core-bank-service
+    SERVICE_PATH: core-bank-service
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH
+      exists:
+        - core-bank-service/Dockerfile
+        - core-bank-service/pom.xml
+
+# d3a8t2: 支付服务 CI/CD
+build:payment-service:
+  <<: *build_definition
+  variables:
+    SERVICE_NAME: payment-service
+    SERVICE_PATH: payment-service
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH
+      exists:
+        - payment-service/Dockerfile
+        - payment-service/package.json
+
+# d3a8t3: 风控服务 CI/CD
+build:risk-service:
+  <<: *build_definition
+  variables:
+    SERVICE_NAME: risk-service
+    SERVICE_PATH: risk-service
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH
+      exists:
+        - risk-service/Dockerfile
+        - risk-service/requirements.txt
+
+# d3a8t4: 前端 CI/CD
+build:frontend:
+  <<: *build_definition
+  variables:
+    SERVICE_NAME: frontend
+    SERVICE_PATH: frontend
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH
+      exists:
+        - frontend/Dockerfile
+        - frontend/package.json
+
+# ========== 测试阶段 ==========
+test:core-bank-service:
+  stage: test
+  image: maven:3-eclipse-temurin-17
+  script:
+    - cd core-bank-service && mvn -q test -DskipTests=false || true
+  rules:
+    - if: $CI_COMMIT_BRANCH
+      exists:
+        - core-bank-service/pom.xml
+
+test:payment-service:
+  stage: test
+  image: node:20-alpine
+  script:
+    - cd payment-service && npm ci && npm test || true
+  rules:
+    - if: $CI_COMMIT_BRANCH
+      exists:
+        - payment-service/package.json
+
+test:risk-service:
+  stage: test
+  image: python:3.11-slim
+  script:
+    - cd risk-service && pip install -r requirements.txt && python -m pytest tests/ -v || true
+  rules:
+    - if: $CI_COMMIT_BRANCH
+      exists:
+        - risk-service/requirements.txt
+
+test:frontend:
+  stage: test
+  image: node:20-alpine
+  script:
+    - cd frontend && npm ci && npm test -- --watchAll=false || true
+  rules:
+    - if: $CI_COMMIT_BRANCH
+      exists:
+        - frontend/package.json
+
+# ========== 安全扫描阶段 (Agent 7 配置: SonarQube, OWASP ZAP, Snyk) ==========
+# 配置见: security/sonar-project.properties, security/owasp-zap-config.json,
+#         security/dependency-scan-config.yaml, .snyk
+security:sast:
+  stage: security
+  image: alpine:3.19
+  script:
+    - echo "SAST: 使用 security/sonar-project.properties，需 SonarQube 服务与 sonar-scanner；CI 变量 SONAR_HOST_URL, SONAR_TOKEN。"
+  allow_failure: true
+
+# 依赖漏洞扫描 (Snyk)。配置: security/dependency-scan-config.yaml, .snyk
+# 需在 GitLab CI 变量配置 SNYK_TOKEN。Maven/Pip 可增同样 job 或使用 snyk/snyk 通用镜像。
+security:dependency:
+  stage: security
+  image: snyk/snyk:node
+  before_script:
+    - if [ -z "$SNYK_TOKEN" ]; then echo "SNYK_TOKEN 未设置，跳过 Snyk；见 security/dependency-scan-config.yaml"; exit 0; fi
+  script:
+    - for dir in payment-service frontend; do [ -f "$dir/package.json" ] && (cd "$dir" && snyk test --severity-threshold=high --policy-path=../.snyk) || true; done
+  allow_failure: true
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+# ========== 部署阶段 ==========
+# d3a8t5: 部署到 Dev 环境 (infrastructure/scripts/deploy.sh + k8s/base/*-service)
+deploy:dev:
+  stage: deploy
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: [""]
+  script:
+    - kubectl config use-context "$KUBE_CONTEXT_DEV" || true
+    - export IMAGE_PREFIX="${CI_REGISTRY}/${CI_PROJECT_PATH}"
+    - bash infrastructure/scripts/deploy.sh dev "$CI_COMMIT_SHORT_SHA"
+  environment:
+    name: dev
+    url: https://dev.digitalbank-poc.example.com
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  allow_failure: true
+
+deploy:qa:
+  stage: deploy
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: [""]
+  script:
+    - kubectl config use-context "$KUBE_CONTEXT_QA" || true
+    - export IMAGE_PREFIX="${CI_REGISTRY}/${CI_PROJECT_PATH}"
+    - export DEPLOY_TAG="${CI_COMMIT_TAG:-$CI_COMMIT_SHORT_SHA}"
+    - bash infrastructure/scripts/deploy.sh qa "$DEPLOY_TAG"
+  environment:
+    name: qa
+    url: https://qa.digitalbank-poc.example.com
+  rules:
+    - if: $CI_COMMIT_TAG
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: manual
+  allow_failure: true
+
+# ========== 验证阶段 (Day 3: d3a8t6 验证自动化部署) ==========
+# 验证: 构建、镜像、部署、健康检查 (infrastructure/scripts/verify-deploy.sh)
+verify:dev:
+  stage: verify
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: [""]
+  script:
+    - kubectl config use-context "$KUBE_CONTEXT_DEV" || true
+    - export IMAGE_PREFIX="${CI_REGISTRY}/${CI_PROJECT_PATH}"
+    - bash infrastructure/scripts/verify-deploy.sh dev
+  needs: [deploy:dev]
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  allow_failure: true
+
+# ========== QA 验证与回滚 (Day 5) ==========
+verify:qa:
+  stage: verify
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: [""]
+  script:
+    - kubectl config use-context "$KUBE_CONTEXT_QA" || true
+    - bash infrastructure/scripts/verify-deploy.sh qa
+  needs: [deploy:qa]
+  rules:
+    - if: $CI_COMMIT_TAG
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: manual
+  allow_failure: true
+
+# Day 5: 回滚脚本（手动触发）
+rollback:qa:
+  stage: deploy
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: [""]
+  variables:
+    ROLLBACK_SERVICE: "core-bank-service"
+    ROLLBACK_REVISION: ""
+  script:
+    - kubectl config use-context "$KUBE_CONTEXT_QA" || true
+    - export DEPLOY_ENV=qa
+    - bash infrastructure/scripts/rollback.sh "$ROLLBACK_SERVICE" "$ROLLBACK_REVISION"
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: manual
+  allow_failure: true

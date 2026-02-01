@@ -1,0 +1,15 @@
+# 开发环境配置 - PostgreSQL 本地连接
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/digitalbank
+    username: digitalbank
+    password: digitalbank
+
+  jpa:
+    show-sql: true
+
+logging:
+  level:
+    com.digitalbank: DEBUG
+    org.hibernate.SQL: DEBUG

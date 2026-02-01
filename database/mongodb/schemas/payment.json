@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://digitalbank-poc/schemas/payment.json",
+  "title": "payments",
+  "description": "支付订单文档结构（MongoDB）。字段命名 camelCase，集合名复数 snake_case。",
+  "type": "object",
+  "required": ["paymentId", "orderId", "userId", "amount", "currency", "status", "createdAt"],
+  "properties": {
+    "_id": {
+      "description": "MongoDB 文档 _id，可选由驱动生成",
+      "bsonType": "objectId"
+    },
+    "paymentId": {
+      "description": "支付单号，业务唯一",
+      "type": "string"
+    },
+    "orderId": {
+      "description": "业务订单号",
+      "type": "string"
+    },
+    "userId": {
+      "description": "用户/客户标识，可与核心银行 customer_id 对应",
+      "type": "string"
+    },
+    "accountId": {
+      "description": "扣款账户 ID（核心银行）",
+      "type": "string"
+    },
+    "amount": {
+      "description": "支付金额",
+      "type": "number"
+    },
+    "currency": {
+      "description": "币种，如 CNY",
+      "type": "string"
+    },
+    "status": {
+      "description": "pending, processing, completed, failed, refunded, cancelled",
+      "type": "string",
+      "enum": ["pending", "processing", "completed", "failed", "refunded", "cancelled"]
+    },
+    "channel": {
+      "description": "支付渠道：wechat, alipay, bank_card, mock",
+      "type": "string"
+    },
+    "gatewayResponse": {
+      "description": "支付网关响应（嵌入）",
+      "type": "object",
+      "properties": {
+        "gatewayOrderId": { "type": "string" },
+        "code": { "type": "string" },
+        "message": { "type": "string" },
+        "paidAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "createdAt": {
+      "description": "创建时间，ISO 8601",
+      "type": "string",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "description": "更新时间，ISO 8601",
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "indexes": [
+    { "keys": { "paymentId": 1 }, "options": { "unique": true } },
+    { "keys": { "orderId": 1 } },
+    { "keys": { "userId": 1, "createdAt": -1 } },
+    { "keys": { "status": 1, "createdAt": -1 } },
+    { "keys": { "userId": 1, "status": 1, "createdAt": -1 } }
+  ]
+}

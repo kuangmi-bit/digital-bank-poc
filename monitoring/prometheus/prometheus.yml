@@ -1,0 +1,56 @@
+# Prometheus 监控基础配置 - 数字银行 POC
+# 指标命名: {service}.{category}.{metric} (snake_case)
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+# Alertmanager
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+            - alertmanager:9093
+
+# 告警规则
+rule_files:
+  - /etc/prometheus/alerts/*.yml
+
+# 抓取配置
+scrape_configs:
+  # Prometheus 自监控
+  - job_name: prometheus
+    static_configs:
+      - targets:
+          - localhost:9090
+
+  # 核心银行服务 (Spring Boot Actuator)
+  - job_name: core-bank-service
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets:
+          - core-bank-service:8080
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: core-bank-service
+
+  # 支付服务 (需暴露 /metrics)
+  - job_name: payment-service
+    static_configs:
+      - targets:
+          - payment-service:3001
+
+  # 风控服务 (FastAPI prometheus 或 /metrics)
+  - job_name: risk-service
+    static_configs:
+      - targets:
+          - risk-service:8000
+
+  # 基础设施: Consul, Kong, Nginx (若已暴露 metrics)
+  - job_name: consul
+    static_configs:
+      - targets:
+          - consul:8500
+
+  # Node / cAdvisor / Kube 等可由 K8s 部署时追加

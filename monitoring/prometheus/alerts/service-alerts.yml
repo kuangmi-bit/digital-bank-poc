@@ -1,0 +1,92 @@
+# 基础告警规则 - 数字银行 POC
+# 指标: {service}.{category}.{metric} (snake_case)
+# severity: critical | warning
+
+groups:
+  - name: service-alerts
+    rules:
+      # 服务不可用
+      - alert: ServiceDown
+        expr: up{job=~"core-bank-service|payment-service|risk-service"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "服务 {{ $labels.job }} 不可用"
+          description: "服务 {{ $labels.job }} 已停止响应超过 1 分钟"
+
+      # 高 5xx 错误率
+      - alert: HighErrorRate
+        expr: |
+          sum(rate(http_server_requests_seconds_count{status=~"5.."}[5m])) by (job)
+          /
+          sum(rate(http_server_requests_seconds_count[5m])) by (job)
+          > 0.05
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "服务 {{ $labels.job }} 错误率过高"
+          description: "服务 {{ $labels.job }} 5xx 错误率超过 5%"
+
+      # P95 响应时间过长
+      - alert: HighResponseTime
+        expr: |
+          histogram_quantile(0.95,
+            sum(rate(http_server_requests_seconds_bucket[5m])) by (le, job)
+          ) > 2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "服务 {{ $labels.job }} 响应时间过长"
+          description: "服务 {{ $labels.job }} P95 响应时间超过 2 秒"
+
+      # CPU 使用率过高 (容器)
+      - alert: HighCpuUsage
+        expr: |
+          sum(rate(container_cpu_usage_seconds_total[5m])) by (pod)
+          /
+          sum(container_spec_cpu_quota / container_spec_cpu_period) by (pod)
+          > 0.8
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Pod {{ $labels.pod }} CPU 使用率过高"
+          description: "Pod {{ $labels.pod }} CPU 使用率超过 80%"
+
+      # 内存使用率过高
+      - alert: HighMemoryUsage
+        expr: |
+          sum(container_memory_usage_bytes) by (pod)
+          /
+          sum(container_spec_memory_limit_bytes) by (pod)
+          > 0.85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Pod {{ $labels.pod }} 内存使用率过高"
+          description: "Pod {{ $labels.pod }} 内存使用率超过 85%"
+
+      # 磁盘空间不足
+      - alert: LowDiskSpace
+        expr: |
+          (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"}) < 0.15
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "节点 {{ $labels.instance }} 磁盘空间不足"
+          description: "节点根分区剩余空间不足 15%"
+
+  - name: prometheus-alerts
+    rules:
+      - alert: PrometheusDown
+        expr: up{job="prometheus"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Prometheus 不可用"

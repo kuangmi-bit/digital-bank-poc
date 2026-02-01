@@ -1,0 +1,242 @@
+# 风控规则配置 - YAML 格式
+# 遵循 agent-3-risk SKILL 与 naming-conventions
+# 规则 name/type: snake_case；condition 字段与 limit_rule / frequency_rule 对应
+# score_reject_threshold: 规则链执行完毕后，若 risk_score >= 该值则拒绝，错误码 RKB005
+
+version: "1.1.0"
+updated_at: "2026-02-02T00:00:00Z"
+score_reject_threshold: 75
+
+rules:
+  # ---- 黑名单规则 ----
+  - name: blacklist_check
+    type: blacklist
+    enabled: true
+    priority: 0
+    action: reject
+    message: "用户在黑名单中"
+    error_code: RKB002
+    condition:
+      check_types: ["customer", "account"]
+
+  # ---- 限额规则 ----
+  - name: single_amount_limit
+    type: limit
+    enabled: true
+    priority: 1
+    action: reject
+    message: "超过单笔限额"
+    error_code: RKB003
+    risk_score_add: 50
+    condition:
+      max_amount: 50000
+
+  - name: single_amount_limit_strict
+    type: limit
+    enabled: true
+    priority: 2
+    action: reject
+    message: "单笔超过 10 万，需人工审核"
+    risk_score_add: 30
+    condition:
+      max_amount: 100000
+
+  - name: daily_limit
+    type: limit
+    enabled: true
+    priority: 3
+    action: reject
+    message: "超过单日累计限额"
+    error_code: RKB003
+    risk_score_add: 45
+    condition:
+      max_daily_amount: 200000
+
+  - name: transfer_amount_limit
+    type: limit
+    enabled: true
+    priority: 4
+    action: reject
+    message: "转账单笔超过限额"
+    error_code: RKB003
+    risk_score_add: 40
+    condition:
+      max_amount: 30000
+      transaction_types: ["transfer"]
+
+  - name: payment_amount_limit
+    type: limit
+    enabled: true
+    priority: 5
+    action: reject
+    message: "支付单笔超过限额"
+    error_code: RKB003
+    risk_score_add: 40
+    condition:
+      max_amount: 20000
+      transaction_types: ["payment"]
+
+  # ---- 批量转账规则（ADR-008）----
+  - name: batch_transfer_single_limit
+    type: limit
+    enabled: true
+    priority: 6
+    action: reject
+    message: "批量转账单笔超过限额"
+    error_code: RKB003
+    risk_score_add: 35
+    condition:
+      max_amount: 10000
+      transaction_types: ["batch_transfer"]
+
+  - name: batch_transfer_total_limit
+    type: batch_limit
+    enabled: true
+    priority: 7
+    action: reject
+    message: "批量转账总额超过限额"
+    error_code: RKB003
+    risk_score_add: 50
+    condition:
+      max_batch_total: 500000
+
+  - name: batch_transfer_count_limit
+    type: batch_limit
+    enabled: true
+    priority: 8
+    action: reject
+    message: "批量转账笔数超过限制"
+    error_code: CBB010
+    risk_score_add: 30
+    condition:
+      max_batch_count: 100
+
+  - name: batch_transfer_daily_count
+    type: batch_limit
+    enabled: true
+    priority: 9
+    action: reject
+    message: "单日批量转账批次超过限制"
+    error_code: RKB003
+    risk_score_add: 40
+    condition:
+      max_daily_batch_count: 10
+
+  # ---- 预约转账规则（ADR-008）----
+  - name: scheduled_transfer_amount_limit
+    type: limit
+    enabled: true
+    priority: 10
+    action: reject
+    message: "预约转账金额超过限额"
+    error_code: RKB003
+    risk_score_add: 35
+    condition:
+      max_amount: 50000
+      transaction_types: ["scheduled_transfer"]
+
+  - name: scheduled_transfer_pending_limit
+    type: scheduled_limit
+    enabled: true
+    priority: 11
+    action: reject
+    message: "待执行预约转账笔数超过限制"
+    error_code: RKB003
+    risk_score_add: 30
+    condition:
+      max_pending_count: 20
+
+  # ---- 账单支付规则（ADR-008）----
+  - name: bill_payment_single_limit
+    type: limit
+    enabled: true
+    priority: 12
+    action: reject
+    message: "账单支付单笔超过限额"
+    error_code: RKB003
+    risk_score_add: 30
+    condition:
+      max_amount: 10000
+      transaction_types: ["bill_payment"]
+
+  - name: bill_payment_daily_limit
+    type: limit
+    enabled: true
+    priority: 13
+    action: reject
+    message: "账单支付单日累计超过限额"
+    error_code: RKB003
+    risk_score_add: 40
+    condition:
+      max_daily_amount: 50000
+      transaction_types: ["bill_payment"]
+
+  - name: single_amount_medium
+    type: limit
+    enabled: true
+    priority: 20
+    action: warn
+    message: "单笔金额较高，请注意"
+    risk_score_add: 15
+    condition:
+      max_amount: 20000
+
+  # ---- 频率规则 ----
+  # 依赖 context.count_1h、count_24h，由 RiskService 从 ES 聚合后注入
+  - name: frequency_1h_warn
+    type: frequency
+    enabled: true
+    priority: 30
+    action: warn
+    message: "1 小时内交易次数较多"
+    risk_score_add: 15
+    condition:
+      max_count: 8
+      window: "1h"
+
+  - name: frequency_1h
+    type: frequency
+    enabled: true
+    priority: 31
+    action: reject
+    message: "1 小时内交易次数过多"
+    error_code: RKB004
+    risk_score_add: 40
+    condition:
+      max_count: 10
+      window: "1h"
+
+  - name: frequency_24h
+    type: frequency
+    enabled: true
+    priority: 32
+    action: reject
+    message: "24 小时内交易次数过多"
+    error_code: RKB004
+    risk_score_add: 30
+    condition:
+      max_count: 50
+      window: "24h"
+
+  - name: frequency_24h_warn
+    type: frequency
+    enabled: true
+    priority: 33
+    action: warn
+    message: "24 小时内交易次数较多"
+    risk_score_add: 10
+    condition:
+      max_count: 40
+      window: "24h"
+
+  - name: frequency_24h_sanity
+    type: frequency
+    enabled: true
+    priority: 34
+    action: reject
+    message: "24 小时内交易次数异常"
+    error_code: RKB004
+    risk_score_add: 50
+    condition:
+      max_count: 100
+      window: "24h"

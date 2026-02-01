@@ -1,0 +1,15 @@
+{
+  "name": "digital-bank-test-data-generators",
+  "version": "1.0.0",
+  "description": "Test data generators for Digital Bank POC (Faker.js)",
+  "private": true,
+  "scripts": {
+    "generate": "node run-generate.js all 20",
+    "generate:account": "node run-generate.js account 50",
+    "generate:payment": "node run-generate.js payment 30",
+    "generate:bulk": "node generate-bulk-csv.js"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^8.4.1"
+  }
+}

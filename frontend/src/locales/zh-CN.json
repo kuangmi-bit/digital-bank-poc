@@ -1,0 +1,19 @@
+{
+  "common": {
+    "loading": "加载中…",
+    "submit": "提交",
+    "cancel": "取消",
+    "close": "关闭",
+    "logout": "退出"
+  },
+  "nav": {
+    "accounts": "账户概览",
+    "transfer": "转账",
+    "transactions": "交易历史",
+    "admin": "管理后台"
+  },
+  "home": {
+    "title": "数字银行 POC · 前端",
+    "intro": "Day 2：项目骨架、Tailwind、设计系统、Button/Input/Card、React Router、Axios 已就绪。"
+  }
+}

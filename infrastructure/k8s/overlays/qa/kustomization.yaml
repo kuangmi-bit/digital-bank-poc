@@ -1,0 +1,29 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# QA 环境：命名空间按环境划分（technical-standards）
+namespace: qa
+
+resources:
+  - ../../base
+  - monitoring
+
+commonLabels:
+  environment: qa
+
+# base/namespace.yaml 默认是 digital-bank-poc；在 QA overlay 中重命名为 qa
+patchesJson6902:
+  - target:
+      version: v1
+      kind: Namespace
+      name: digital-bank-poc
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: qa
+      - op: replace
+        path: /metadata/labels/environment
+        value: qa
+      - op: replace
+        path: /metadata/labels/managed-by
+        value: kustomize

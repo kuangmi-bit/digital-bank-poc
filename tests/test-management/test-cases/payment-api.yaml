@@ -1,0 +1,29 @@
+# 支付服务 API 用例（TestRail 可导入）
+
+- id: TC-PY-001
+  title: POST 创建支付订单 - 有效 body 应返回 201 与 paymentId
+  suite: payment
+  priority: 1
+  steps:
+    - action: POST /api/v1/payments，body 含 orderId、amount、currency、channel
+    - action: 检查 code=201，body 含 paymentId 或 _id
+  expected: 201，含支付标识
+  tags: [api, payments, smoke]
+
+- id: TC-PY-002
+  title: GET 查询支付状态 - 存在则 200
+  suite: payment
+  priority: 1
+  steps:
+    - action: GET /api/v1/payments/{payment-id}
+  expected: 200，含 status
+  tags: [api, payments]
+
+- id: TC-PY-003
+  title: POST 处理支付 - 应返回 200 或 400/404
+  suite: payment
+  priority: 2
+  steps:
+    - action: POST /api/v1/payments/{payment-id}/process
+  expected: 200 成功；400 业务失败；404 不存在
+  tags: [api, payments]

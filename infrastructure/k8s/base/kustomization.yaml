@@ -1,0 +1,32 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: digital-bank-poc
+
+resources:
+  - namespace.yaml
+  # 基础设施组件（显式列出文件，便于标准 kustomize/kubectl -k）
+  - consul/configmap.yaml
+  - consul/deployment.yaml
+  - consul/service.yaml
+  - kong/configmap.yaml
+  - kong/deployment.yaml
+  - kong/service.yaml
+  - nginx/configmap.yaml
+  - nginx/deployment.yaml
+  - nginx/service.yaml
+  # Day 3 Agent 8: 应用服务 Deployment+Service
+  - core-bank-service/secret-db.yaml
+  - core-bank-service/deployment.yaml
+  - core-bank-service/service.yaml
+  - payment-service/deployment.yaml
+  - payment-service/service.yaml
+  - risk-service/deployment.yaml
+  - risk-service/service.yaml
+  - frontend/deployment.yaml
+  - frontend/service.yaml
+
+commonLabels:
+  app: digital-bank-poc
+  environment: dev
+  managed-by: kustomize

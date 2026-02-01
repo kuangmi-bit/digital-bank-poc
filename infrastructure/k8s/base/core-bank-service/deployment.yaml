@@ -1,0 +1,70 @@
+# 核心银行服务 - Deployment (Day 3 Agent 8)
+# 命名: core-bank-service-deployment, 容器 core-bank-service
+# 健康: /actuator/health/readiness, /actuator/health/liveness (technical-standards)
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: core-bank-service-deployment
+  labels:
+    app: core-bank-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: core-bank-service
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  revisionHistoryLimit: 5
+  template:
+    metadata:
+      labels:
+        app: core-bank-service
+    spec:
+      containers:
+      - name: core-bank-service
+        image: digitalbank/core-bank-service:latest
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "dev"
+        - name: CORE_BANK_DB_HOST
+          value: "postgres.digital-bank-poc.svc.cluster.local"
+        - name: CORE_BANK_DB_PORT
+          value: "5432"
+        - name: CORE_BANK_DB_NAME
+          value: "digitalbank"
+        - name: CORE_BANK_DB_USER
+          value: "digitalbank"
+        - name: CORE_BANK_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: core-bank-db-secret
+              key: password
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 5
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          failureThreshold: 3

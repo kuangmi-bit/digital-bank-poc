@@ -1,0 +1,251 @@
+<mxfile host="app.diagrams.net" modified="2026-02-01T00:00:00.000Z" agent="Claude" version="21.0.0" etag="daily-decision-windows" type="device">
+  <diagram id="decision-windows" name="每日决策窗口机制">
+    <mxGraphModel dx="1400" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- 背景框 -->
+        <mxCell id="bg-frame" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#E0E0E0;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="30" width="1320" height="740" as="geometry" />
+        </mxCell>
+
+        <!-- 标题 -->
+        <mxCell id="title" value="每日决策窗口机制" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="500" y="50" width="400" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" value="双决策窗口 - 确保架构一致性和决策效率" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=2;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="450" y="85" width="500" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- 时间线背景 -->
+        <mxCell id="timeline-bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1976D2;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="130" width="1240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="timeline-label" value="每日时间线" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;fontColor=#1976D2;" vertex="1" parent="1">
+          <mxGeometry x="600" y="145" width="200" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- 时间轴 -->
+        <mxCell id="timeline" value="" style="endArrow=classic;html=1;strokeWidth=3;strokeColor=#1976D2;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="100" y="220" as="sourcePoint" />
+            <mxPoint x="1300" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 时间点标记 -->
+        <mxCell id="time-08" value="08:00" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="140" y="230" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="time-08-mark" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1976D2;strokeColor=#0D47A1;" vertex="1" parent="1">
+          <mxGeometry x="165" y="215" width="10" height="10" as="geometry" />
+        </mxCell>
+
+        <mxCell id="time-10" value="10:00" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="300" y="230" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="time-10-mark" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#66BB6A;strokeColor=#388E3C;" vertex="1" parent="1">
+          <mxGeometry x="325" y="215" width="10" height="10" as="geometry" />
+        </mxCell>
+
+        <mxCell id="time-12" value="12:00" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="460" y="230" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="time-12-mark" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#66BB6A;strokeColor=#388E3C;" vertex="1" parent="1">
+          <mxGeometry x="485" y="215" width="10" height="10" as="geometry" />
+        </mxCell>
+
+        <mxCell id="time-18" value="18:00" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="780" y="230" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="time-18-mark" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1976D2;strokeColor=#0D47A1;" vertex="1" parent="1">
+          <mxGeometry x="805" y="215" width="10" height="10" as="geometry" />
+        </mxCell>
+
+        <mxCell id="time-22" value="22:00" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="230" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="time-22-mark" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FF7043;strokeColor=#E64A19;" vertex="1" parent="1">
+          <mxGeometry x="1045" y="215" width="10" height="10" as="geometry" />
+        </mxCell>
+
+        <mxCell id="time-23" value="23:00" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="230" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="time-23-mark" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FF7043;strokeColor=#E64A19;" vertex="1" parent="1">
+          <mxGeometry x="1205" y="215" width="10" height="10" as="geometry" />
+        </mxCell>
+
+        <!-- 决策窗口 1 -->
+        <mxCell id="window1-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#66BB6A;strokeWidth=2;strokeDasharray=3 3;" vertex="1" parent="1">
+          <mxGeometry x="280" y="260" width="240" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="window1-title" value="决策窗口 1" style="text;html=1;strokeColor=none;fillColor=#66BB6A;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=16;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="330" y="270" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="window1-time" value="10:00 - 12:00" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#388E3C;" vertex="1" parent="1">
+          <mxGeometry x="340" y="305" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="window1-content" value="• 审查前日成果&#xa;• 审批技术方案&#xa;• 发布架构决策&#xa;• 分配当日任务" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="305" y="335" width="200" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- 决策窗口 2 -->
+        <mxCell id="window2-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#FF7043;strokeWidth=2;strokeDasharray=3 3;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="260" width="240" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="window2-title" value="决策窗口 2" style="text;html=1;strokeColor=none;fillColor=#FF7043;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=16;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="270" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="window2-time" value="22:00 - 23:00" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#E64A19;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="305" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="window2-content" value="• 审查当日成果&#xa;• 解决阻塞问题&#xa;• 生成每日简报&#xa;• 规划次日任务" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="1025" y="335" width="200" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- 并行开发阶段 -->
+        <mxCell id="dev-phase-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1976D2;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="540" y="280" width="440" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="dev-phase-title" value="Agent 1-9 并行开发执行阶段" style="text;html=1;strokeColor=none;fillColor=#1976D2;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=16;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="600" y="300" width="320" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="dev-phase-time" value="12:00 - 22:00 (约10小时)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#1976D2;" vertex="1" parent="1">
+          <mxGeometry x="660" y="340" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="dev-phase-content" value="各 Agent 按照任务分配&#xa;并行独立开发执行&#xa;通过标准化接口协作" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="620" y="370" width="280" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- 箭头连接 -->
+        <mxCell id="arrow1" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#66BB6A;curved=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="520" y="360" as="sourcePoint" />
+            <mxPoint x="540" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow2" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#FF7043;curved=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="980" y="360" as="sourcePoint" />
+            <mxPoint x="1000" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 流程说明 -->
+        <mxCell id="flow-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#E0E0E0;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="500" width="1240" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-title" value="工作流程" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="620" y="510" width="160" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- 流程步骤 -->
+        <mxCell id="step1" value="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#66BB6A;strokeColor=#388E3C;fontSize=14;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="140" y="555" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="step1-text" value="晨会决策&#xa;任务分配" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="110" y="590" width="90" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="step-arrow1" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#BDBDBD;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="200" y="570" as="sourcePoint" />
+            <mxPoint x="320" y="570" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="step2" value="2" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1976D2;strokeColor=#0D47A1;fontSize=14;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="340" y="555" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="step2-text" value="并行开发&#xa;独立执行" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="310" y="590" width="90" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="step-arrow2" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#BDBDBD;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="400" y="570" as="sourcePoint" />
+            <mxPoint x="520" y="570" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="step3" value="3" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1976D2;strokeColor=#0D47A1;fontSize=14;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="540" y="555" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="step3-text" value="持续集成&#xa;自动测试" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="510" y="590" width="90" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="step-arrow3" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#BDBDBD;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="600" y="570" as="sourcePoint" />
+            <mxPoint x="720" y="570" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="step4" value="4" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1976D2;strokeColor=#0D47A1;fontSize=14;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="740" y="555" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="step4-text" value="代码评审&#xa;问题反馈" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="710" y="590" width="90" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="step-arrow4" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#BDBDBD;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="800" y="570" as="sourcePoint" />
+            <mxPoint x="920" y="570" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="step5" value="5" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FF7043;strokeColor=#E64A19;fontSize=14;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="940" y="555" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="step5-text" value="晚会总结&#xa;简报生成" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="910" y="590" width="90" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="step-arrow5" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#BDBDBD;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1000" y="570" as="sourcePoint" />
+            <mxPoint x="1120" y="570" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="step6" value="6" style="ellipse;whiteSpace=wrap;html=1;fillColor=#9E9E9E;strokeColor=#616161;fontSize=14;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="555" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="step6-text" value="次日规划&#xa;循环迭代" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="590" width="90" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- 图例 -->
+        <mxCell id="legend-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#E0E0E0;" vertex="1" parent="1">
+          <mxGeometry x="80" y="680" width="400" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-title" value="图例:" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="95" y="690" width="50" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend1-color" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#66BB6A;strokeColor=#388E3C;" vertex="1" parent="1">
+          <mxGeometry x="95" y="715" width="15" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="legend1-text" value="晨会窗口" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="115" y="712" width="70" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend2-color" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF7043;strokeColor=#E64A19;" vertex="1" parent="1">
+          <mxGeometry x="195" y="715" width="15" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="legend2-text" value="晚会窗口" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="215" y="712" width="70" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend3-color" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976D2;strokeColor=#0D47A1;" vertex="1" parent="1">
+          <mxGeometry x="295" y="715" width="15" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="legend3-text" value="开发阶段" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="315" y="712" width="70" height="20" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

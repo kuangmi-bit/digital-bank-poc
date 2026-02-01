@@ -1,0 +1,153 @@
+<mxfile host="app.diagrams.net" modified="2026-01-27T00:00:00.000Z" agent="Agent 9" version="21.0.0" etag="er-diagram-agent9" type="device">
+  <diagram id="er-diagram" name="数字银行 POC 数据模型 ER 图">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- 标题 -->
+        <mxCell id="title" value="数字银行 POC - 数据模型 ER 图 (PostgreSQL 核心银行)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="400" y="20" width="800" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" value="Agent 9 数据处理分析师 | 遵循 naming-conventions + technical-standards v1.0" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=0" vertex="1" parent="1">
+          <mxGeometry x="400" y="56" width="800" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- 实体: customers -->
+        <mxCell id="ent-customers" value="customers" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=28;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="80" y="120" width="220" height="228" as="geometry" />
+        </mxCell>
+        <mxCell id="attr-customers-pk" value="  id BIGSERIAL PK" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=1" vertex="1" parent="ent-customers">
+          <mxGeometry y="28" width="220" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="attr-customers-1" value="  name VARCHAR(100)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ent-customers">
+          <mxGeometry y="48" width="220" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="attr-customers-2" value="  id_card VARCHAR(18) UK" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ent-customers">
+          <mxGeometry y="68" width="220" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="attr-customers-3" value="  phone VARCHAR(20)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ent-customers">
+          <mxGeometry y="88" width="220" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="attr-customers-4" value="  email VARCHAR(128)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ent-customers">
+          <mxGeometry y="108" width="220" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="attr-customers-5" value="  address TEXT" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ent-customers">
+          <mxGeometry y="128" width="220" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="attr-customers-6" value="  status VARCHAR(20)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ent-customers">
+          <mxGeometry y="148" width="220" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="attr-customers-7" value="  created_at TIMESTAMPTZ" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ent-customers">
+          <mxGeometry y="168" width="220" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="attr-customers-8" value="  updated_at TIMESTAMPTZ" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ent-customers">
+          <mxGeometry y="188" width="220" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- 实体: bank_accounts -->
+        <mxCell id="ent-bank-accounts" value="bank_accounts" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=28;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="400" y="120" width="260" height="268" as="geometry" />
+        </mxCell>
+        <mxCell id="attr-ba-pk" value="  id BIGSERIAL PK" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=1" vertex="1" parent="ent-bank-accounts">
+          <mxGeometry y="28" width="260" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="attr-ba-1" value="  account_number VARCHAR(20) UK" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ent-bank-accounts">
+          <mxGeometry y="48" width="260" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="attr-ba-2" value="  customer_id BIGINT FK → customers.id" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ent-bank-accounts">
+          <mxGeometry y="68" width="260" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="attr-ba-3" value="  balance DECIMAL(19,2)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ent-bank-accounts">
+          <mxGeometry y="88" width="260" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="attr-ba-4" value="  currency VARCHAR(3)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ent-bank-accounts">
+          <mxGeometry y="108" width="260" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="attr-ba-5" value="  account_type VARCHAR(20)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ent-bank-accounts">
+          <mxGeometry y="128" width="260" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="attr-ba-6" value="  status VARCHAR(20)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ent-bank-accounts">
+          <mxGeometry y="148" width="260" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="attr-ba-7" value="  created_at TIMESTAMPTZ" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ent-bank-accounts">
+          <mxGeometry y="168" width="260" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="attr-ba-8" value="  updated_at TIMESTAMPTZ" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ent-bank-accounts">
+          <mxGeometry y="188" width="260" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- 实体: transactions -->
+        <mxCell id="ent-transactions" value="transactions" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=28;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="760" y="120" width="280" height="288" as="geometry" />
+        </mxCell>
+        <mxCell id="attr-tx-pk" value="  id BIGSERIAL PK" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=1" vertex="1" parent="ent-transactions">
+          <mxGeometry y="28" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="attr-tx-1" value="  transaction_id VARCHAR(32) UK" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ent-transactions">
+          <mxGeometry y="48" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="attr-tx-2" value="  account_id BIGINT FK → bank_accounts.id" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ent-transactions">
+          <mxGeometry y="68" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="attr-tx-3" value="  counter_account_id BIGINT FK (nullable)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ent-transactions">
+          <mxGeometry y="88" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="attr-tx-4" value="  amount DECIMAL(19,2)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ent-transactions">
+          <mxGeometry y="108" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="attr-tx-5" value="  transaction_type VARCHAR(20)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ent-transactions">
+          <mxGeometry y="128" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="attr-tx-6" value="  status VARCHAR(20)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ent-transactions">
+          <mxGeometry y="148" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="attr-tx-7" value="  remark TEXT" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ent-transactions">
+          <mxGeometry y="168" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="attr-tx-8" value="  created_at TIMESTAMPTZ" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ent-transactions">
+          <mxGeometry y="188" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="attr-tx-9" value="  updated_at TIMESTAMPTZ" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ent-transactions">
+          <mxGeometry y="208" width="280" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- 关系: customers 1───&lt; bank_accounts -->
+        <mxCell id="rel-c-ba" value="1" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;entryPerimeter=0;strokeWidth=2;endSize=6;startSize=6;startFill=0;endFill=1;fillColor=#f8cecc;strokeColor=#b85450;" edge="1" parent="1" source="ent-customers" target="ent-bank-accounts">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-c-ba-label" value="customer_id&#xa;一个客户多个账户" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="rel-c-ba">
+          <mxGeometry x="-0.1" y="1" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <!-- 关系: bank_accounts 1───&lt; transactions (account_id) -->
+        <mxCell id="rel-ba-tx" value="1" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;entryPerimeter=0;strokeWidth=2;endSize=6;startSize=6;startFill=0;endFill=1;fillColor=#f8cecc;strokeColor=#b85450;" edge="1" parent="1" source="ent-bank-accounts" target="ent-transactions">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-ba-tx-label" value="account_id&#xa;一个账户多笔交易" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="rel-ba-tx">
+          <mxGeometry x="-0.1" y="1" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <!-- MongoDB 区域标题 -->
+        <mxCell id="mongo-title" value="MongoDB 支付域 (payment_db) — 文档模型" style="text;html=1;strokeColor=#9673a6;fillColor=#e1d5e7;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;strokeWidth=2" vertex="1" parent="1">
+          <mxGeometry x="80" y="460" width="520" height="32" as="geometry" />
+        </mxCell>
+
+        <!-- 集合: payments 概览 -->
+        <mxCell id="coll-payments" value="payments&#xa;paymentId, orderId, userId, amount, currency, status, channel,&#xa;createdAt, updatedAt, gatewayResponse (embed)" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="80" y="510" width="260" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- 集合: settlements 概览 -->
+        <mxCell id="coll-settlements" value="settlements&#xa;settlementId, batchId, totalAmount, status,&#xa;paymentIds[], createdAt, updatedAt" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="380" y="510" width="260" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- 图例 -->
+        <mxCell id="legend" value="图例: PK=主键 UK=唯一 FK=外键 TIMESTAMPTZ=TIMESTAMP WITH TIME ZONE&#xa;PostgreSQL: snake_case 表/列; 复数表名 | MongoDB: camelCase 字段; 复数集合名" style="text;html=1;strokeColor=#666666;fillColor=#f5f5f5;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=10;fontStyle=0" vertex="1" parent="1">
+          <mxGeometry x="80" y="620" width="680" height="36" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

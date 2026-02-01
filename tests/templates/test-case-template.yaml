@@ -1,0 +1,15 @@
+# 测试用例模板 - 复制到 test-management/test-cases/ 使用
+# 符合 test-case-schema.json；命名规范见 naming-conventions
+
+- id: TC-XX-001
+  title: "【标题】应_{expected}_当_{condition}"
+  suite: core-bank   # core-bank | payment | risk | e2e | performance
+  priority: 2        # 1-4，1 最高
+  steps:
+    - action: "步骤 1：操作描述"
+    - action: "步骤 2：操作描述"
+  expected: "预期结果描述"
+  preconditions: "前置条件（可选）"
+  tags: [api, smoke]
+
+# 方法命名参考：test_{scenario}_{expected_result} 或 should_{expected}_when_{condition}

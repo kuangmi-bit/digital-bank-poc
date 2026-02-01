@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: consul-config
+  namespace: digital-bank-poc
+  labels:
+    app: consul
+data:
+  consul-config.json: |
+    {
+      "datacenter": "digital-bank-poc",
+      "data_dir": "/consul/data",
+      "log_level": "INFO",
+      "node_name": "consul-server",
+      "server": true,
+      "bootstrap_expect": 1,
+      "ui_config": {
+        "enabled": true
+      },
+      "client_addr": "0.0.0.0",
+      "bind_addr": "0.0.0.0",
+      "ports": {
+        "http": 8500,
+        "dns": 8600,
+        "serf_lan": 8301,
+        "serf_wan": 8302,
+        "server": 8300
+      },
+      "connect": {
+        "enabled": true
+      },
+      "acl": {
+        "enabled": false,
+        "default_policy": "allow"
+      },
+      "services": [
+        {
+          "id": "core-bank-service-k8s",
+          "name": "core-bank-service",
+          "address": "core-bank-service.digital-bank-poc.svc.cluster.local",
+          "port": 8080,
+          "tags": ["banking", "api", "java", "spring-boot"],
+          "check": {
+            "http": "http://core-bank-service.digital-bank-poc.svc.cluster.local:8080/actuator/health",
+            "interval": "10s",
+            "timeout": "5s",
+            "deregister_critical_service_after": "30s"
+          }
+        },
+        {
+          "id": "payment-service-k8s",
+          "name": "payment-service",
+          "address": "payment-service.digital-bank-poc.svc.cluster.local",
+          "port": 3000,
+          "tags": ["payment", "settlement", "api", "nodejs", "express"],
+          "check": {
+            "http": "http://payment-service.digital-bank-poc.svc.cluster.local:3000/health",
+            "interval": "10s",
+            "timeout": "5s",
+            "deregister_critical_service_after": "30s"
+          }
+        },
+        {
+          "id": "risk-service-k8s",
+          "name": "risk-service",
+          "address": "risk-service.digital-bank-poc.svc.cluster.local",
+          "port": 8000,
+          "tags": ["risk", "compliance", "api", "python", "fastapi"],
+          "check": {
+            "http": "http://risk-service.digital-bank-poc.svc.cluster.local:8000/health",
+            "interval": "10s",
+            "timeout": "5s",
+            "deregister_critical_service_after": "30s"
+          }
+        }
+      ]
+    }
