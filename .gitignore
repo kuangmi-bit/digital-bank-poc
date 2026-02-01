@@ -34,6 +34,9 @@ logs/
 .env.local
 .env.*.local
 
+# Claude / Cursor 本地文件
+.claude/settings.local.json
+
 # 临时文件
 *.tmp
 *.temp
@@ -47,6 +50,16 @@ Thumbs.db
 # 测试覆盖率
 coverage/
 .nyc_output/
+
+# 测试报告中的临时产物/大文件（建议不入库）
+tests/reports/_cache/
+tests/reports/cypress/
+*.mp4
+*.zip.downloading
+*.lock
+
+# Python coverage 文件
+risk-service/.coverage
 
 # 数据库
 *.db
