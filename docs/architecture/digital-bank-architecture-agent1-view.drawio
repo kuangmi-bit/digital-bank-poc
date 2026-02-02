@@ -16,15 +16,15 @@
         </mxCell>
         
         <!-- 业务服务 -->
-        <mxCell id="business-account" value="账户管理业务" style="shape=mxgraph.archimate3.business;appType=serv;archiType=rounded;fillColor=#FFD54F;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+        <mxCell id="business-account" value="账户管理业务" style="shape=mxgraph.archimate3.application;appType=serv;archiType=rounded;fillColor=#FFD54F;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
           <mxGeometry x="50" y="140" width="200" height="60" as="geometry" />
         </mxCell>
         
-        <mxCell id="business-transaction" value="交易处理业务" style="shape=mxgraph.archimate3.business;appType=serv;archiType=rounded;fillColor=#FFD54F;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+        <mxCell id="business-transaction" value="交易处理业务" style="shape=mxgraph.archimate3.application;appType=serv;archiType=rounded;fillColor=#FFD54F;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
           <mxGeometry x="280" y="140" width="200" height="60" as="geometry" />
         </mxCell>
         
-        <mxCell id="business-customer" value="客户信息业务" style="shape=mxgraph.archimate3.business;appType=serv;archiType=rounded;fillColor=#FFD54F;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+        <mxCell id="business-customer" value="客户信息业务" style="shape=mxgraph.archimate3.application;appType=serv;archiType=rounded;fillColor=#FFD54F;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
           <mxGeometry x="510" y="140" width="200" height="60" as="geometry" />
         </mxCell>
         
@@ -104,20 +104,20 @@
         </mxCell>
         
         <!-- 数据对象 -->
-        <mxCell id="data-account" value="Account Entity&#xa;账户实体" style="shape=mxgraph.archimate3.data;appType=passive;archiType=rounded;fillColor=#1976D2;strokeColor=#666666;fontColor=#FFFFFF;" vertex="1" parent="1">
+        <mxCell id="data-account" value="Account Entity&#xa;账户实体" style="shape=mxgraph.archimate3.application;appType=passive;archiType=rounded;fillColor=#1976D2;strokeColor=#666666;fontColor=#FFFFFF;" vertex="1" parent="1">
           <mxGeometry x="50" y="640" width="180" height="50" as="geometry" />
         </mxCell>
         
-        <mxCell id="data-transaction" value="Transaction Entity&#xa;交易实体" style="shape=mxgraph.archimate3.data;appType=passive;archiType=rounded;fillColor=#1976D2;strokeColor=#666666;fontColor=#FFFFFF;" vertex="1" parent="1">
+        <mxCell id="data-transaction" value="Transaction Entity&#xa;交易实体" style="shape=mxgraph.archimate3.application;appType=passive;archiType=rounded;fillColor=#1976D2;strokeColor=#666666;fontColor=#FFFFFF;" vertex="1" parent="1">
           <mxGeometry x="260" y="640" width="180" height="50" as="geometry" />
         </mxCell>
         
-        <mxCell id="data-customer" value="Customer Entity&#xa;客户实体" style="shape=mxgraph.archimate3.data;appType=passive;archiType=rounded;fillColor=#1976D2;strokeColor=#666666;fontColor=#FFFFFF;" vertex="1" parent="1">
+        <mxCell id="data-customer" value="Customer Entity&#xa;客户实体" style="shape=mxgraph.archimate3.application;appType=passive;archiType=rounded;fillColor=#1976D2;strokeColor=#666666;fontColor=#FFFFFF;" vertex="1" parent="1">
           <mxGeometry x="470" y="640" width="180" height="50" as="geometry" />
         </mxCell>
         
         <!-- PostgreSQL数据库 -->
-        <mxCell id="data-postgresql" value="PostgreSQL 15&#xa;核心银行数据库&#xa;bank_accounts, transactions, customers" style="shape=mxgraph.archimate3.data;appType=passive;archiType=rounded;fillColor=#1976D2;strokeColor=#666666;fontColor=#FFFFFF;fontStyle=1" vertex="1" parent="1">
+        <mxCell id="data-postgresql" value="PostgreSQL 15&#xa;核心银行数据库&#xa;bank_accounts, transactions, customers" style="shape=mxgraph.archimate3.application;appType=passive;archiType=rounded;fillColor=#1976D2;strokeColor=#666666;fontColor=#FFFFFF;fontStyle=1" vertex="1" parent="1">
           <mxGeometry x="50" y="720" width="600" height="80" as="geometry" />
         </mxCell>
         
@@ -127,17 +127,17 @@
         </mxCell>
         
         <!-- Spring Boot框架 -->
-        <mxCell id="tech-spring-boot" value="Spring Boot 3.x&#xa;应用框架" style="shape=mxgraph.archimate3.technology;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+        <mxCell id="tech-spring-boot" value="Spring Boot 3.x&#xa;应用框架" style="shape=mxgraph.archimate3.application;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
           <mxGeometry x="50" y="900" width="180" height="60" as="geometry" />
         </mxCell>
         
         <!-- Spring Data JPA -->
-        <mxCell id="tech-spring-jpa" value="Spring Data JPA&#xa;ORM框架" style="shape=mxgraph.archimate3.technology;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+        <mxCell id="tech-spring-jpa" value="Spring Data JPA&#xa;ORM框架" style="shape=mxgraph.archimate3.application;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
           <mxGeometry x="260" y="900" width="180" height="60" as="geometry" />
         </mxCell>
         
         <!-- Java 17 -->
-        <mxCell id="tech-java" value="Java 17&#xa;运行时环境" style="shape=mxgraph.archimate3.technology;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+        <mxCell id="tech-java" value="Java 17&#xa;运行时环境" style="shape=mxgraph.archimate3.application;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
           <mxGeometry x="470" y="900" width="180" height="60" as="geometry" />
         </mxCell>
         
@@ -146,20 +146,20 @@
           <mxGeometry x="700" y="840" width="200" height="30" as="geometry" />
         </mxCell>
         
-        <mxCell id="tech-junit" value="JUnit 5&#xa;单元测试" style="shape=mxgraph.archimate3.technology;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+        <mxCell id="tech-junit" value="JUnit 5&#xa;单元测试" style="shape=mxgraph.archimate3.application;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
           <mxGeometry x="700" y="880" width="180" height="50" as="geometry" />
         </mxCell>
         
-        <mxCell id="tech-mockito" value="Mockito&#xa;Mock框架" style="shape=mxgraph.archimate3.technology;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+        <mxCell id="tech-mockito" value="Mockito&#xa;Mock框架" style="shape=mxgraph.archimate3.application;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
           <mxGeometry x="700" y="950" width="180" height="50" as="geometry" />
         </mxCell>
         
-        <mxCell id="tech-testcontainers" value="TestContainers&#xa;集成测试" style="shape=mxgraph.archimate3.technology;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+        <mxCell id="tech-testcontainers" value="TestContainers&#xa;集成测试" style="shape=mxgraph.archimate3.application;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
           <mxGeometry x="900" y="880" width="180" height="50" as="geometry" />
         </mxCell>
         
         <!-- API文档 -->
-        <mxCell id="tech-openapi" value="OpenAPI 3.0&#xa;API文档" style="shape=mxgraph.archimate3.technology;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+        <mxCell id="tech-openapi" value="OpenAPI 3.0&#xa;API文档" style="shape=mxgraph.archimate3.application;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
           <mxGeometry x="900" y="950" width="180" height="50" as="geometry" />
         </mxCell>
         
@@ -168,7 +168,7 @@
           <mxGeometry x="50" y="1040" width="200" height="30" as="geometry" />
         </mxCell>
         
-        <mxCell id="legend-bus" value="业务层" style="shape=mxgraph.archimate3.business;appType=serv;archiType=rounded;fillColor=#FFD54F;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+        <mxCell id="legend-bus" value="业务层" style="shape=mxgraph.archimate3.application;appType=serv;archiType=rounded;fillColor=#FFD54F;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
           <mxGeometry x="50" y="1080" width="120" height="40" as="geometry" />
         </mxCell>
         
@@ -176,11 +176,11 @@
           <mxGeometry x="200" y="1080" width="120" height="40" as="geometry" />
         </mxCell>
         
-        <mxCell id="legend-data" value="数据层" style="shape=mxgraph.archimate3.data;appType=passive;archiType=rounded;fillColor=#1976D2;strokeColor=#666666;fontColor=#FFFFFF;" vertex="1" parent="1">
+        <mxCell id="legend-data" value="数据层" style="shape=mxgraph.archimate3.application;appType=passive;archiType=rounded;fillColor=#1976D2;strokeColor=#666666;fontColor=#FFFFFF;" vertex="1" parent="1">
           <mxGeometry x="350" y="1080" width="120" height="40" as="geometry" />
         </mxCell>
         
-        <mxCell id="legend-tech" value="技术层" style="shape=mxgraph.archimate3.technology;appType=node;archiType=rounded;fillColor=#7CB342;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+        <mxCell id="legend-tech" value="技术层" style="shape=mxgraph.archimate3.application;appType=node;archiType=rounded;fillColor=#7CB342;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
           <mxGeometry x="500" y="1080" width="120" height="40" as="geometry" />
         </mxCell>
         

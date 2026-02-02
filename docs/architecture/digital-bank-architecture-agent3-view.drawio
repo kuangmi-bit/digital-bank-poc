@@ -16,15 +16,15 @@
         </mxCell>
         
         <!-- 业务服务 -->
-        <mxCell id="business-risk-check" value="风控检查业务" style="shape=mxgraph.archimate3.business;appType=serv;archiType=rounded;fillColor=#FFD54F;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+        <mxCell id="business-risk-check" value="风控检查业务" style="shape=mxgraph.archimate3.application;appType=serv;archiType=rounded;fillColor=#FFD54F;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
           <mxGeometry x="50" y="140" width="200" height="60" as="geometry" />
         </mxCell>
         
-        <mxCell id="business-rule-engine" value="规则引擎业务" style="shape=mxgraph.archimate3.business;appType=serv;archiType=rounded;fillColor=#FFD54F;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+        <mxCell id="business-rule-engine" value="规则引擎业务" style="shape=mxgraph.archimate3.application;appType=serv;archiType=rounded;fillColor=#FFD54F;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
           <mxGeometry x="280" y="140" width="200" height="60" as="geometry" />
         </mxCell>
         
-        <mxCell id="business-blacklist" value="黑名单管理业务" style="shape=mxgraph.archimate3.business;appType=serv;archiType=rounded;fillColor=#FFD54F;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+        <mxCell id="business-blacklist" value="黑名单管理业务" style="shape=mxgraph.archimate3.application;appType=serv;archiType=rounded;fillColor=#FFD54F;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
           <mxGeometry x="510" y="140" width="200" height="60" as="geometry" />
         </mxCell>
         
@@ -124,20 +124,20 @@
         </mxCell>
         
         <!-- 数据对象 -->
-        <mxCell id="data-risk-event" value="Risk Event Document&#xa;风控事件文档" style="shape=mxgraph.archimate3.data;appType=passive;archiType=rounded;fillColor=#1976D2;strokeColor=#666666;fontColor=#FFFFFF;" vertex="1" parent="1">
+        <mxCell id="data-risk-event" value="Risk Event Document&#xa;风控事件文档" style="shape=mxgraph.archimate3.application;appType=passive;archiType=rounded;fillColor=#1976D2;strokeColor=#666666;fontColor=#FFFFFF;" vertex="1" parent="1">
           <mxGeometry x="50" y="790" width="180" height="50" as="geometry" />
         </mxCell>
         
-        <mxCell id="data-blacklist" value="Blacklist Document&#xa;黑名单文档" style="shape=mxgraph.archimate3.data;appType=passive;archiType=rounded;fillColor=#1976D2;strokeColor=#666666;fontColor=#FFFFFF;" vertex="1" parent="1">
+        <mxCell id="data-blacklist" value="Blacklist Document&#xa;黑名单文档" style="shape=mxgraph.archimate3.application;appType=passive;archiType=rounded;fillColor=#1976D2;strokeColor=#666666;fontColor=#FFFFFF;" vertex="1" parent="1">
           <mxGeometry x="260" y="790" width="180" height="50" as="geometry" />
         </mxCell>
         
-        <mxCell id="data-transaction-log" value="Transaction Log Document&#xa;交易日志文档" style="shape=mxgraph.archimate3.data;appType=passive;archiType=rounded;fillColor=#1976D2;strokeColor=#666666;fontColor=#FFFFFF;" vertex="1" parent="1">
+        <mxCell id="data-transaction-log" value="Transaction Log Document&#xa;交易日志文档" style="shape=mxgraph.archimate3.application;appType=passive;archiType=rounded;fillColor=#1976D2;strokeColor=#666666;fontColor=#FFFFFF;" vertex="1" parent="1">
           <mxGeometry x="470" y="790" width="180" height="50" as="geometry" />
         </mxCell>
         
         <!-- Elasticsearch数据库 -->
-        <mxCell id="data-elasticsearch" value="Elasticsearch 8.x&#xa;风控日志数据库&#xa;risk_events, blacklist, transaction_logs" style="shape=mxgraph.archimate3.data;appType=passive;archiType=rounded;fillColor=#1976D2;strokeColor=#666666;fontColor=#FFFFFF;fontStyle=1" vertex="1" parent="1">
+        <mxCell id="data-elasticsearch" value="Elasticsearch 8.x&#xa;风控日志数据库&#xa;risk_events, blacklist, transaction_logs" style="shape=mxgraph.archimate3.application;appType=passive;archiType=rounded;fillColor=#1976D2;strokeColor=#666666;fontColor=#FFFFFF;fontStyle=1" vertex="1" parent="1">
           <mxGeometry x="50" y="870" width="600" height="80" as="geometry" />
         </mxCell>
         
@@ -147,22 +147,22 @@
         </mxCell>
         
         <!-- FastAPI框架 -->
-        <mxCell id="tech-fastapi" value="FastAPI&#xa;Web框架" style="shape=mxgraph.archimate3.technology;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+        <mxCell id="tech-fastapi" value="FastAPI&#xa;Web框架" style="shape=mxgraph.archimate3.application;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
           <mxGeometry x="50" y="1050" width="180" height="60" as="geometry" />
         </mxCell>
         
         <!-- Pydantic -->
-        <mxCell id="tech-pydantic" value="Pydantic&#xa;数据验证" style="shape=mxgraph.archimate3.technology;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+        <mxCell id="tech-pydantic" value="Pydantic&#xa;数据验证" style="shape=mxgraph.archimate3.application;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
           <mxGeometry x="260" y="1050" width="180" height="60" as="geometry" />
         </mxCell>
         
         <!-- Python -->
-        <mxCell id="tech-python" value="Python 3.11&#xa;运行时环境" style="shape=mxgraph.archimate3.technology;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+        <mxCell id="tech-python" value="Python 3.11&#xa;运行时环境" style="shape=mxgraph.archimate3.application;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
           <mxGeometry x="470" y="1050" width="180" height="60" as="geometry" />
         </mxCell>
         
         <!-- Elasticsearch客户端 -->
-        <mxCell id="tech-elasticsearch" value="Elasticsearch Client&#xa;搜索引擎客户端" style="shape=mxgraph.archimate3.technology;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+        <mxCell id="tech-elasticsearch" value="Elasticsearch Client&#xa;搜索引擎客户端" style="shape=mxgraph.archimate3.application;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
           <mxGeometry x="50" y="1140" width="180" height="60" as="geometry" />
         </mxCell>
         
@@ -171,12 +171,12 @@
           <mxGeometry x="700" y="990" width="200" height="30" as="geometry" />
         </mxCell>
         
-        <mxCell id="tech-pytest" value="pytest&#xa;测试框架" style="shape=mxgraph.archimate3.technology;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+        <mxCell id="tech-pytest" value="pytest&#xa;测试框架" style="shape=mxgraph.archimate3.application;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
           <mxGeometry x="700" y="1030" width="180" height="50" as="geometry" />
         </mxCell>
         
         <!-- API文档 -->
-        <mxCell id="tech-openapi" value="OpenAPI 3.0&#xa;API文档（自动生成）" style="shape=mxgraph.archimate3.technology;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+        <mxCell id="tech-openapi" value="OpenAPI 3.0&#xa;API文档（自动生成）" style="shape=mxgraph.archimate3.application;appType=sysSw;archiType=rounded;fillColor=#AED581;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
           <mxGeometry x="700" y="1100" width="180" height="50" as="geometry" />
         </mxCell>
         
@@ -185,7 +185,7 @@
           <mxGeometry x="50" y="1230" width="200" height="30" as="geometry" />
         </mxCell>
         
-        <mxCell id="legend-bus" value="业务层" style="shape=mxgraph.archimate3.business;appType=serv;archiType=rounded;fillColor=#FFD54F;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+        <mxCell id="legend-bus" value="业务层" style="shape=mxgraph.archimate3.application;appType=serv;archiType=rounded;fillColor=#FFD54F;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
           <mxGeometry x="50" y="1270" width="120" height="40" as="geometry" />
         </mxCell>
         
@@ -193,11 +193,11 @@
           <mxGeometry x="200" y="1270" width="120" height="40" as="geometry" />
         </mxCell>
         
-        <mxCell id="legend-data" value="数据层" style="shape=mxgraph.archimate3.data;appType=passive;archiType=rounded;fillColor=#1976D2;strokeColor=#666666;fontColor=#FFFFFF;" vertex="1" parent="1">
+        <mxCell id="legend-data" value="数据层" style="shape=mxgraph.archimate3.application;appType=passive;archiType=rounded;fillColor=#1976D2;strokeColor=#666666;fontColor=#FFFFFF;" vertex="1" parent="1">
           <mxGeometry x="350" y="1270" width="120" height="40" as="geometry" />
         </mxCell>
         
-        <mxCell id="legend-tech" value="技术层" style="shape=mxgraph.archimate3.technology;appType=node;archiType=rounded;fillColor=#7CB342;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+        <mxCell id="legend-tech" value="技术层" style="shape=mxgraph.archimate3.application;appType=node;archiType=rounded;fillColor=#7CB342;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
           <mxGeometry x="500" y="1270" width="120" height="40" as="geometry" />
         </mxCell>
         
