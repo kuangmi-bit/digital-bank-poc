@@ -36,25 +36,22 @@
 
 ### 系统架构
 
-```
-+-----------------------------------------------------------------------+
-|                      [1] Client Layer / 客户端层                      |
-|                       React 18 + TypeScript 5                         |
-+-----------------------------------------------------------------------+
-|                      [2] Gateway Layer / 接入层                       |
-|                     Kong API Gateway + Consul                         |
-+-----------------+-----------------+-----------------+-----------------+
-| Core Banking    | Payment Service | Risk Service    | Frontend        |
-| 核心银行服务    | 支付清算服务    | 风控合规服务    | 前端应用        |
-+-----------------+-----------------+-----------------+-----------------+
-| Java 17         | Node.js 20      | Python 3.11     | React 18        |
-| Spring Boot 3.2 | Express 4       | FastAPI         | Vite 5          |
-| PostgreSQL 15   | MongoDB 7       | Elasticsearch 8 | Tailwind CSS    |
-+-----------------+-----------------+-----------------+-----------------+
-|                   [3] Infrastructure Layer / 基础设施层               |
-|              Kubernetes + Docker + Prometheus + Grafana               |
-+-----------------------------------------------------------------------+
-```
+**客户端层 (Client Layer)**
+> React 18 + TypeScript 5
+
+**接入层 (Gateway Layer)**
+> Kong API Gateway + Consul
+
+**服务层 (Service Layer)**
+
+| 服务 | 核心银行服务 | 支付清算服务 | 风控合规服务 | 前端应用 |
+|:-----|:------------|:------------|:------------|:---------|
+| 语言 | Java 17 | Node.js 20 | Python 3.11 | React 18 |
+| 框架 | Spring Boot 3.2 | Express 4 | FastAPI | Vite 5 |
+| 存储 | PostgreSQL 15 | MongoDB 7 | Elasticsearch 8 | - |
+
+**基础设施层 (Infrastructure Layer)**
+> Kubernetes + Docker + Prometheus + Grafana
 
 ### 项目结构
 
