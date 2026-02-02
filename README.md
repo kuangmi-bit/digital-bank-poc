@@ -37,22 +37,21 @@
 ### 系统架构
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                           Client Layer (客户端层)                            │
-│                         React 18 + TypeScript 5                              │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                          Gateway Layer (接入层)                              │
-│                       Kong API Gateway + Consul                              │
-├───────────────────┬───────────────────┬───────────────────┬─────────────────┤
-│  Core Banking     │  Payment Service  │  Risk Service     │  Frontend       │
-│  ───────────────  │  ────────────────  │  ───────────────  │  ────────────   │
-│  Java 17          │  Node.js 20       │  Python 3.11      │  React 18       │
-│  Spring Boot 3.2  │  Express 4        │  FastAPI          │  Vite 5         │
-│  PostgreSQL 15    │  MongoDB 7        │  Elasticsearch 8  │  Tailwind CSS   │
-├───────────────────┴───────────────────┴───────────────────┴─────────────────┤
-│                       Infrastructure (基础设施层)                            │
-│                Kubernetes + Docker + Prometheus + Grafana                    │
-└─────────────────────────────────────────────────────────────────────────────┘
++-----------------------------------------------------------------------------+
+|                              CLIENT LAYER                                   |
+|                        React 18 + TypeScript 5                              |
++-----------------------------------------------------------------------------+
+|                             GATEWAY LAYER                                   |
+|                      Kong API Gateway + Consul                              |
++------------------+------------------+------------------+--------------------+
+|  Core Banking    |  Payment Service |  Risk Service    |  Frontend          |
+|  Java 17         |  Node.js 20      |  Python 3.11     |  React 18          |
+|  Spring Boot 3.2 |  Express 4       |  FastAPI         |  Vite 5            |
+|  PostgreSQL 15   |  MongoDB 7       |  Elasticsearch 8 |  Tailwind CSS      |
++------------------+------------------+------------------+--------------------+
+|                           INFRASTRUCTURE LAYER                              |
+|               Kubernetes + Docker + Prometheus + Grafana                    |
++-----------------------------------------------------------------------------+
 ```
 
 ### 项目结构
