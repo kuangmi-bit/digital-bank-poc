@@ -116,7 +116,7 @@ digital-bank-poc/
 #### 1. 克隆项目
 
 ```bash
-git clone https://github.com/your-org/digital-bank-poc.git
+git clone https://github.com/kuangmi-bit/digital-bank-poc.git
 cd digital-bank-poc
 ```
 
@@ -320,7 +320,7 @@ This project is an innovative technical proof-of-concept, demonstrating the feas
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/digital-bank-poc.git
+git clone https://github.com/kuangmi-bit/digital-bank-poc.git
 cd digital-bank-poc
 
 # Start infrastructure
